@@ -14,7 +14,10 @@ $blue:   #0275d8 !default;
 $teal:   #5bc0de !default;
 $pink:   #ff5b77 !default;
 $purple: #613d7c !default;
-
+// $orange:  #e0b256 !default;
+$lightgray:#f7f7f7 !default;
+$darkgray:#dee2e6 !default;
+$graydark:#9e9ea1 !default;
 // Create grayscale
 $gray-dark:                 #292b2c !default;
 $gray:                      #464a4c !default;
@@ -263,3 +266,4 @@ header {
 .nav-up {
     transform: translateY(-100%);
 }
+@import "kishori"

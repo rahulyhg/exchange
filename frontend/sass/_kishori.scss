@@ -1,0 +1,36 @@
+// start of home page
+// tabs css
+.exchange-tabs {
+    @include border-color($darkgray $darkgray null $darkgray);
+    border: 1px solid transparent;
+    a{
+        color:$orange;
+    }
+    .nav-tabs {
+        width: 55%;
+    }
+    .nav-tabs .nav-link:hover,
+    .nav-tabs .nav-link:focus {
+        background-color: $lightgray;
+    }
+    .active {
+        background-color: $lightgray;
+        .nav-link {
+            @include border-color($darkgray $darkgray null $darkgray);
+            &:focus {
+                border-bottom: none;
+            }
+        }
+        .nav-tabs {
+            border-bottom: none !important;
+        }
+    }
+    .nav-tabs {
+        border-bottom: 1px solid $darkgray;
+    }
+}
+.table-order{
+    th{
+        color:$graydark;
+    }
+}

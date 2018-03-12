@@ -10350,6 +10350,34 @@ header {
 .nav-up {
   transform: translateY(-100%); }
 
+.exchange-tabs {
+  border-top-color: #dee2e6;
+  border-right-color: #dee2e6;
+  border-left-color: #dee2e6;
+  border: 1px solid transparent; }
+  .exchange-tabs a {
+    color: #f0ad4e; }
+  .exchange-tabs .nav-tabs {
+    width: 55%; }
+  .exchange-tabs .nav-tabs .nav-link:hover,
+  .exchange-tabs .nav-tabs .nav-link:focus {
+    background-color: #f7f7f7; }
+  .exchange-tabs .active {
+    background-color: #f7f7f7; }
+    .exchange-tabs .active .nav-link {
+      border-top-color: #dee2e6;
+      border-right-color: #dee2e6;
+      border-left-color: #dee2e6; }
+      .exchange-tabs .active .nav-link:focus {
+        border-bottom: none; }
+    .exchange-tabs .active .nav-tabs {
+      border-bottom: none !important; }
+  .exchange-tabs .nav-tabs {
+    border-bottom: 1px solid #dee2e6; }
+
+.table-order th {
+  color: #9e9ea1; }
+
 #fancybox-loading,
 .fancybox-close,
 .fancybox-next span,

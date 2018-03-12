@@ -1,16 +1,24 @@
-myApp.controller('HomeCtrl', function ($scope, TemplateService, NavigationService, $timeout, toastr, $http) {
+myApp.controller('HomeCtrl', function ($scope, TemplateService, NavigationService,$window, $timeout, toastr, $http) {
     $scope.template = TemplateService.getHTML("content/home.html");
     TemplateService.title = "Home"; //This is the Title of the Website
+    TemplateService.header = "";
+    TemplateService.footer = "";
     $scope.navigation = NavigationService.getNavigation();
 
-    $scope.submitForm = function (data) {
-        console.log("This is it");
-        return new Promise(function (callback) {
-            $timeout(function () {
-                callback();
-            }, 5000);
+    $scope.tabs = [
+        { title:'Dynamic Title 1', content:'Dynamic content 1' },
+        { title:'Dynamic Title 2', content:'Dynamic content 2', disabled: true }
+      ];
+    
+      $scope.alertMe = function() {
+        setTimeout(function() {
+          $window.alert('You\'ve selected the alert tab!');
         });
-    };
+      };
+    
+      $scope.model = {
+        name: 'Tabs'
+      };
 
 
 
