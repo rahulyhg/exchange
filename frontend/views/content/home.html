@@ -1,252 +1,202 @@
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-sm-3 col-md-3 col-lg-3">
-      <div class="table-responsive">
-        <table class="table border">
+  <div class="mx-4 mb-4">
+    <div class="row">
+      <div class="col-sm-3 col-md-3 col-lg-3">
+        <div class="table-responsive">
+          <table class="table-amount border">
             <thead class="thead-light">
+              <tr>
+                <th></th>
+                <th class="text-right" colspan="2">groups
+                  <input type="number" class="group-input" placeholder="2 decimals">
+                </th>
+              </tr>
+            </thead>
+            <thead>
+              <tr>
+                <th>Price(USDT)</th>
+                <th>Amount(BTC)</th>
+                <th>Total(USDT)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="data in tableAmount">
+                <td class="pl-3 text-danger">{{data.usdt}}</td>
+                <td class="pl-4">{{data.btc}}</td>
+                <td class="pr-3 text-right">{{data.tusdt}}</td>
+                   </tr>
+                   <tr>
+                     <td colspan="3" class="text-center thead-light py-1 font-weight-bold">46578</td>
+                   </tr>
+            </tbody>
+          </table>
+          <table class="table-amount border">
+              <thead>
                 <tr>
-                  <th>Firstname</th>
-                  <th>Lastname</th>
-                  <th>Email</th>
+                  <th>Price(USDT)</th>
+                  <th>Amount(BTC)</th>
+                  <th>Total(USDT)</th>
                 </tr>
               </thead>
-          <thead>
-            <tr>
-              <th>Price(USDT)</th>
-              <th>Amount(BTC)</th>
-              <th>Total(USDT)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>986565</td>
-              <td>0.7665678</td>
-              <td>5757897</td>
-            </tr>
-            <tr>
-              <td>98765</td>
-              <td>0.465467t</td>
-              <td>4765876</td>
-            </tr>
-            <tr>
-              <td>676545</td>
-              <td>0.334567</td>
-              <td>876543</td>
-            </tr>
-            <tr>
-              <td>676545</td>
-              <td>0.334567</td>
-              <td>876543</td>
-            </tr>
-            <tr>
-              <td>676545</td>
-              <td>0.334567</td>
-              <td>876543</td>
-            </tr>
-            <tr>
-              <td>676545</td>
-              <td>0.334567</td>
-              <td>876543</td>
-            </tr>
-            <tr>
-              <td>676545</td>
-              <td>0.334567</td>
-              <td>876543</td>
-            </tr>
-          </tbody>
-        </table>
+              <tbody>
+                <tr ng-repeat="data in tableAmount">
+                  <td class="pl-3 text-danger">{{data.usdt}}</td>
+                  <td class="pl-4">{{data.btc}}</td>
+                  <td class="pr-3 text-right">{{data.tusdt}}</td>
+                     </tr>
+                     <tr>
+                       <td colspan="3" class="text-center thead-light py-1 font-weight-bold">46578</td>
+                     </tr>
+              </tbody>
+            </table>
+        </div>
       </div>
-    </div>
-    <div class="col-sm-6 col-md-6 col-lg-6">
-      <div class="exchange-tabs">
+      <div class="col-sm-6 col-md-6 col-lg-6">
+        <div class="exchange-tabs">
           <uib-tabset active="activeJustified" justified="true">
-              <uib-tab index="0" heading="Limit">
-                <div class="row">
-                  <div class="col-md-6">
-                    <form class="form-horizontal">
-                      <div class="container">
-                        <div class="row">
-                            <div class="form-group form-group-sm col-sm-12">
-                             <div class="row">
-                                  <label for="first_name" class="col-sm-6 col-form-label"><b>Buy BTC</b></label>
-                                  <div class="col-sm-6 text-right">
-                                      <label for="first_name" class="col-form-label">USDT Balance:</label>
-                                  </div>
-                                </div>
-                              </div>
-                          <div class="form-group form-group-sm col-sm-12">
-                            <div class="row">
-                              <label for="first_name" class="col-sm-2 col-form-label">Price:</label>
-                              <div class="col-sm-10">
-                                <input type="text" class="form-control" id="first_name" name="first_name">
-                              </div>
+            <uib-tab index="0" heading="Limit">
+              <div class="row">
+                <div class="col-md-6">
+                  <form class="form-horizontal">
+                    <div class="container">
+                      <div class="row">
+                        <div class="form-group form-group-sm col-sm-12">
+                          <div class="row">
+                            <label for="first_name" class="col-sm-6 col-form-label font-weight-bold">
+                              Buy BTC
+                            </label>
+                            <div class="col-sm-6 text-right">
+                              <label for="first_name" class="col-form-label">USDT Balance:</label>
                             </div>
                           </div>
-                          <div class="form-group form-group-sm col-sm-12">
-                            <div class="row">
-                              <label for="last_name" class="col-sm-2 col-form-label">Amount:</label>
-                              <div class="col-sm-10">
-                                <input type="text" class="form-control" id="last_name" name="last_name">
-                              </div>
+                        </div>
+                        <div class="form-group form-group-sm col-sm-12">
+                          <div class="row">
+                            <label for="first_name" class="col-sm-2 col-form-label">Price:</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" id="first_name" name="first_name">
                             </div>
                           </div>
-                          <div class="form-group form-group-sm col-sm-12">
-                            <div class="row">
-                              <label for="Street" class="col-sm-2 col-form-label">Total:</label>
-                              <div class="col-sm-10">
-                                <input type="text" class="form-control" id="Street" name="Street">
-                              </div>
+                        </div>
+                        <div class="form-group form-group-sm col-sm-12">
+                          <div class="row">
+                            <label for="last_name" class="col-sm-2 col-form-label">Amount:</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" id="last_name" name="last_name">
                             </div>
                           </div>
-                         
-                          <div class="form-group form-group-sm col-sm-12">
-                            <div class="row">
-                              <div class="col-sm-12">
-                                <button type="submit" class="btn btn-default">Submit</button>
-                              </div>
+                        </div>
+                        <div class="form-group form-group-sm col-sm-12">
+                          <div class="row">
+                            <label for="Street" class="col-sm-2 col-form-label">Total:</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" id="Street" name="Street">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group form-group-sm col-sm-12">
+                          <div class="row">
+                            <div class="col-sm-12">
+                              <button type="submit" class="btn btn-default">Submit</button>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </form>
-                   </div>
-                  <div class="col-md-6">
-                      <form class="form-horizontal">
-                          <div class="container">
-                            <div class="row">
-                              
-                                <div class="form-group form-group-sm col-sm-12">
-                                    <div class="row">
-                                         <label for="first_name" class="col-sm-6 col-form-label"><b>Buy BTC</b></label>
-                                         <div class="col-sm-6 text-right">
-                                             <label for="first_name" class="col-form-label">USDT Balance:</label>
-                                         </div>
-                                       </div>
-                                     </div>
-                                
-                              <div class="form-group form-group-sm col-sm-12">
-                                <div class="row">
-                                  <label for="first_name" class="col-sm-2 col-form-label">Price</label>
-                                  <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="first_name" name="first_name">
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="form-group form-group-sm col-sm-12">
-                                <div class="row">
-                                  <label for="last_name" class="col-sm-2 col-form-label">Amount</label>
-                                  <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="last_name" name="last_name">
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="form-group form-group-sm col-sm-12">
-                                <div class="row">
-                                  <label for="Street" class="col-sm-2 col-form-label">Total</label>
-                                  <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="Street" name="Street">
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="form-group form-group-sm col-sm-12">
-                                <div class="row">
-                                  <div class="col-sm-12">
-                                    <button type="submit" class="btn btn-default">Submit</button>
-                                  </div>
-                                </div>
-                              </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="col-md-6">
+                  <form class="form-horizontal">
+                    <div class="container">
+                      <div class="row">
+                        <div class="form-group form-group-sm col-sm-12">
+                          <div class="row">
+                            <label for="first_name" class="col-sm-6 col-form-label font-weight-bold">
+                              Buy BTC
+                            </label>
+                            <div class="col-sm-6 text-right">
+                              <label for="first_name" class="col-form-label">USDT Balance:</label>
                             </div>
                           </div>
-                        </form>
-                  </div>
+                        </div>
+                        <div class="form-group form-group-sm col-sm-12">
+                          <div class="row">
+                            <label for="first_name" class="col-sm-2 col-form-label">Price</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" id="first_name" name="first_name">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group form-group-sm col-sm-12">
+                          <div class="row">
+                            <label for="last_name" class="col-sm-2 col-form-label">Amount</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" id="last_name" name="last_name">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group form-group-sm col-sm-12">
+                          <div class="row">
+                            <label for="Street" class="col-sm-2 col-form-label">Total</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" id="Street" name="Street">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group form-group-sm col-sm-12">
+                          <div class="row">
+                            <div class="col-sm-12">
+                              <button type="submit" class="btn btn-default">Submit</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
                 </div>
-           </uib-tab>
-              <uib-tab index="1" heading="Market">Market</uib-tab>
-              <uib-tab index="2" heading="Stop-Limit">Stop-Limit</uib-tab>
-            </uib-tabset>
+              </div>
+            </uib-tab>
+            <uib-tab index="1" heading="Market">Market</uib-tab>
+            <uib-tab index="2" heading="Stop-Limit">Stop-Limit</uib-tab>
+          </uib-tabset>
+        </div>
       </div>
-   
-     </div>
-    <div class="col-sm-3 col-md-3 col-lg-3">
-      <div class="table-responsive">
-        <table>
-          <thead>
-            <tr>
-              <th>Price(USDT)</th>
-              <th>Amount(BTC)</th>
-              <th>Total(USDT)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <tr>
-                <td>986565</td>
-                <td>0.7665678</td>
-                <td>5757897</td>
-              </tr>
-            </tr>
-            <tr>
-              <tr>
-                <td>986565</td>
-                <td>0.7665678</td>
-                <td>5757897</td>
-              </tr>
-            </tr>
-            <tr>
-              <tr>
-                <td>986565</td>
-                <td>0.7665678</td>
-                <td>5757897</td>
-              </tr>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
- <div class="row">
-   <div class="col-md-12 col-lg-12">
-      <div class="mt-4 table-order">
-        <h6><b>Open Orders</b></h6>
-        <div class="table-responsive border">
-            <table class="table">
+      <div class="col-sm-3 col-md-3 col-lg-3">
+        <div class="table-responsive">
+            <table class="table-amount border">
+               <h6>Trade History</h6>
                 <thead>
                   <tr>
-                    <th>Date</th>
-                    <th>Pair</th>
-                    <th>Type</th>
-                    <th>Side</th>
-                    <th>Price</th>
-                    <th>Amount</th>
-                    <th>Filled%</th>
-                    <th>Total</th>
-                    <th>Trigger conditions</th>
-                    <th>clear All</th>
+                    <th>Price(USDT)</th>
+                    <th>Amount(BTC)</th>
+                    <th>Total(USDT)</th>
                   </tr>
                 </thead>
                 <tbody>
-               <tr>
-                 <td>234</td>
-                 <td>234</td>
-                 <td>234</td>
-                 <td>234</td>
-                 <td>234</td>
-                 <td>234</td>
-                 <td>234</td>
-                 <td>234</td>
-                 <td>234</td>
-               </tr>
-              
-                </tbody>
+                  <tr ng-repeat="data in tableAmount">
+                    <td class="pl-3 text-danger">{{data.usdt}}</td>
+                    <td class="pl-4">{{data.btc}}</td>
+                    <td class="pr-3 text-right">{{data.tusdt}}</td>
+                       </tr>
+               </tbody>
               </table>
         </div>
-       
-        </div>
-   </div>
-   <div class="col-md-12 col-lg-12">
-      <div class="table-responsive border mt-4 mb-4">
-          <h6>Open Orders</h6>
-            <table class="table">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 col-lg-12">
+        <div class="mt-4 table-order">
+          <div class="float-left">
+              <h6 class="font-weight-bold">
+                  Open Orders
+                </h6>
+                </div>
+                <div class="float-right hide-pair">
+                <input  type="checkbox"><span>Hide other pairs</span>
+          </div>
+      
+          <div class="table-responsive border">
+            <table class="table table-order">
               <thead>
                 <tr>
                   <th>Date</th>
@@ -256,27 +206,108 @@
                   <th>Price</th>
                   <th>Amount</th>
                   <th>Filled%</th>
-                  <th>Total</th>
-                  <th>Trigger conditions</th>
-                  <th>clear All</th>
+                  <th class="text-right">Total</th>
+                  <th class="text-right">Trigger conditions</th>
+                  <th class="text-right pr-4"><button type="button" class="btn btn-cancle">cancle All</button>
+                  <select class="select-option">
+                    <option></option>
+                  </select></th>
+                  <!-- <th></th> -->
                 </tr>
               </thead>
               <tbody>
-               <tr>
-                 <td>dfg</td>
-                 <td>dgdf</td>
-                 <td>dfgg</td>
-                 <td>fgddf</td>
-               </tr>
-               <tr>
-                  <td>dfg</td>
-                  <td>dgdf</td>
-                  <td>dfgg</td>
-                  <td>fgddf</td>
+                <tr>
+                  <td>234</td>
+                  <td>234</td>
+                  <td>234</td>
+                  <td>234</td>
+                  <td>234</td>
+                  <td>234</td>
+                  <td >234</td>
+                  <td class="text-right">234</td>
+                  <td class="text-right">234</td>
+                  <td class="text-right pr-4">234</td>
                 </tr>
+                <tr>
+                    <td>234</td>
+                    <td>234</td>
+                    <td>234</td>
+                    <td>234</td>
+                    <td>234</td>
+                    <td>234</td>
+                    <td >234</td>
+                    <td class="text-right">234</td>
+                    <td class="text-right">234</td>
+                    <td class="text-right pr-4">234</td>
+                  </tr>
               </tbody>
             </table>
           </div>
+        </div>
+      </div>
+      <div class="col-md-12 col-lg-12">
+          <div class="mt-4 table-order">
+              <div class="float-left">
+                  <h6 class="font-weight-bold">
+                      My 24th order History 
+                    </h6>
+                    </div>
+                    <div class="float-right hide-pair">
+                    <input  type="checkbox"><span>Hide other pairs</span><span class="pl-3 font-weight-bold"><a>More</a></span>
+              </div>
+           <div class="table-responsive border">
+                <table class="table table-order">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Pair</th>
+                      <th>Type</th>
+                      <th>Side</th>
+                      <th>Price</th>
+                      <th>Amount</th>
+                      <th>Filled%</th>
+                      <th class="text-right">Total</th>
+                      <th class="text-right">Trigger conditions</th>
+                      <th class="text-right pr-4"><button type="button" class="btn btn-cancle">cancle All</button>
+                      <select class="select-option">
+                        <option></option>
+                      </select></th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>234</td>
+                      <td>234</td>
+                      <td>234</td>
+                      <td>234</td>
+                      <td>234</td>
+                      <td>234</td>
+                      <td >234</td>
+                      <td class="text-right">234</td>
+                      <td class="text-right">234</td>
+                      <td class="text-right pr-4">234</td>
+                      <td >234</td>
+                    </tr>
+                    <tr>
+                        <td>234</td>
+                        <td>234</td>
+                        <td>234</td>
+                        <td>234</td>
+                        <td>234</td>
+                        <td>234</td>
+                        <td >234</td>
+                        <td class="text-right">234</td>
+                        <td class="text-right">234</td>
+                        <td class="text-right pr-4">234</td>
+                        <td >234</td>
+                      </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+      </div>
     </div>
- </div>
+  </div>
+
 </div>

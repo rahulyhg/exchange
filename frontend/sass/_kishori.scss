@@ -3,8 +3,8 @@
 .exchange-tabs {
     @include border-color($darkgray $darkgray null $darkgray);
     border: 1px solid transparent;
-    a{
-        color:$orange;
+    a {
+        color: $orange;
     }
     .nav-tabs {
         width: 55%;
@@ -29,8 +29,72 @@
         border-bottom: 1px solid $darkgray;
     }
 }
+
+.table-order {
+    th {
+        color: $graydark;
+    }
+}
+
+.table-amount {
+    .thead-light {
+        background-color: $lightgray;
+        th {
+            font-size: 12px;
+        }
+    }
+    th {
+        padding: 0.15em 0.55em;
+        color: $graydark;
+    }
+    td {
+        font-size: 14px;
+    }
+    .group-input {
+        width: 100px;
+        padding: 2px 5px;
+        font-size: 12px;
+        border-radius: 5px;
+        border: 1px solid $lightgray;
+        margin: 5px 6px;
+    }
+    tbody tr:hover {
+        background-color: $lightpink;
+    }
+}
 .table-order{
-    th{
-        color:$graydark;
+     th {
+        padding: 0.25rem;
+        font-size: 13px;
+        vertical-align: middle !important;
+      
+     }
+     td{
+        padding: 0.25rem;
+        border-top:none;
+        font-size: 12px;
+        padding-left: 6px;
+     }
+}
+.btn-cancle{
+    padding: 6px 14px;
+    font-size: 12px;
+    background: transparent;
+    border: 1px solid lightgray;
+    margin: 1px;
+}
+.select-option{
+    vertical-align: middle;
+    height: 27px;
+}
+.hide-pair{
+    input{
+        vertical-align: middle
+    }
+    span{
+        font-size: 12px;
+        a{
+            text-decoration: underline !important;
+        }
     }
 }
