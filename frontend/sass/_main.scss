@@ -16,9 +16,12 @@ $pink:   #ff5b77 !default;
 $purple: #613d7c !default;
 // $orange:  #e0b256 !default;
 $lightgray:#f7f7f7 !default;
-$darkgray:#dee2e6 !default;
+$darkgray :#dee2e6 !default;
 $graydark:#9e9ea1 !default;
 $lightpink:#faecf2  !default;
+$lightblack:#6d6b6b  !default;
+  $elightblack:#ced4da  !default;
+ $lightgreen: #eff7e6 !default;
 // Create grayscale
 $gray-dark:                 #292b2c !default;
 $gray:                      #464a4c !default;
@@ -267,4 +270,10 @@ header {
 .nav-up {
     transform: translateY(-100%);
 }
+
+//common classes
+.shadow-box{
+    box-shadow: 0px 0px 2px #ced4da !important;
+}
+
 @import "kishori"

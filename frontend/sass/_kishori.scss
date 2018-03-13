@@ -1,13 +1,28 @@
 // start of home page
-// tabs css
+////////////////////// tabs css///////////////////
 .exchange-tabs {
     @include border-color($darkgray $darkgray null $darkgray);
     border: 1px solid transparent;
+    .tab-pane{
+        border-bottom: 1px solid $darkgray;
+    border-left:1px solid $darkgray;
+    border-right:1px solid $darkgray;
+    }
+   
+   .bor-top{
+       border-top:1px solid $darkgray;
+   }
     a {
-        color: $orange;
+        color: $lightblack;
+        font-weight: 500;
     }
     .nav-tabs {
-        width: 55%;
+        width: 53%;
+        .nav-link{
+            border-top: 1px solid $darkgray;
+            border-left:1px solid $darkgray;
+            border-right:1px solid $darkgray;
+        }
     }
     .nav-tabs .nav-link:hover,
     .nav-tabs .nav-link:focus {
@@ -24,12 +39,67 @@
         .nav-tabs {
             border-bottom: none !important;
         }
+        a {
+            color: $orange;
+          
+        }
+        
+        //     border-top: 1px solid transparent;
+        // border-left:1px solid transparent;
+        // border-right:1px solid transparent;
+        
     }
     .nav-tabs {
         border-bottom: 1px solid $darkgray;
     }
 }
+//////////////////login form ////////////////////
+.place-right {
+    input::placeholder {
+        padding-right: 5px;
+        font-size: 14px;
+        color: $darkgray;
+        text-align: right;
+        font-weight: 600;
+    }
+    .form-control:focus{
+        border-color: $darkgray;
+    }
+}
 
+.label-color {
+    color: $lightblack;
+    font-weight: 500;
+}
+
+.btn-login {
+    padding: 11px 72px;
+    font-size: 14px;
+    font-weight: 500;
+    border: 1px solid $elightblack;
+    background: transparent;
+    span {
+        color: $orange;
+    }
+}
+.btn-percent{
+    font-size: 14px !important;
+    padding: 4px 10px !important;
+    border: 1px solid $elightblack;
+    margin: 8px 0px 0px 1px;
+   }
+.bor-right:after{
+    content: "";
+    position: absolute;
+    height: 283px;
+    top: 11px;
+    right:0;
+    border-right:2px solid   rgba(206, 212, 218, 0.27058823529411763); 
+   
+}
+
+//////////////////////end of login form///////////
+///////////////////table css///////////////////////
 .table-order {
     th {
         color: $graydark;
@@ -37,6 +107,7 @@
 }
 
 .table-amount {
+   
     .thead-light {
         background-color: $lightgray;
         th {
@@ -49,52 +120,67 @@
     }
     td {
         font-size: 14px;
+        color:$graydark;
     }
     .group-input {
         width: 100px;
-        padding: 2px 5px;
+        @include padding(2px 5px);
         font-size: 12px;
-        border-radius: 5px;
         border: 1px solid $lightgray;
         margin: 5px 6px;
     }
     tbody tr:hover {
         background-color: $lightpink;
     }
+   
 }
-.table-order{
-     th {
+.green-hover{
+    tbody tr:hover {
+        background-color:$lightgreen;
+    }
+}
+.signal{
+    span{
+        font-size: 16px;
+  }
+  i{
+      font-size: 25px;
+  }
+   
+}
+.table-order {
+    th {
         padding: 0.25rem;
         font-size: 13px;
         vertical-align: middle !important;
-      
-     }
-     td{
+    }
+    td {
         padding: 0.25rem;
-        border-top:none;
+        border-top: none;
         font-size: 12px;
         padding-left: 6px;
-     }
+    }
 }
-.btn-cancle{
+
+.btn-cancle {
     padding: 6px 14px;
+    margin: 1px;
     font-size: 12px;
     background: transparent;
-    border: 1px solid lightgray;
-    margin: 1px;
+    border: 1px solid $lightgray;
 }
-.select-option{
-    vertical-align: middle;
+
+.select-option {
     height: 27px;
 }
-.hide-pair{
-    input{
-        vertical-align: middle
-    }
-    span{
+
+.hide-pair {
+    span {
         font-size: 12px;
-        a{
+        a {
             text-decoration: underline !important;
         }
     }
 }
+///////////////end of table ////////////////////
+
