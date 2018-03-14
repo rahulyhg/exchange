@@ -17,7 +17,7 @@
         font-weight: 500;
     }
     .nav-tabs {
-        width: 53%;
+        // width: 53%;
         .nav-link{
             border-top: 1px solid $darkgray;
             border-left:1px solid $darkgray;
@@ -73,7 +73,7 @@
 }
 
 .btn-login {
-    padding: 11px 72px;
+    padding: 11px;
     font-size: 14px;
     font-weight: 500;
     border: 1px solid $elightblack;

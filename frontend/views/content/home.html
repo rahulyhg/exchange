@@ -1,12 +1,14 @@
 <div class="container-fluid">
   <div class="mx-4 mb-4">
     <div class="row">
-      <div class="col-sm-3 col-md-3 col-lg-3">
+      <div class="col-12 col-md-3">
         <div class="table-responsive">
           <table class="table-amount border">
             <thead class="thead-light">
               <tr>
-                <th> <i class="fa fa-barcode-alt"></i> </th>
+                <th>
+                  <i class="fa fa-barcode-alt"></i>
+                </th>
                 <th class="text-right" colspan="2">groups
                   <input type="number" class="group-input rounded" placeholder="2 decimals">
                 </th>
@@ -47,43 +49,43 @@
                 <td class="pl-4 font-weight-bold">{{data.btc}}</td>
                 <td class="pr-3 text-right font-weight-bold">{{data.tusdt}}</td>
               </tr>
-             
+
             </tbody>
           </table>
         </div>
       </div>
-      <div class="col-sm-6 col-md-6 col-lg-6">
+      <div class="col-12 col-md-6">
         <div class="exchange-tabs">
           <uib-tabset active="activeJustified" justified="true">
             <uib-tab index="0" heading="Limit">
               <div class="row">
-                <div class="col-md-6">
+                <div class="col col-lg-6">
                   <form class="form-horizontal">
                     <div class="container">
-                      <div class="row">
                         <div class="bor-right">
-                          <div class="form-group form-group-sm col-sm-12">
+                          <div class="row">
+                          <div class="col form-group form-group-sm">
                             <div class="row">
-                              <label for="first_name" class="col-sm-6 col-form-label font-weight-bold">
+                              <label for="first_name" class="col-6 col-form-label font-weight-bold">
                                 Buy BTC
                               </label>
-                              <div class="col-sm-6 text-right">
+                              <div class="col-6 text-right">
                                 <label for="first_name" class="col-form-label label-color">USDT Balance:--</label>
                               </div>
                             </div>
                           </div>
-                          <div class="form-group form-group-sm col-sm-12 mb-2">
+                          <div class="col-12 form-group form-group-sm mb-2">
                             <div class="row">
-                              <label for="first_name" class="col-sm-3 col-form-label label-color">Price:</label>
-                              <div class="col-sm-9 place-right">
+                              <label for="first_name" class="col-3 col-form-label label-color">Price:</label>
+                              <div class="col-9 place-right">
                                 <input type="number" class="form-control shadow-box" id="first_name" name="first_name" placeholder="USDT">
                               </div>
                             </div>
                           </div>
-                          <div class="form-group form-group-sm col-sm-12 mb-2">
+                          <div class="col-12 form-group form-group-sm  mb-2">
                             <div class="row">
-                              <label for="last_name" class="col-sm-3 col-form-label label-color">Amount:</label>
-                              <div class="col-sm-9  place-right">
+                              <label for="last_name" class="col-3 col-form-label label-color">Amount:</label>
+                              <div class="col-9  place-right">
                                 <input type="tel" class="form-control shadow-box" id="last_name" name="last_name" placeholder="BTC">
                                 <div class="text-center">
                                   <button type="button" class="btn btn-light btn-percent shadow-box label-color">25%</button>
@@ -94,55 +96,55 @@
                               </div>
                             </div>
                           </div>
-                          <div class="form-group form-group-sm col-sm-12">
+                          <div class="col-12 form-group form-group-sm">
                             <div class="row">
-                              <label for="Street" class="col-sm-3 col-form-label label-color">Total:</label>
-                              <div class="col-sm-9  place-right">
+                              <label for="Street" class="col-3 col-form-label label-color">Total:</label>
+                              <div class="col-9  place-right">
                                 <input type="text" class="form-control shadow-box" id="Street" name="Street" placeholder="USDT">
                               </div>
                             </div>
                           </div>
-                          <div class="form-group form-group-sm col-sm-12">
+                          <div class="col form-group form-group-sm">
                             <div class="row">
-                              <div class="col-sm-12 text-center">
-                                <button type="submit" class="btn btn-light text-center btn-login shadow-box mt-3 label-color rounded">
+                                <div class="col text-center">
+                                <button type="submit" class="btn btn-light text-center btn-login w-100 shadow-box mt-3 label-color rounded">
                                   <span class="">Login</span> or
                                   <span>Register</span> to trade</button>
+                                  </div>
                               </div>
-                            </div>
                           </div>
+                          
                         </div>
-
                       </div>
                     </div>
                   </form>
                 </div>
-                <div class="col-md-6">
+                <div class="col col-lg-6">
                   <form class="form-horizontal">
                     <div class="container">
                       <div class="row">
-                        <div class="form-group form-group-sm col-sm-12 bor-top">
+                        <div class="col form-group form-group-sm bor-top">
                           <div class="row">
-                            <label for="first_name" class="col-sm-6 col-form-label font-weight-bold">
+                            <label for="first_name" class="col-6 col-form-label font-weight-bold">
                               Buy BTC
                             </label>
-                            <div class="col-sm-6 text-right">
+                            <div class="col-6 text-right">
                               <label for="first_name" class="col-form-label label-color">USDT Balance:--</label>
                             </div>
                           </div>
                         </div>
-                        <div class="form-group form-group-sm col-sm-12 mb-2">
+                        <div class="col-12 form-group form-group-sm  mb-2">
                           <div class="row">
-                            <label for="first_name" class="col-sm-3 col-form-label label-color">Price:</label>
-                            <div class="col-sm-9 place-right">
+                            <label for="first_name" class="col-3 col-form-label label-color">Price:</label>
+                            <div class="col-9 place-right">
                               <input type="number" class="form-control shadow-box" id="first_name" name="first_name" placeholder="USDT">
                             </div>
                           </div>
                         </div>
-                        <div class="form-group form-group-sm col-sm-12 mb-2">
+                        <div class="col-12 form-group form-group-sm  mb-2">
                           <div class="row">
-                            <label for="last_name" class="col-sm-3 col-form-label label-color">Amount:</label>
-                            <div class="col-sm-9  place-right">
+                            <label for="last_name" class="col-3 col-form-label label-color">Amount:</label>
+                            <div class="col-9  place-right">
                               <input type="tel" class="form-control shadow-box" id="last_name" name="last_name" placeholder="BTC">
                               <div class="text-center">
                                 <button type="button" class="btn btn-light btn-percent shadow-box label-color">25%</button>
@@ -153,18 +155,18 @@
                             </div>
                           </div>
                         </div>
-                        <div class="form-group form-group-sm col-sm-12">
+                        <div class="col-12 form-group form-group-sm">
                           <div class="row">
-                            <label for="Street" class="col-sm-3 col-form-label label-color">Total:</label>
-                            <div class="col-sm-9  place-right">
+                            <label for="Street" class="col-3 col-form-label label-color">Total:</label>
+                            <div class="col-9  place-right">
                               <input type="text" class="form-control shadow-box" id="Street" name="Street" placeholder="USDT">
                             </div>
                           </div>
                         </div>
-                        <div class="form-group form-group-sm col-sm-12">
+                        <div class="col-12 form-group form-group-sm">
                           <div class="row">
-                            <div class="col-sm-12">
-                              <button type="submit" class="btn btn-light text-center btn-login shadow-box mt-3 label-color rounded">
+                            <div class="col">
+                              <button type="submit" class="btn btn-light text-center w-100 btn-login shadow-box mt-3 label-color rounded">
                                 <span>Login</span> or
                                 <span>Register</span> to trade</button>
                             </div>
@@ -181,7 +183,7 @@
           </uib-tabset>
         </div>
       </div>
-      <div class="col-sm-3 col-md-3 col-lg-3">
+      <div class="col-12 col-md-3">
         <div class="table-responsive">
           <table class="table-amount border">
             <h6>Trade History</h6>

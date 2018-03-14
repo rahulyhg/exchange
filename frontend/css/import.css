@@ -11264,12 +11264,10 @@ header {
   .exchange-tabs a {
     color: #6d6b6b;
     font-weight: 500; }
-  .exchange-tabs .nav-tabs {
-    width: 53%; }
-    .exchange-tabs .nav-tabs .nav-link {
-      border-top: 1px solid #dee2e6;
-      border-left: 1px solid #dee2e6;
-      border-right: 1px solid #dee2e6; }
+  .exchange-tabs .nav-tabs .nav-link {
+    border-top: 1px solid #dee2e6;
+    border-left: 1px solid #dee2e6;
+    border-right: 1px solid #dee2e6; }
   .exchange-tabs .nav-tabs .nav-link:hover,
   .exchange-tabs .nav-tabs .nav-link:focus {
     background-color: #f7f7f7; }
@@ -11324,7 +11322,7 @@ header {
   font-weight: 500; }
 
 .btn-login {
-  padding: 11px 72px;
+  padding: 11px;
   font-size: 14px;
   font-weight: 500;
   border: 1px solid #ced4da;
@@ -11446,3 +11444,18 @@ header {
 
 .fancybox-nav.fancybox-prev span {
   background-image: url(../img/prev.png); }
+
+@media (min-width(var(--breakpoint-lg))) {
+  .exchange-tabs .nav-tabs {
+    width: 67%; } }
+
+@media (min-width(var(--breakpoint-md))) {
+  .btn-login {
+    padding: 11px;
+    font-size: 12px; }
+  .exchange-tabs .nav-tabs {
+    width: 67%; } }
+
+@media (min-width(var(--breakpoint-sm))) {
+  .exchange-tabs .nav-tabs {
+    width: 67%; } }
