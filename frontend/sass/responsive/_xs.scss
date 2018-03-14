@@ -1,1 +1,11 @@
-@media (min-width(var(--breakpoint-xs))) {}
+@media (min-width(var(--breakpoint-xs))) {
+    .bor-right:after{
+        content: "";
+        position: absolute;
+        height: 0%;
+        top: 96%;
+        right:0;
+        border-right:2px solid transparent; 
+       
+    }
+}

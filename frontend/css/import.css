@@ -11445,13 +11445,28 @@ header {
 .fancybox-nav.fancybox-prev span {
   background-image: url(../img/prev.png); }
 
-@media (min-width(var(--breakpoint-md))) {
+@media only screen and (max-width: 1200px) {
   .btn-login {
-    padding: 11px;
-    font-size: 12px; }
-  label {
-    font-size: 10px; } }
+    display: none; } }
 
 @media (min-width(var(--breakpoint-sm))) {
-  .exchange-tabs .nav-tabs {
-    width: 67%; } }
+  .exchange-tabs {
+    display: none; }
+    .exchange-tabs .nav-tabs {
+      width: 67%; }
+  .bor-right:after {
+    content: "";
+    position: absolute;
+    height: 0%;
+    top: 0%;
+    right: 0;
+    border-right: 2px solid transparent; } }
+
+@media (min-width(var(--breakpoint-xs))) {
+  .bor-right:after {
+    content: "";
+    position: absolute;
+    height: 0%;
+    top: 96%;
+    right: 0;
+    border-right: 2px solid transparent; } }

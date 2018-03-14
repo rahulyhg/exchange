@@ -1,8 +1,18 @@
 @media (min-width(var(--breakpoint-sm))) {
     .exchange-tabs{
+        display: none;
         .nav-tabs {
             width: 67%;
         }
+    }
+    .bor-right:after{
+        content: "";
+        position: absolute;
+        height: 0%;
+        top: 0%;
+        right:0;
+        border-right:2px solid transparent; 
+       
     }
   
 }
