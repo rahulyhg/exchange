@@ -6,6 +6,7 @@
   "keywords": [],
   "dependencies": {
     "@google-cloud/storage": "^1.5.2",
+    "@mcb/matching-simulator": "0.0.13",
     "async": "^2.6.0",
     "autoprefixer": "^7.2.5",
     "chalk": "^2.3.0",
