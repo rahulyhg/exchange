@@ -1,3 +1,11 @@
-@media (min-width(var(--breakpoint-lg))) {
-   
+@include media-breakpoint-down(lg) {
+    .table-amount td ,th{
+       font-size: 12px;
+        
+    } 
+    .bor-right:after {
+        
+        height: 0%;
+       
+    }
 }

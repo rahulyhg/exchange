@@ -1,8 +1,7 @@
-@media (min-width(var(--breakpoint-sm))) {
-    .exchange-tabs{
-        .nav-tabs {
-            width: 67%;
-        }
+@include media-breakpoint-down(sm) {
+    .table-amount td ,th{
+        font-size: 12px;
+        
     }
-  
+
 }

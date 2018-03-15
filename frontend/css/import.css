@@ -11405,6 +11405,10 @@ header {
   .hide-pair span a {
     text-decoration: underline !important; }
 
+@media only screen and (max-width: 1300px) {
+  .table-amount td, th {
+    font-size: 12px; } }
+
 #fancybox-loading,
 .fancybox-close,
 .fancybox-next span,
@@ -11445,13 +11449,28 @@ header {
 .fancybox-nav.fancybox-prev span {
   background-image: url(../img/prev.png); }
 
-@media (min-width(var(--breakpoint-md))) {
-  .btn-login {
-    padding: 11px;
-    font-size: 12px; }
-  label {
-    font-size: 10px; } }
+@media (max-width: 575.98px) {
+  .bor-right:after {
+    content: "";
+    position: absolute;
+    height: 0%;
+    top: 96%;
+    right: 0;
+    border-right: 2px solid transparent; }
+  .table-amount td, th {
+    font-size: 12px; } }
 
-@media (min-width(var(--breakpoint-sm))) {
-  .exchange-tabs .nav-tabs {
-    width: 67%; } }
+@media (max-width: 767.98px) {
+  .table-amount td, th {
+    font-size: 12px; } }
+
+/* Breakpoint for medium viewport */
+@media (max-width: 991.98px) {
+  .table-amount td, th {
+    font-size: 12px; } }
+
+@media (max-width: 1199.98px) {
+  .table-amount td, th {
+    font-size: 12px; }
+  .bor-right:after {
+    height: 0%; } }
