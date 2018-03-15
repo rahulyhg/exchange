@@ -36,5 +36,19 @@ schema.plugin(timestamps);
 module.exports = mongoose.model('BuyOrder', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema,"user script", "user script", "order", "asc"));
-var model = {};
+var model = {
+
+    findAllBuyOrders:function(data,callback){
+        BuyOrder.find({}).sort({
+            rate: -1
+        }).exec(function(err, found){
+            if(err||_.isEmpty(found)){
+                callback(err,"noData")
+            }else{
+                callback(null,found)
+            }
+        })
+    }
+
+};
 module.exports = _.assign(module.exports, exports, model);
