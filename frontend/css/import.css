@@ -11407,7 +11407,7 @@ header {
 
 @media only screen and (max-width: 1300px) {
   .table-amount td, th {
-    font-size: 12px; } }
+    font-size: 13px; } }
 
 #fancybox-loading,
 .fancybox-close,
@@ -11458,11 +11458,17 @@ header {
     right: 0;
     border-right: 2px solid transparent; }
   .table-amount td, th {
-    font-size: 12px; } }
+    font-size: 14px; }
+  .exchange-tabs {
+    margin: 30px 0px; } }
 
 @media (max-width: 767.98px) {
   .table-amount td, th {
-    font-size: 12px; } }
+    font-size: 12px; }
+  .exchange-tabs {
+    margin: 30px 0px; }
+    .exchange-tabs .nav-tabs {
+      font-size: 12px; } }
 
 /* Breakpoint for medium viewport */
 @media (max-width: 991.98px) {
