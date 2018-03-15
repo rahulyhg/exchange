@@ -1,5 +1,17 @@
-@media only screen and (max-width: 1200px) {
-    .btn-login {
-        display: none;
-           }
+// @media only screen and (max-width: 1200px) {
+//     .table-amount td ,th{
+//         font-size: 12px;
+        
+//     }
+
+// }
+
+/* Breakpoint for medium viewport */
+
+@include media-breakpoint-down(md) {
+    .table-amount td ,th{
+        font-size: 12px;
+        
+    }
+
 }

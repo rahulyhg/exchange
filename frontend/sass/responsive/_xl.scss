@@ -1,1 +1,6 @@
-@media (min-width(var(--breakpoint-xl))) {}
+@include media-breakpoint-down(xl) {
+    .table-amount td ,th{
+       font-size: 12px;
+        
+    } 
+}

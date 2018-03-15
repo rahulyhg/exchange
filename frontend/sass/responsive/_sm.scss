@@ -1,18 +1,7 @@
-@media (min-width(var(--breakpoint-sm))) {
-    .exchange-tabs{
-        display: none;
-        .nav-tabs {
-            width: 67%;
-        }
+@include media-breakpoint-down(sm) {
+    .table-amount td ,th{
+        font-size: 12px;
+        
     }
-    .bor-right:after{
-        content: "";
-        position: absolute;
-        height: 0%;
-        top: 0%;
-        right:0;
-        border-right:2px solid transparent; 
-       
-    }
-  
+
 }
