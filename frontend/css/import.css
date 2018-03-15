@@ -11471,4 +11471,6 @@ header {
 
 @media (max-width: 1199.98px) {
   .table-amount td, th {
-    font-size: 12px; } }
+    font-size: 12px; }
+  .bor-right:after {
+    height: 0%; } }
