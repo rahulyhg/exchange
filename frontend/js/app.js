@@ -25,6 +25,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'HomeCtrl'
         })
+        .state('twofactor', {
+            url: "/twofactor",
+            templateUrl: tempateURL,
+            controller: 'TwoFactorCtrl'
+        })
         .state('links', {
             url: "/links",
             templateUrl: tempateURL,
