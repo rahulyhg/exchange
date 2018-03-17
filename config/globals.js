@@ -148,5 +148,5 @@ if (process.env.NODE_ENV && process.env.NODE_ENV === "production") {
 
 
 // 2 factor Authentication
-var speakeasy = require("speakeasy");
-var QRCode = require('qrcode');
+global.speakeasy = require("speakeasy");
+global.QRCode = require('qrcode');
