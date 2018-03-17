@@ -1,4 +1,5 @@
 module.exports = _.cloneDeep(require("sails-wohlig-controller"));
+var secretKey = "";
 var controller = {
     index: function (req, res) {
         res.json({
@@ -100,6 +101,23 @@ var controller = {
     },
     sendmail: function (req, res) {
         Config.sendEmail("chintan@wohlig.com", "jagruti@wohlig.com", "first email from endgrid", "", "<html><body>dome content</body></html>");
+    },
+    getSecret: function (req, res) {
+
+        var newSecret = twoFactor.generateSecret({
+            name: 'ChintanShah'
+        });
+        secretKey = newSecret;
+        res.callback(null, newSecret);
+    },
+    verifyTwoFactor: function (req, res) {
+        if (!_.isEmpty(req.body)) {
+            var authenticationValue = twoFactor.verifyToken(req.body.secret, req.body.value);
+            callback(null, authenticationValue);
+        } else {
+            callback("No 2 Factor Authentication Key Found");
+        }
+
     }
 
 };
