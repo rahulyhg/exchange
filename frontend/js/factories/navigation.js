@@ -21,12 +21,12 @@ myApp.factory('NavigationService', function ($http) {
         },
         callApiWithData: function (url, data, callback) {
             $http.post(adminurl + url, data).then(function (data) {
-        
+
                 callback(data);
             });
         },
         callApi: function (url, callback) {
-        
+
             $http.post(adminurl + url).then(function (data) {
                 callback(data);
             });
