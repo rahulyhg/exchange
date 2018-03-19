@@ -7,11 +7,13 @@
     "fields": [{
         "name": "User",
         "isSort": "",
+        
         "tableRef": "user.name"
         }, 
         {
         "name": "Script",
         "isSort": "",
+        
         "tableRef": "script.name"
         },  
     {

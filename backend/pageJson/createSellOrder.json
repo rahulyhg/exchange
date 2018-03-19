@@ -13,14 +13,15 @@
             "dropDownType": "single",
             "dropDownField": "name",
             "searchApi": "searchCall",
-            "placeholder": "Enter Name ",
+            "placeholder": "Enter User ",
             "id": "user",
             "validation": [
             "",
             "trim",
             ""
             ],
-            "url": "User/search"
+            "url": "User/search",
+            "onView":true
         }, 
         {
             "name": "Script",
@@ -36,7 +37,8 @@
                 "trim",
                 ""
                 ],
-                "url": "Script/search"
+                "url": "Script/search",
+                "onView":true
                 },
     {
         "name": "Rate",

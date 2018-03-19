@@ -103,6 +103,32 @@ myApp.controller('HomeCtrl', function ($scope, TemplateService, NavigationServic
             },
         ];
 
+        NavigationService.apiCallWithoutData("BuyOrder/displayList", function (data) {
+
+            $scope.lists = data.data;
+
+        });
+        NavigationService.apiCallWithoutData("SellOrder/displayList", function (data) {
+
+            $scope.lists1 = data.data;
+
+        });
+        NavigationService.apiCallWithoutData("Transaction/displayList", function (data) {
+
+            $scope.lists2 = data.data;
+
+        });
+        $scope.value = "";
+        $scope.login = "";
+        $scope.data1 = {};
+
+        $scope.submitForm = function (data) {
+
+            NavigationService.callApiWithData("User/login", data, function (saveddata) {
+                $scope.login = saveddata;
+                $.jStorage.set("user", saveddata.data);
+            });
+        };
     })
 
     .controller('LinksCtrl', function ($scope, TemplateService, NavigationService, $timeout, toastr, $http) {
