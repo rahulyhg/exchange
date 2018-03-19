@@ -10,18 +10,17 @@ myApp.factory('apiService', function ($http, $q, $timeout) {
             }).success(callback);
         },
         getSecret: function (callback) {
-            $http.get("./json/User/getSecret.json").then(function (data) {
+            $http.post(adminurl + "User/getSecret").then(function (data) {
                 callback(data.data.data);
             });
         },
-        verifyToken: function (data, callback) {
-            $http.get("./json/User/verifyToken.json", data).then(function (data) {
+        verifyToken: function (token, callback) {
+            $http.post(adminurl + "User/verifyToken", {
+                token: token
+            }).then(function (data) {
                 callback(data.data.data);
             });
         }
-
         // This is a demo Service for POST Method.
-
-
     };
 });

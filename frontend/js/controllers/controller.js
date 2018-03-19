@@ -120,22 +120,20 @@ myApp.controller('HomeCtrl', function ($scope, TemplateService, NavigationServic
         apiService.getSecret(function (data) {
             $scope.qrCodeData = data;
         });
-        $scope.enterToken=function(data){
-            $scope.qrCodeToken = data
-            if($scope.qrCodeToken==undefined){
-                toastr.warning('Please enter the token')
-            }else{
-                apiService.verifyToken($scope.qrCodeToken, function (data) {
-                    $scope.tokenResponse = data
-                    if($scope.tokenResponse.tokenVerification==false){
-                        toastr.error('Please enter correct token')
-                    }else{
-                        toastr.success('You are successfully logged in')
-                        $state.go('home')
+        $scope.enterToken = function () {
+            if (_.isEmpty($scope.qrCodeData.token)) {
+                toastr.warning('Please enter the token');
+            } else {
+                apiService.verifyToken($scope.qrCodeData.token, function (data) {
+                    $scope.tokenResponse = data;
+                    if ($scope.tokenResponse.tokenVerification == false) {
+                        toastr.error('Please enter correct token');
+                    } else {
+                        toastr.success('You are successfully logged in');
                     }
                 });
             }
-            
+
 
         }
     })
