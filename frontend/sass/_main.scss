@@ -276,4 +276,36 @@ header {
     box-shadow: 0px 0px 2px #ced4da !important;
 }
 
+.mar20{
+    margin: 20px 0px;
+}
+
+.pad-20{
+    padding: 20px;
+}
+
+.btn-val-sub{
+    color: #f0ad4e!important;
+}
+//pranay
+.login-panel{
+    background: #f8f9fa;
+    padding: 20px auto;
+    
+}
+
+.base32{
+        width:50%!important;
+    margin: 0 auto;
+}
+
+.qr-scan-code{
+    width: 100%;
+    margin: 20px auto;
+    img{
+        width: 100%;
+    }
+}
+
+
 @import "kishori"
