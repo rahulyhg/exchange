@@ -135,7 +135,7 @@ myApp.controller('HomeCtrl', function ($scope, TemplateService, NavigationServic
             }
 
 
-        }
+        };
     })
 
     // Example API Controller
