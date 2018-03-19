@@ -1,8 +1,8 @@
 module.exports = _.cloneDeep(require("sails-wohlig-controller"));
 var controller = {
-   
+
     displayList: function (req, res) {
-        console.log("ttttttttttt",req.body);
+        console.log("ttttttttttt", req.body);
 
         if (req.body) {
             BuyOrder.displayList(req.body, res.callback);
@@ -12,10 +12,10 @@ var controller = {
             res.json({
                 value: false,
                 data: {
-                    message: "Invalid request"
+                    message: "Invalid Request"
                 }
             });
         }
-    }
+    },
 };
 module.exports = _.assign(module.exports, controller);

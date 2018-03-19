@@ -11156,7 +11156,7 @@ a.text-dark:hover, a.text-dark:focus {
   src: url("../fonts/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("../fonts/glyphicons-halflings-regular.woff2") format("woff2"), url("../fonts/glyphicons-halflings-regular.woff") format("woff"), url("../fonts/glyphicons-halflings-regular.ttf") format("truetype"), url("../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg"); }
 
 body {
-  padding-top: 70px; }
+  padding-top: 0px; }
 
 img.loading {
   text-align: center;
@@ -11249,6 +11249,29 @@ header {
 .shadow-box {
   -webkit-box-shadow: 0px 0px 2px #ced4da !important;
           box-shadow: 0px 0px 2px #ced4da !important; }
+
+.mar20 {
+  margin: 20px 0px; }
+
+.pad-20 {
+  padding: 20px; }
+
+.btn-val-sub {
+  color: #f0ad4e !important; }
+
+.login-panel {
+  background: #f8f9fa;
+  padding: 20px auto; }
+
+.base32 {
+  width: 50% !important;
+  margin: 0 auto; }
+
+.qr-scan-code {
+  width: 100%;
+  margin: 20px auto; }
+  .qr-scan-code img {
+    width: 100%; }
 
 .exchange-tabs {
   border-top-color: #dee2e6;

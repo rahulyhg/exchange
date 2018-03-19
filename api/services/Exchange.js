@@ -60,6 +60,27 @@ var model = {
          > user2 sell 5 tx1 @ 50
         */
         callback(null,"yo")
-    }
+    },
+
+    saveOrdersData: function (data, callback) {
+        if(data.type=="Buy"){
+            BuyOrder.saveData(data, function (err, data2) {
+                if (err || _.isEmpty(data2)) {
+                    callback(err, [])
+                } else {
+                    callback(null, data2)
+                }
+            })
+        }else{
+            SellOrder.saveData(data, function (err, data2) {
+                if (err || _.isEmpty(data2)) {
+                    callback(err, [])
+                } else {
+                    callback(null, data2)
+                }
+            })
+        }
+    },
+
 };
 module.exports = _.assign(module.exports, exports, model);

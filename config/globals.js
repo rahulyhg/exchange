@@ -71,8 +71,6 @@ mongoose.connect(mongourl, {
     useMongoClient: true
 }, function (err, db) {});
 
-
-
 // Mongoose Globals
 global.ObjectId = mongoose.Types.ObjectId;
 global.deepPopulate = require('mongoose-deep-populate')(mongoose);
@@ -147,3 +145,8 @@ if (process.env.NODE_ENV && process.env.NODE_ENV === "production") {
 } else {
     global.env = require("./env/development.js");
 }
+
+
+// 2 factor Authentication
+global.speakeasy = require("speakeasy");
+global.QRCode = require('qrcode');

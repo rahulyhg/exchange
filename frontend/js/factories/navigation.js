@@ -23,9 +23,6 @@ myApp.factory('NavigationService', function ($http) {
         },
         callApiWithData: function (url, data, callback) {
             $http.post(adminurl + url, data).then(function (data) {
-        
-        
-
                 callback(data);
             });
         },
@@ -34,13 +31,10 @@ myApp.factory('NavigationService', function ($http) {
             $http.post(adminurl + url).then(function (data) {
                 if (data) {
                     data = data.data;
-                    
                     callback(data);
                 }
-
-
             });
         },
-        
+
     };
 });

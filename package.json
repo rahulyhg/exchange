@@ -54,6 +54,7 @@
     "mongoose-url-slugs": "^1.0.2",
     "mongoose-validators": "^0.1.0",
     "monguurl": "^0.1.0",
+    "node-2fa": "^1.1.2",
     "node-xlsx": "^0.11.2",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
@@ -61,6 +62,7 @@
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4",
     "postcss-cli": "^4.1.1",
+    "qrcode": "^1.2.0",
     "rand-token": "^0.3.0",
     "rc": "^1.2.4",
     "request": "^2.83.0",
@@ -69,7 +71,8 @@
     "sails-wohlig-controller": "^0.0.4",
     "sails-wohlig-service": "^0.0.11",
     "sendgrid": "^5.2.3",
-    "skipper-gclouds": "^1.0.1"
+    "skipper-gclouds": "^1.0.1",
+    "speakeasy": "^2.0.0"
   },
   "scripts": {
     "debug": "node debug app.js",
