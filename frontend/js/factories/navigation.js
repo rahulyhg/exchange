@@ -1,4 +1,4 @@
-myApp.factory('NavigationService', function () {
+myApp.factory('NavigationService', function ($http) {
     var navigation = [{
         name: "Home",
         classis: "active",
@@ -16,8 +16,31 @@ myApp.factory('NavigationService', function () {
     }];
 
     return {
+
+
         getNavigation: function () {
             return navigation;
         },
+        callApiWithData: function (url, data, callback) {
+            $http.post(adminurl + url, data).then(function (data) {
+            console.log("services",data);
+        
+
+                callback(data);
+            });
+        },
+
+        apiCallWithoutData: function (url, callback) {
+            $http.post(adminurl + url).then(function (data) {
+                if (data) {
+                    data = data.data;
+                    console.log("apicall without", data);
+                    callback(data);
+                }
+
+
+            });
+        },
+        
     };
 });
