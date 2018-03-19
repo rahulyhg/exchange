@@ -21,17 +21,8 @@ myApp.controller('HomeCtrl', function ($scope, TemplateService, NavigationServic
 
         $scope.submitForm = function (data) {
 
-            console.log(data);
             NavigationService.callApiWithData("User/login", data, function (saveddata) {
-                console.log("saved data", saveddata);
-        
-                
-                
-                console.log("jstorage data is", saveddata.data);
                 $scope.login = saveddata;
-                console.log("saved data", $scope.login.data.value);
-                console.log("saved data", saveddata.data.value);
-                console.log(saveddata.data.data._id);
                 $.jStorage.set("user", saveddata.data);
             });
         };
