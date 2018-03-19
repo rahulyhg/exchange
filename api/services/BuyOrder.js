@@ -2,10 +2,12 @@ var schema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User',
+
         index: true
 
     },
     script: {
+
         type: Schema.Types.ObjectId,
         ref: 'Script',
         index: true
@@ -30,6 +32,7 @@ schema.plugin(deepPopulate, {
     'script': {
         select: ''
     }
+
 });
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
@@ -78,6 +81,4 @@ var model = {
     //     });
     // }
 
-
-};
-module.exports = _.assign(module.exports, exports, model);
+}

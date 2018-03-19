@@ -16,20 +16,25 @@ myApp.factory('NavigationService', function ($http) {
     }];
 
     return {
+
+
         getNavigation: function () {
             return navigation;
         },
         callApiWithData: function (url, data, callback) {
             $http.post(adminurl + url, data).then(function (data) {
-        
                 callback(data);
             });
         },
-        callApi: function (url, callback) {
-        
+
+        apiCallWithoutData: function (url, callback) {
             $http.post(adminurl + url).then(function (data) {
-                callback(data);
+                if (data) {
+                    data = data.data;
+                    callback(data);
+                }
             });
-        }
+        },
+
     };
 });

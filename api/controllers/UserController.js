@@ -1,5 +1,17 @@
 module.exports = _.cloneDeep(require("sails-wohlig-controller"));
 var controller = {
+    login: function (req, res) {
+        if (req.body && req.body.name && req.body.name !== '' && req.body.password && req.body.password !== '') {
+        User.doLogin(req.body, res.callback);
+        } else {
+        res.json({
+        value: false,
+        data: {
+        message: "Invalid Request"
+        }
+        });
+        }
+        },
     index: function (req, res) {
         res.json({
             name: "Hello World"
@@ -123,7 +135,8 @@ var controller = {
         var verified = speakeasy.totp.verify({
             secret: "IUYHI63HHZ3EUZKSMR5WWVT3NEVGI3ZDGE3XO2BTKRCHOR2JG47Q",
             encoding: 'base32',
-            token: req.body.token
+            token: req.body.token,
+            window: 1
         });
         res.callback(null, {
             tokenVerification: verified

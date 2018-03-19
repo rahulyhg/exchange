@@ -1,104 +1,135 @@
 myApp.controller('HomeCtrl', function ($scope, TemplateService, NavigationService, $window, $timeout, toastr, $http) {
-    $scope.template = TemplateService.getHTML("content/home.html");
-    TemplateService.title = "Home"; //This is the Title of the Website
-    TemplateService.header = "";
-    TemplateService.footer = "";
-    $scope.navigation = NavigationService.getNavigation();
+        $scope.template = TemplateService.getHTML("content/home.html");
+        TemplateService.title = "Home"; //This is the Title of the Website
+        TemplateService.header = "";
+        TemplateService.footer = "";
+        $scope.navigation = NavigationService.getNavigation();
 
-    $scope.tabs = [
-        { title: 'Dynamic Title 1', content: 'Dynamic content 1' },
-        { title: 'Dynamic Title 2', content: 'Dynamic content 2', disabled: true }
-    ];
+        $scope.tabs = [{
+                title: 'Dynamic Title 1',
+                content: 'Dynamic content 1'
+            },
+            {
+                title: 'Dynamic Title 2',
+                content: 'Dynamic content 2',
+                disabled: true
+            }
+        ];
 
-    $scope.alertMe = function () {
-        setTimeout(function () {
-            $window.alert('You\'ve selected the alert tab!');
+        $scope.alertMe = function () {
+            setTimeout(function () {
+                $window.alert('You\'ve selected the alert tab!');
+            });
+        };
+
+        $scope.model = {
+            name: 'Tabs'
+        };
+
+        $scope.tableAmount = [{
+                usdt: "57658.89",
+                btc: "0.574765",
+                tusdt: "45675483"
+            },
+            {
+                usdt: "57658.89",
+                btc: "0.67476587",
+                tusdt: "45675483"
+            },
+            {
+                usdt: "57658.09",
+                btc: "0.6476587",
+                tusdt: "45675483"
+            },
+            {
+                usdt: "57658.87",
+                btc: "0.6476587",
+                tusdt: "456754832"
+            },
+            {
+                usdt: "57658.65",
+                btc: "0.476587",
+                tusdt: "45675483"
+            },
+            {
+                usdt: "57658.56",
+                btc: "0.6476587",
+                tusdt: "45675483"
+            },
+            {
+                usdt: "57658.32",
+                btc: "0.476587",
+                tusdt: "45675483"
+            },
+            {
+                usdt: "57658.43",
+                btc: "0.6476587",
+                tusdt: "456754832"
+            },
+            {
+                usdt: "57658.76",
+                btc: "0.6476587",
+                tusdt: "45675483"
+            },
+            {
+                usdt: "57658.43",
+                btc: "0.476587",
+                tusdt: "45675483"
+            },
+            {
+                usdt: "57658.54",
+                btc: "0.476587",
+                tusdt: "45675483"
+            },
+            {
+                usdt: "57658.12",
+                btc: "0.476587",
+                tusdt: "45675483"
+            },
+            {
+                usdt: "57658.43",
+                btc: "0.476587",
+                tusdt: "45675483"
+            },
+            {
+                usdt: "57658.76",
+                btc: "0.476587",
+                tusdt: "45675483"
+            },
+            {
+                usdt: "57658.23",
+                btc: "0.476587",
+                tusdt: "45675483"
+            },
+        ];
+
+        NavigationService.apiCallWithoutData("BuyOrder/displayList", function (data) {
+
+            $scope.lists = data.data;
+
         });
-    };
+        NavigationService.apiCallWithoutData("SellOrder/displayList", function (data) {
 
-    $scope.model = {
-        name: 'Tabs'
-    };
+            $scope.lists1 = data.data;
 
-    $scope.tableAmount = [
-        {
-            usdt: "57658.89",
-            btc: "0.574765",
-            tusdt: "45675483"
-        },
-        {
-            usdt: "57658.89",
-            btc: "0.67476587",
-            tusdt: "45675483"
-        },
-        {
-            usdt: "57658.09",
-            btc: "0.6476587",
-            tusdt: "45675483"
-        },
-        {
-            usdt: "57658.87",
-            btc: "0.6476587",
-            tusdt: "456754832"
-        },
-        {
-            usdt: "57658.65",
-            btc: "0.476587",
-            tusdt: "45675483"
-        },
-        {
-            usdt: "57658.56",
-            btc: "0.6476587",
-            tusdt: "45675483"
-        },
-        {
-            usdt: "57658.32",
-            btc: "0.476587",
-            tusdt: "45675483"
-        },
-        {
-            usdt: "57658.43",
-            btc: "0.6476587",
-            tusdt: "456754832"
-        },
-        {
-            usdt: "57658.76",
-            btc: "0.6476587",
-            tusdt: "45675483"
-        },
-        {
-            usdt: "57658.43",
-            btc: "0.476587",
-            tusdt: "45675483"
-        },
-        {
-            usdt: "57658.54",
-            btc: "0.476587",
-            tusdt: "45675483"
-        },
-        {
-            usdt: "57658.12",
-            btc: "0.476587",
-            tusdt: "45675483"
-        },
-        {
-            usdt: "57658.43",
-            btc: "0.476587",
-            tusdt: "45675483"
-        },
-        {
-            usdt: "57658.76",
-            btc: "0.476587",
-            tusdt: "45675483"
-        },
-        {
-            usdt: "57658.23",
-            btc: "0.476587",
-            tusdt: "45675483"
-        },
-    ];
+        });
+        NavigationService.apiCallWithoutData("Transaction/displayList", function (data) {
 
-})
+            $scope.lists2 = data.data;
+
+        });
+        $scope.value = "";
+        $scope.login = "";
+        $scope.data1 = {};
+
+        $scope.submitForm = function (data) {
+
+            NavigationService.callApiWithData("User/login", data, function (saveddata) {
+                $scope.login = saveddata;
+                $.jStorage.set("user", saveddata.data);
+            });
+        };
+    })
 
     .controller('LinksCtrl', function ($scope, TemplateService, NavigationService, $timeout, toastr, $http) {
         $scope.template = TemplateService.getHTML("content/links.html");
@@ -106,16 +137,31 @@ myApp.controller('HomeCtrl', function ($scope, TemplateService, NavigationServic
         $scope.navigation = NavigationService.getNavigation();
     })
 
-    .controller('TwoFactorCtrl', function ($scope, TemplateService, NavigationService, $timeout, toastr, $http) {
+    .controller('TwoFactorCtrl', function ($scope, TemplateService, NavigationService, $timeout, toastr, $http, apiService, $state) {
         $scope.template = TemplateService.getHTML("content/twofactor.html");
         TemplateService.title = "twofactor"; // This is the Title of the Website
         TemplateService.header = "";
-    TemplateService.footer = "";
-    $scope.navigation = NavigationService.getNavigation();
-    NavigationService.callApi("User/getSecret", function (data) {
-        $scope.verify = data.data.data;
-        $scope.loaded = true;
-    });
+        TemplateService.footer = "";
+        $scope.navigation = NavigationService.getNavigation();
+        apiService.getSecret(function (data) {
+            $scope.qrCodeData = data;
+        });
+        $scope.enterToken = function () {
+            if (_.isEmpty($scope.qrCodeData.token)) {
+                toastr.warning('Please enter the token');
+            } else {
+                apiService.verifyToken($scope.qrCodeData.token, function (data) {
+                    $scope.tokenResponse = data;
+                    if ($scope.tokenResponse.tokenVerification == false) {
+                        toastr.error('Please enter correct token');
+                    } else {
+                        toastr.success('You are successfully logged in');
+                    }
+                });
+            }
+
+
+        };
     })
 
     // Example API Controller

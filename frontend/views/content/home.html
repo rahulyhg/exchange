@@ -9,47 +9,51 @@
                 <th>
                   <i class="fa fa-barcode-alt"></i>
                 </th>
-                <th class="text-right" colspan="2">groups
-                  <input type="number" class="group-input rounded" placeholder="2 decimals">
+                <th>
+                  <h6>List of BuyOrders</h6>
                 </th>
               </tr>
             </thead>
             <thead>
               <tr>
-                <th>Price(USDT)</th>
-                <th>Amount(BTC)</th>
-                <th>Total(USDT)</th>
+                <th>Rate</th>
+                <th>Quantity</th>
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="data in tableAmount">
-                <td class="pl-3 text-danger font-weight-bold">{{data.usdt}}</td>
-                <td class="pl-4 font-weight-bold">{{data.btc}}</td>
-                <td class="pr-3 text-right font-weight-bold">{{data.tusdt}}</td>
+              <tr ng-repeat="data in lists">
+                <td class="pl-3 text-danger font-weight-bold">{{data.rate}}</td>
+                <td class="pl-4 font-weight-bold">{{data.quantity}}</td>
               </tr>
-              <tr>
-                <td colspan="3" class="text-center thead-light py-1 font-weight-bold text-dark signal">
-                  <span>9,4658.78</span>
-                  <i class="fa fa-signal float-right pr-3 pt-1 text-success"></i>
-                </td>
-              </tr>
+
             </tbody>
           </table>
+
         </div>
         <div class="table-responsive">
           <table class="table-amount green-hover border">
+            <thead class="thead-light">
+              <tr>
+                <th>
+                  <i class="fa fa-barcode-alt"></i>
+                </th>
+                <th>
+                  <h6>List of SellOrders</h6>
+                </th>
+              </tr>
+            </thead>
+
             <thead>
               <tr>
-                <th>Price(USDT)</th>
-                <th>Amount(BTC)</th>
-                <th>Total(USDT)</th>
+                <th>Rate</th>
+                <th>Quantity</th>
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="data in tableAmount">
-                <td class="pl-3 text-success font-weight-bold">{{data.usdt}}</td>
-                <td class="pl-4 font-weight-bold">{{data.btc}}</td>
-                <td class="pr-3 text-right font-weight-bold">{{data.tusdt}}</td>
+              <tr ng-repeat="data in lists1">
+                <td class="pl-3 text-success font-weight-bold">{{data.rate}}</td>
+                <td class="pl-4 font-weight-bold">{{data.quantity}}</td>
+
               </tr>
             </tbody>
           </table>
@@ -107,6 +111,11 @@
                           </div>
                           <div class="col form-group form-group-sm">
                             <div class="row">
+                              <div class="col text-center" ng-if="btnLogin1">
+                                <button type="submit" class="btn btn-light text-center btn-login w-100 shadow-box mt-3 label-color rounded" ng-click="login()">
+                                  <span class="">Login</span> or
+                                  <span>Register</span> to trade</button>
+                              </div>
                               <div class="col text-center">
                                 <button type="submit" class="btn btn-light text-center btn-login w-100 shadow-box mt-3 label-color rounded">
                                   <span class="">Login</span> or
@@ -184,21 +193,45 @@
         </div>
       </div>
       <div class="col-12 col-md-3">
+        <div ng-if="login==''">
+          <form name="formData">Username:
+            <input type="text" ng-model="data1.name" name="username"> Password:
+            <input type="password" ng-model="data1.password" name="password">
+            <button class="button button-block button-positive" ng-click="submitForm(data1)" class="btn btn-default" ng-disabled="formData.$invalid"
+              promise-btn>Log In</button>
+          </form>
+        </div>
+        <div ng-if="login.data.value==true">
+          <p>Welcome {{login.data.data.name}}</p>
+        </div>
+        <div ng-if="login.data.value==false">
+            <p>{{login.data.error.message}}</p>
+          </div>
         <div class="table-responsive">
           <table class="table-amount border">
-            <h6>Trade History</h6>
+            <thead class="thead-light">
+              <tr>
+                <th>
+                  <i class="fa fa-barcode-alt"></i>
+                </th>
+                <th>
+                  <h6>Transactions</h6>
+                </th>
+              </tr>
+            </thead>
+
             <thead>
               <tr>
-                <th>Price(USDT)</th>
-                <th>Amount(BTC)</th>
-                <th>Total(USDT)</th>
+                <th>Rate</th>
+                <th>Quantity</th>
+
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="data in tableAmount">
-                <td class="pl-3 text-danger font-weight-bold">{{data.usdt}}</td>
-                <td class="pl-4 font-weight-bold">{{data.btc}}</td>
-                <td class="pr-3 text-right font-weight-bold">{{data.tusdt}}</td>
+              <tr ng-repeat="data in lists2">
+                <td class="pl-3 text-danger font-weight-bold">{{data.rate}}</td>
+                <td class="pl-4 font-weight-bold">{{data.quantity}}</td>
+
               </tr>
             </tbody>
           </table>
@@ -217,7 +250,7 @@
             <input type="checkbox" class="align-middle">
             <span>Hide other pairs</span>
           </div>
-            <div class="table-responsive border">
+          <div class="table-responsive border">
             <table class="table table-order">
               <thead>
                 <tr>
