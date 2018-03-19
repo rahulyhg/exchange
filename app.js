@@ -24,15 +24,16 @@ process.chdir(__dirname);
 var mongoose;
 mongoose = require('mongoose');
 // global.mongoose = require('mongoose');
-global["database"] = "exchange";
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/' + database, {
+global.database = "exchange";
+global.username = "vivek";
+global.password = "chirag123";
+global.host = "localhost";
+global.port = "27019";
+global.url = 'mongodb://' + username + ':' + encodeURI(password) + '@' + host + ':' + port + '/' + database;
+global.mongourl = url;
+mongoose.connect(global.url, {
     useMongoClient: true
-}, function (err) {
-    if (err) {
-        console.log(err);
-    }
-});
+}, function (err, db) {});
 
 // Ensure a "sails" can be located:
 (function () {
