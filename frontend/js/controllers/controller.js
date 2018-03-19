@@ -111,7 +111,7 @@ myApp.controller('HomeCtrl', function ($scope, TemplateService, NavigationServic
         $scope.navigation = NavigationService.getNavigation();
     })
 
-    .controller('TwoFactorCtrl', function ($scope, TemplateService, NavigationService, $timeout, toastr, $http, apiService) {
+    .controller('TwoFactorCtrl', function ($scope, TemplateService, NavigationService, $timeout, toastr, $http, apiService, $state) {
         $scope.template = TemplateService.getHTML("content/twofactor.html");
         TemplateService.title = "twofactor"; // This is the Title of the Website
         TemplateService.header = "";
@@ -120,6 +120,24 @@ myApp.controller('HomeCtrl', function ($scope, TemplateService, NavigationServic
         apiService.getSecret(function (data) {
             $scope.qrCodeData = data;
         });
+        $scope.enterToken=function(data){
+            $scope.qrCodeToken = data
+            if($scope.qrCodeToken==undefined){
+                toastr.warning('Please enter the token')
+            }else{
+                apiService.verifyToken($scope.qrCodeToken, function (data) {
+                    $scope.tokenResponse = data
+                    if($scope.tokenResponse.tokenVerification==false){
+                        toastr.error('Please enter correct token')
+                    }else{
+                        toastr.success('You are successfully logged in')
+                        $state.go('home')
+                    }
+                });
+            }
+            
+
+        }
     })
 
     // Example API Controller

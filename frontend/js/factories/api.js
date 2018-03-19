@@ -16,7 +16,7 @@ myApp.factory('apiService', function ($http, $q, $timeout) {
         },
         verifyToken: function (data, callback) {
             $http.get("./json/User/verifyToken.json", data).then(function (data) {
-                callback(data);
+                callback(data.data.data);
             });
         }
 

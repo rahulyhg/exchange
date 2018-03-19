@@ -1,6 +1,6 @@
 {
     "data": {
-        "tokenVerification": false
+        "tokenVerification": true
     },
     "value": true
 }
