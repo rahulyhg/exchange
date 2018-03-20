@@ -4,24 +4,24 @@ module.exports = {
     minimumArrayLength: 100,
     buyingOrder: [], // will be descending
 
-    createByingOrderArry: function (data, callback) {
-        var objToSend;
-        _.forEach(data, function (x) {
-            objToSend = {};
-            objToSend.rate = x.rate;
-            var orders = [];
-            var obj = {};
-            obj.user = x.user;
-            obj.script = x.script;
-            obj.quantity = x.quantity;
-            obj.id = x._id;
-            orders.push(obj);
-            objToSend.orders = orders;
-            MatchingEngine.buyingOrder.push(objToSend);
-        })
+    // createByingOrderArry: function (data, callback) {
+    //     var objToSend;
+    //     _.forEach(data, function (x) {
+    //         objToSend = {};
+    //         objToSend.rate = x.rate;
+    //         var orders = [];
+    //         var obj = {};
+    //         obj.user = x.user;
+    //         obj.script = x.script;
+    //         obj.quantity = x.quantity;
+    //         obj.id = x._id;
+    //         orders.push(obj);
+    //         objToSend.orders = orders;
+    //         MatchingEngine.buyingOrder.push(objToSend);
+    //     })
 
-        console.log("MatchingEngine.buyingOrder", MatchingEngine.buyingOrder)
-    },
+    //     console.log("MatchingEngine.buyingOrder", MatchingEngine.buyingOrder)
+    // },
 
     /**
      * obj = {
@@ -87,9 +87,9 @@ module.exports = {
 
         var arryData;
         BuyOrder.findAllBuyOrders(data1, function (err, data) {
-            MatchingEngine.buyingOrder = data.slice(0, 9);
+            MatchingEngine.buyingOrder = data.slice(0, 100);
             var last_element = MatchingEngine.buyingOrder[MatchingEngine.buyingOrder.length - 1];
-            console.log("MatchingEngine.buyingOrder1111", MatchingEngine.buyingOrder)
+
             if (data1.rate > last_element._id) {
                 // MatchingEngine.buyingOrder.splice(0,0,"abc");
                 console.log("MatchingEngine.buyingOrder", MatchingEngine.buyingOrder)

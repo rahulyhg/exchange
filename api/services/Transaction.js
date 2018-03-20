@@ -48,10 +48,7 @@ module.exports = mongoose.model('Transaction', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema,"user script", "user script"));
 var model = {
     displayList: function(data,callback){
-
-    
         Transaction.find({
-            
         }).sort({rate: 'descending'}).sort({createdAt:-1}).limit(20).exec(function (err, found) {
             if (err) {
                 callback(err, null);

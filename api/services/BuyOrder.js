@@ -2,7 +2,6 @@ var schema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User',
-
         index: true
 
     },
@@ -50,7 +49,7 @@ var model = {
                             user: "$user",
                             quantity: "$quantity",
                             script: "$script",
-                            id:"$_id"
+                            id: "$_id"
                         }
                     }
                 }
@@ -79,6 +78,24 @@ var model = {
     //             callback(null, found)
     //         }
     //     });
-    // }
+    // },
 
-}
+    displayList: function (data, callback) {
+        BuyOrder.find({}).sort({
+                createdAt: -1
+            })
+            .limit(20).exec(function (err, found) {
+                if (err) {
+                    callback(err, null);
+                } else if (_.isEmpty(found)) {
+                    callback("noDataound", null);
+                } else {
+                    var list = _.orderBy(found, ['rate'], ['desc']);
+                    callback(null, list);
+                }
+            });
+
+    },
+
+};
+module.exports = _.assign(module.exports, exports, model);
