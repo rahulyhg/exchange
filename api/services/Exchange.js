@@ -77,6 +77,7 @@ var model = {
                 if (err || _.isEmpty(data2)) {
                     callback(err, [])
                 } else {
+                    MatchingEngine.addToSellingOrder(data2)                    
                     callback(null, data2)
                 }
             })
