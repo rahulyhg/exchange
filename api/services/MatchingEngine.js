@@ -282,6 +282,8 @@ module.exports = {
     },
 
     matchingSellingOrderWithBuyingOrder: function (sellObj, rate, callback) {
+
+
         var indexNo = _.sortedIndexBy(MatchingEngine.buyingOrder, {
             rate: rate
         }, function (o) {
@@ -290,8 +292,6 @@ module.exports = {
         var buyingTrades = [];
         var sellingTrades = [];
         var buyingOrdersCount = 0;
-        console.log("indexNo", indexNo);
-        console.log("MatchingEngine.buyingOrder.length", MatchingEngine.buyingOrder.length);
         if (indexNo == 0) {
             if (MatchingEngine.buyingOrder.length > 0 && rate == MatchingEngine.buyingOrder[0].rate) {
                 buyingOrdersCount = 1;
@@ -319,6 +319,7 @@ module.exports = {
         }
 
         function startTrading(callback) {
+
             var endLoop = false;
             console.log(buyingOrdersCount);
             for (i = 0; i < buyingOrdersCount && !endLoop; i++) {
