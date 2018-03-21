@@ -92,7 +92,6 @@ var model = {
         User.findOne({
         name: data.name,
         password: data.password
-        //password: md5(data.password)
         
         }).exec(function (err, found) {
         if (err) {
@@ -110,8 +109,6 @@ var model = {
         }, null);
         }
         }
-        // session.authenticated = true;
-        // session.mobile = data.mobile;
         });
         },
     add: function () {

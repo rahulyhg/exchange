@@ -54,10 +54,23 @@ var model = {
             } else {
                 var list1 = _.orderBy(found, ['rate'], ['asc']);
                 callback(null, list1);
-
-                console.log("Services backend", list1);
             }
         });
-    }
+    },
+    displayList1:function (data,callback){
+        console.log('erere',data._id);
+            SellOrder.find({user:data._id}).exec(function (err, found) {
+                if (err) {
+                    callback(err, null);
+                } else if (_.isEmpty(found)) {
+                    callback("noDataound", null);
+                } else {
+                    var list = _.orderBy(found, ['rate'], ['desc']);
+                    callback(null, list);
+        
+                }
+        
+        });
+    },
 };
 module.exports = _.assign(module.exports, exports, model);

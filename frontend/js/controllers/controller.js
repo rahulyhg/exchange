@@ -1,4 +1,4 @@
-myApp.controller('HomeCtrl', function ($scope, TemplateService, NavigationService, $window, $timeout, toastr, $http) {
+myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, NavigationService, $window, $timeout, toastr, $http) {
         $scope.template = TemplateService.getHTML("content/home.html");
         TemplateService.title = "Home"; //This is the Title of the Website
         TemplateService.header = "";
@@ -103,6 +103,7 @@ myApp.controller('HomeCtrl', function ($scope, TemplateService, NavigationServic
             },
         ];
 
+
         NavigationService.apiCallWithoutData("BuyOrder/displayList", function (data) {
 
             $scope.lists = data.data;
@@ -116,18 +117,76 @@ myApp.controller('HomeCtrl', function ($scope, TemplateService, NavigationServic
         NavigationService.apiCallWithoutData("Transaction/displayList", function (data) {
 
             $scope.lists2 = data.data;
+           
 
         });
         $scope.value = "";
-        $scope.login = "";
-        $scope.data1 = {};
 
+        $scope.data1 = {};
         $scope.submitForm = function (data) {
 
             NavigationService.callApiWithData("User/login", data, function (saveddata) {
-                $scope.login = saveddata;
+
                 $.jStorage.set("user", saveddata.data);
+                $state.reload();
             });
+        };
+
+        $scope.x = $.jStorage.get("user");
+        console.log($scope.x);
+        if($scope.x!=null&&$scope.x.value==true){
+            
+                data0 = $scope.x.data;
+                
+                NavigationService.callApiWithData("BuyOrder/displayList1", data0, function (data) {
+                    
+                    $scope.userBuyOrder = data.data.data;
+
+                });
+                NavigationService.callApiWithData("SellOrder/displayList1", data0, function (data) {
+                  
+                    $scope.userSellOrder = data.data.data;
+
+
+                });
+                NavigationService.callApiWithData("Transaction/displayList1", data0, function (data) {
+                
+                    $scope.userTransaction = data.data.data;
+
+                });
+            
+            }
+        $scope.logOut = function () {
+            $.jStorage.flush();
+            $state.reload();
+        };
+        $scope.x = $.jStorage.get("user");
+
+        $scope.addBuyOrder = function (data) {
+            data.user = $scope.x.data._id;
+
+
+            NavigationService.callApiWithData("BuyOrder/save", data, function (saveddata) {
+
+                if (saveddata.data.value == true) {
+                    $state.reload();
+                }
+
+            });
+
+        };
+
+        $scope.addSellOrder = function (data) {
+            data.user = $scope.x.data._id;
+
+            NavigationService.callApiWithData("SellOrder/save", data, function (saveddata) {
+
+                if (saveddata.data.value == true) {
+                    $state.reload();
+                }
+
+            });
+
         };
     })
 

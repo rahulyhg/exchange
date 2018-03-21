@@ -40,7 +40,6 @@ module.exports = mongoose.model('BuyOrder', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "user script", "user script"));
 var model = {
-
     displayList: function (data, callback) {
 
         BuyOrder.find({
@@ -48,9 +47,7 @@ var model = {
             }).sort({
                 createdAt: -1
             })
-            // .sort({
-            //     rate: 'descending'
-            // })
+
             .limit(20).exec(function (err, found) {
                 if (err) {
                     callback(err, null);
@@ -63,6 +60,21 @@ var model = {
                 }
             });
 
+    },
+    displayList1:function (data,callback){
+        console.log('erere',data._id);
+            BuyOrder.find({user:data._id}).exec(function (err, found) {
+                if (err) {
+                    callback(err, null);
+                } else if (_.isEmpty(found)) {
+                    callback("noDataound", null);
+                } else {
+                    var list = _.orderBy(found, ['rate'], ['desc']);
+                    callback(null, list);
+        
+                }
+        
+        });
     },
 };
 module.exports = _.assign(module.exports, exports, model);

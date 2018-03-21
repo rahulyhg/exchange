@@ -52,17 +52,31 @@ var model = {
     
         Transaction.find({
             
-        }).sort({rate: 'descending'}).sort({createdAt:-1}).limit(20).exec(function (err, found) {
+        }).sort({createdAt:-1}).limit(20).exec(function (err, found) {
             if (err) {
                 callback(err, null);
             } else if (_.isEmpty(found)) {
                 callback("noDataound", null);
             } else {
-                var list2 = _.orderBy(found, ['rate'], ['desc']);
-                callback(null, list2);
-                console.log("Services backend",list2);
+                //var list2 = _.orderBy(found, ['rate'], ['desc']);
+                callback(null, found);
             }
         });
-    }
+    },
+    displayList1:function (data,callback){
+        console.log('erere',data._id);
+            Transaction.find({user:data._id}).exec(function (err, found) {
+                if (err) {
+                    callback(err, null);
+                } else if (_.isEmpty(found)) {
+                    callback("noDataound", null);
+                } else {
+                    //var list = _.orderBy(found, ['rate'], ['desc']);
+                    callback(null, found);
+        
+                }
+        
+        });
+    },
 };
 module.exports = _.assign(module.exports, exports, model);
