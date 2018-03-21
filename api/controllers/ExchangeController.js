@@ -1,7 +1,7 @@
 module.exports = _.cloneDeep(require("sails-wohlig-controller"));
 
 var controller = {
-   
+
     exchangeBTK: function (req, res) {
         if (req.body) {
             Exchange.exchangeBTK(req.body, res.callback);
@@ -26,7 +26,7 @@ var controller = {
                 }
             });
         }
-    },
+    }
 
 };
 module.exports = _.assign(module.exports, controller);

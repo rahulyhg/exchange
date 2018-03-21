@@ -13,8 +13,8 @@ module.exports = mongoose.model('Exchange', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
-    exchangeBTK: function (data,callback) {
-        console.log("data",data);
+    exchangeBTK: function (data, callback) {
+        console.log("data", data);
         // import {
         //     createBook,
         //     Side
@@ -43,7 +43,7 @@ var model = {
             firmId: 'Wohlig Tech'
         };
 
-        var sideData=data.side
+        var sideData = data.side
 
         book.addOrder(user, data.instrumentId, Side.sideData, data.volume, data.price);
         book.addOrder(user2, 'BTK/INR', Side.Buy, 100, 100);
@@ -59,25 +59,24 @@ var model = {
          > user1 buy 5 tx1 @ 50
          > user2 sell 5 tx1 @ 50
         */
-        callback(null,"yo")
+        callback(null, "yo")
     },
 
     saveOrdersData: function (data, callback) {
-        if(data.type=="Buy"){
+        if (data.type == "Buy") {
             BuyOrder.saveData(data, function (err, data2) {
                 if (err || _.isEmpty(data2)) {
                     callback(err, [])
                 } else {
-                    MatchingEngine.addToBuyingOrder(data2,callback);
+                    MatchingEngine.addToBuyingOrder(data2, callback);
                 }
             })
-        }else{
+        } else {
             SellOrder.saveData(data, function (err, data2) {
                 if (err || _.isEmpty(data2)) {
                     callback(err, [])
                 } else {
-                    MatchingEngine.addToSellingOrder(data2,callback);    
-                    callback();               
+                    MatchingEngine.addToSellingOrder(data2, callback);
                 }
             })
         }
