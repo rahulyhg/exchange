@@ -82,36 +82,47 @@ var model = {
     },
 
     addTransaction: function (data, transactionType, callback) {
-        var orderType, OrderTable;
+        var orderType, OrderTable, orderDataId;
+        var transactionDetail;
+        var orderDetail;
         if (transactionType == "Buy") {
             orderType = "Buy";
             OrderTable = BuyOrder;
+            orderDataId = "buyOrderId";
         } else {
             orderType = "Sell";
             OrderTable = SellOrder;
+            orderDataId = "sellOrderId";
         }
         var dataToSave = Transaction();
         dataToSave.user = data.user;
         dataToSave.script = data.script;
         dataToSave.rate = data.rate;
         dataToSave.quantity = data.quantity;
-        dataToSave.buyOrderId = data.id;
+        dataToSave[orderDataId] = data.id;
         dataToSave.orderType = orderType;
-        var transactionDetail;
-        var orderDetail;
         async.waterfall([function (callback) {
             dataToSave.save(function (err, data) {
                 callback(err, data);
             });
         }, function (transaction, callback) {
             transactionDetail = transaction;
+            console.log("transactionDetail", transactionDetail);
             OrderTable.findOne({
                 _id: data.id
             }).exec(callback);
         }, function (order, callback) {
+            console.log("order", order);
             orderDetail = order;
+            if (_.isEmpty(order.trades)) {
+                order.trades = [];
+            }
             order.trades.push(transactionDetail._id);
-            order.filled += data.quantity;
+            console.log(data.quantity);
+            if (!order.filled) {
+                order.filled = 0;
+            }
+            order.filled = order.filled + data.quantity;
             if (order.filled == order.quantity) {
                 order.status = "Complete";
             } else {

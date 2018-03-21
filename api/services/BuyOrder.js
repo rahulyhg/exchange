@@ -22,7 +22,10 @@ var schema = new Schema({
         required: true,
 
     },
-    filled: Number,
+    filled: {
+        type: Number,
+        default: 0,
+    },
     status: String,
     trades: [{
         type: Schema.Types.ObjectId,

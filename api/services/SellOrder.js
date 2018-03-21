@@ -18,7 +18,12 @@ var schema = new Schema({
         required: true,
     },
     filled: Number,
-    status: String
+    status: String,
+    trades: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Transaction',
+        index: true
+    }]
 });
 
 schema.plugin(deepPopulate, {

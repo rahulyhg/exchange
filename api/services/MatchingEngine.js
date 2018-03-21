@@ -52,7 +52,7 @@ module.exports = {
 
         MatchingEngine.buyingOrder = MatchingEngine.buyingOrder.slice(0, MatchingEngine.minimumArrayLength);
 
-        console.log("MatchingEngine.buyingOrder", MatchingEngine.buyingOrder);
+        console.log("MatchingEngine.buyingOrder", JSON.stringify(MatchingEngine.buyingOrder));
         if (indexData == 0 && !alreadyRateAvailable) {
             MatchingEngine.matchingBuyingOrderWithSellingOrder(obj, data1.rate, callback);
         } else {
@@ -88,7 +88,7 @@ module.exports = {
 
         MatchingEngine.sellingOrder = MatchingEngine.sellingOrder.slice(0, MatchingEngine.minimumArrayLength);
 
-        console.log("MatchingEngine.sellingOrder", MatchingEngine.sellingOrder);
+        console.log("MatchingEngine.sellingOrder", JSON.stringify(MatchingEngine.sellingOrder));
 
         if (indexData == 0 && !alreadyRateAvailable) {
             MatchingEngine.matchingSellingOrderWithBuyingOrder(obj, data1.rate, callback);
@@ -173,12 +173,12 @@ module.exports = {
                 _.each(currentOrderObjectArray, function (sellingObject) {
                     console.log(buyObj.quantity);
                     if (buyObj.quantity >= sellingObject.quantity) {
-                        var buyingTrade = _.cloneDeep(buyObj);
+                        var buyingTrade = _.cloneDeep(sellingObject);
                         buyingTrade.rate = sellingOrder.rate;
                         buyingTrade.quantity = sellingObject.quantity;
                         buyingTrades.push(buyingTrade);
 
-                        var sellingTrade = _.cloneDeep(sellingObject);
+                        var sellingTrade = _.cloneDeep(buyObj);
                         sellingTrade.rate = sellingOrder.rate;
                         sellingTrade.quantity = sellingObject.quantity;
                         sellingTrades.push(sellingTrade);
@@ -189,12 +189,12 @@ module.exports = {
                             return false;
                         }
                     } else if (buyObj.quantity < sellingObject.quantity) {
-                        var buyingTrade = _.cloneDeep(buyObj);
+                        var buyingTrade = _.cloneDeep(sellingObject);
                         buyingTrade.rate = sellingOrder.rate;
                         buyingTrade.quantity = buyObj.quantity;
                         buyingTrades.push(buyingTrade);
 
-                        var sellingTrade = _.cloneDeep(sellingObject);
+                        var sellingTrade = _.cloneDeep(buyObj);
                         sellingTrade.rate = sellingOrder.rate;
                         sellingTrade.quantity = buyObj.quantity;
                         sellingTrades.push(sellingTrade);
@@ -224,33 +224,33 @@ module.exports = {
                 }
             }
 
-            if (buyingTrades && sellingTrades) {
-                async.parallel([
-                        function (callback) {
-                            async.concat(buyingTrades, function (value, callback) {
-                                Transaction.addBuyingTransaction(value, callback)
-                            }, callback);
-                        },
-                        function (callback) {
-                            async.concat(sellingTrades, function (value, callback) {
-                                Transaction.addSellingTransaction(value, callback)
-                            }, callback);
-                        }
-                    ],
-                    function (err, data) {
-                        if (err) {
-                            console.log("error occured")
-                            // callback(null, err);
-                        } else {
-                            callback(null, {
-                                buyingTrades: buyingTrades,
-                                sellingTrades: sellingTrades,
-                                buyingOrder: MatchingEngine.buyingOrder,
-                                sellingOrder: MatchingEngine.sellingOrder,
-                            });
-                        }
-                    });
-            }
+            // if (buyingTrades && sellingTrades) {
+            //     async.parallel([
+            //             function (callback) {
+            //                 async.concat(buyingTrades, function (value, callback) {
+            //                     Transaction.addTransaction(value, 'Buy', callback)
+            //                 }, callback);
+            //             },
+            //             function (callback) {
+            //                 async.concat(sellingTrades, function (value, callback) {
+            //                     Transaction.addTransaction(value, 'Sell', callback)
+            //                 }, callback);
+            //             }
+            //         ],
+            //         function (err, data) {
+            //             if (err) {
+            //                 console.log("error occured")
+            //                 // callback(null, err);
+            //             } else {
+            //                 callback(null, {
+            //                     buyingTrades: buyingTrades,
+            //                     sellingTrades: sellingTrades,
+            //                     buyingOrder: MatchingEngine.buyingOrder,
+            //                     sellingOrder: MatchingEngine.sellingOrder,
+            //                 });
+            //             }
+            //         });
+            // }
         }
     },
 
@@ -298,12 +298,12 @@ module.exports = {
                 _.each(currentOrderObjectArray, function (buyingObject) {
                     console.log(sellObj.quantity);
                     if (sellObj.quantity >= buyingObject.quantity) {
-                        var buyingTrade = _.cloneDeep(sellObj);
+                        var buyingTrade = _.cloneDeep(buyingObject);
                         buyingTrade.rate = buyingOrder.rate;
                         buyingTrade.quantity = buyingObject.quantity;
                         buyingTrades.push(buyingTrade);
 
-                        var sellingTrade = _.cloneDeep(buyingObject);
+                        var sellingTrade = _.cloneDeep(sellObj);
                         sellingTrade.rate = buyingOrder.rate;
                         sellingTrade.quantity = buyingObject.quantity;
                         sellingTrades.push(sellingTrade);
@@ -314,12 +314,12 @@ module.exports = {
                             return false;
                         }
                     } else if (sellObj.quantity < buyingObject.quantity) {
-                        var buyingTrade = _.cloneDeep(sellObj);
+                        var buyingTrade = _.cloneDeep(buyingObject);
                         buyingTrade.rate = buyingOrder.rate;
                         buyingTrade.quantity = sellObj.quantity;
                         buyingTrades.push(buyingTrade);
 
-                        var sellingTrade = _.cloneDeep(buyingObject);
+                        var sellingTrade = _.cloneDeep(sellObj);
                         sellingTrade.rate = buyingOrder.rate;
                         sellingTrade.quantity = sellObj.quantity;
                         sellingTrades.push(sellingTrade);
@@ -349,23 +349,24 @@ module.exports = {
                 }
             }
 
+
             if (buyingTrades && sellingTrades) {
                 async.parallel([
                         function (callback) {
                             async.concatSeries(buyingTrades, function (value, callback) {
-                                Transaction.addBuyingTransaction(value, callback)
+                                Transaction.addTransaction(value, 'Buy', callback)
                             }, callback);
                         },
                         function (callback) {
                             async.concatSeries(sellingTrades, function (value, callback) {
-                                Transaction.addSellingTransaction(value, callback)
+                                Transaction.addTransaction(value, 'Sell', callback)
                             }, callback);
                         }
                     ],
                     function (err, data) {
                         if (err) {
                             console.log("error occured")
-                            // callback(null, err);
+                            callback(null, err);
                         } else {
                             callback(null, {
                                 buyingTrades: buyingTrades,
