@@ -2,55 +2,7 @@
 
 module.exports = {
     minimumArrayLength: 100,
-    buyingOrder: [{
-            rate: 120,
-            orders: [{
-                    _id: 12345,
-                    user: "Chintan",
-                    script: 12345,
-                    quantity: 100
-                },
-                {
-                    _id: 12345,
-                    user: "abc",
-                    script: 12345,
-                    quantity: 100
-                }
-            ]
-        },
-        {
-            rate: 110,
-            orders: [{
-                    _id: 12345,
-                    user: "abcd",
-                    script: 12345,
-                    quantity: 100
-                },
-                {
-                    _id: 12345,
-                    user: "abcde",
-                    script: 12345,
-                    quantity: 100
-                }
-            ]
-        },
-        {
-            rate: 100,
-            orders: [{
-                    _id: 12345,
-                    user: "pqr",
-                    script: 12345,
-                    quantity: 100
-                },
-                {
-                    _id: 12345,
-                    user: "xyZ",
-                    script: 12345,
-                    quantity: 100
-                }
-            ]
-        }
-    ], // will be descending
+    buyingOrder: [], // will be descending
     /**
      * obj = {
             rate:100.20,
@@ -272,18 +224,37 @@ module.exports = {
                 }
             }
 
-            callback(null, {
-                buyingTrades: buyingTrades,
-                sellingTrades: sellingTrades,
-                buyingOrder: MatchingEngine.buyingOrder,
-                sellingOrder: MatchingEngine.sellingOrder,
-            });
+            if (buyingTrades && sellingTrades) {
+                async.parallel([
+                        function (callback) {
+                            async.concat(buyingTrades, function (value, callback) {
+                                Transaction.addBuyingTransaction(value, callback)
+                            }, callback);
+                        },
+                        function (callback) {
+                            async.concat(sellingTrades, function (value, callback) {
+                                Transaction.addSellingTransaction(value, callback)
+                            }, callback);
+                        }
+                    ],
+                    function (err, data) {
+                        if (err) {
+                            console.log("error occured")
+                            // callback(null, err);
+                        } else {
+                            callback(null, {
+                                buyingTrades: buyingTrades,
+                                sellingTrades: sellingTrades,
+                                buyingOrder: MatchingEngine.buyingOrder,
+                                sellingOrder: MatchingEngine.sellingOrder,
+                            });
+                        }
+                    });
+            }
         }
     },
 
     matchingSellingOrderWithBuyingOrder: function (sellObj, rate, callback) {
-
-
         var indexNo = _.sortedIndexBy(MatchingEngine.buyingOrder, {
             rate: rate
         }, function (o) {
@@ -319,7 +290,6 @@ module.exports = {
         }
 
         function startTrading(callback) {
-
             var endLoop = false;
             console.log(buyingOrdersCount);
             for (i = 0; i < buyingOrdersCount && !endLoop; i++) {
@@ -378,14 +348,36 @@ module.exports = {
                     endLoop2 = true;
                 }
             }
-            callback(null, {
-                buyingTrades: buyingTrades,
-                sellingTrades: sellingTrades,
-                buyingOrder: MatchingEngine.buyingOrder,
-                sellingOrder: MatchingEngine.sellingOrder,
-            });
-        }
 
+            if (buyingTrades && sellingTrades) {
+                async.parallel([
+                        function (callback) {
+                            async.concatSeries(buyingTrades, function (value, callback) {
+                                Transaction.addBuyingTransaction(value, callback)
+                            }, callback);
+                        },
+                        function (callback) {
+                            async.concatSeries(sellingTrades, function (value, callback) {
+                                Transaction.addSellingTransaction(value, callback)
+                            }, callback);
+                        }
+                    ],
+                    function (err, data) {
+                        if (err) {
+                            console.log("error occured")
+                            // callback(null, err);
+                        } else {
+                            callback(null, {
+                                buyingTrades: buyingTrades,
+                                sellingTrades: sellingTrades,
+                                buyingOrder: MatchingEngine.buyingOrder,
+                                sellingOrder: MatchingEngine.sellingOrder,
+                            });
+                        }
+                    });
+            }
+
+        }
     },
 
     sendForTrade: function () {}

@@ -1,30 +1,24 @@
 var schema = new Schema({
     user: {
-
         type: Schema.Types.ObjectId,
         ref: 'User',
-
         index: true
-
     },
     script: {
-
         type: Schema.Types.ObjectId,
         ref: 'Script',
-
         index: true
-
     },
     rate: {
         type: Number,
         required: true,
-
     },
     quantity: {
         type: Number,
         required: true,
-
-    }
+    },
+    filled: Number,
+    status: String
 });
 
 schema.plugin(deepPopulate, {

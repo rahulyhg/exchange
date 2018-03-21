@@ -21,7 +21,14 @@ var schema = new Schema({
         type: Number,
         required: true,
 
-    }
+    },
+    filled: Number,
+    status: String,
+    trades: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Transaction',
+        index: true
+    }]
 });
 
 schema.plugin(deepPopulate, {
@@ -39,6 +46,7 @@ module.exports = mongoose.model('BuyOrder', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "user script", "user script", "order", "asc"));
 var model = {
+
     findAllBuyOrders: function (data, callback) {
         BuyOrder.aggregate([{
                 $group: {

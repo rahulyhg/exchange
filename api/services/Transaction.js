@@ -1,19 +1,13 @@
 var schema = new Schema({
     user: {
-
         type: Schema.Types.ObjectId,
         ref: 'User',
-
         index: true
-
     },
     script: {
-
         type: Schema.Types.ObjectId,
         ref: 'Script',
-
         index: true
-
     },
     rate: {
         type: Number,
@@ -25,12 +19,20 @@ var schema = new Schema({
         required: true,
 
     },
+    buyOrderId: {
+        type: Schema.Types.ObjectId,
+        ref: 'SellOrder',
+        index: true
+    },
+    sellOrderId: {
+        type: Schema.Types.ObjectId,
+        ref: 'BuyOrder',
+        index: true
+    },
     orderType: {
         type: String,
-        default: "Buy",
         enum: ['Buy', 'Sell']
     }
-
 });
 
 schema.plugin(deepPopulate, {
@@ -77,6 +79,47 @@ var model = {
             }
 
         });
+    },
+
+    addTransaction: function (data, transactionType, callback) {
+        var orderType, OrderTable;
+        if (transactionType == "Buy") {
+            orderType = "Buy";
+            OrderTable = BuyOrder;
+        } else {
+            orderType = "Sell";
+            OrderTable = SellOrder;
+        }
+        var dataToSave = Transaction();
+        dataToSave.user = data.user;
+        dataToSave.script = data.script;
+        dataToSave.rate = data.rate;
+        dataToSave.quantity = data.quantity;
+        dataToSave.buyOrderId = data.id;
+        dataToSave.orderType = orderType;
+        var transactionDetail;
+        var orderDetail;
+        async.waterfall([function (callback) {
+            dataToSave.save(function (err, data) {
+                callback(err, data);
+            });
+        }, function (transaction, callback) {
+            transactionDetail = transaction;
+            OrderTable.findOne({
+                _id: data.id
+            }).exec(callback);
+        }, function (order, callback) {
+            orderDetail = order;
+            order.trades.push(transactionDetail._id);
+            order.filled += data.quantity;
+            if (order.filled == order.quantity) {
+                order.status = "Complete";
+            } else {
+                order.status = "Partial";
+            }
+            order.save(callback);
+        }], callback);
+
     },
 };
 module.exports = _.assign(module.exports, exports, model);
