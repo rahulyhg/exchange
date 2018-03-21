@@ -107,18 +107,15 @@ var model = {
             });
         }, function (transaction, callback) {
             transactionDetail = transaction;
-            console.log("transactionDetail", transactionDetail);
             OrderTable.findOne({
                 _id: data.id
             }).exec(callback);
         }, function (order, callback) {
-            console.log("order", order);
             orderDetail = order;
             if (_.isEmpty(order.trades)) {
                 order.trades = [];
             }
             order.trades.push(transactionDetail._id);
-            console.log(data.quantity);
             if (!order.filled) {
                 order.filled = 0;
             }

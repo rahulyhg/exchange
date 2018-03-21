@@ -224,33 +224,33 @@ module.exports = {
                 }
             }
 
-            // if (buyingTrades && sellingTrades) {
-            //     async.parallel([
-            //             function (callback) {
-            //                 async.concat(buyingTrades, function (value, callback) {
-            //                     Transaction.addTransaction(value, 'Buy', callback)
-            //                 }, callback);
-            //             },
-            //             function (callback) {
-            //                 async.concat(sellingTrades, function (value, callback) {
-            //                     Transaction.addTransaction(value, 'Sell', callback)
-            //                 }, callback);
-            //             }
-            //         ],
-            //         function (err, data) {
-            //             if (err) {
-            //                 console.log("error occured")
-            //                 // callback(null, err);
-            //             } else {
-            //                 callback(null, {
-            //                     buyingTrades: buyingTrades,
-            //                     sellingTrades: sellingTrades,
-            //                     buyingOrder: MatchingEngine.buyingOrder,
-            //                     sellingOrder: MatchingEngine.sellingOrder,
-            //                 });
-            //             }
-            //         });
-            // }
+            if (buyingTrades && sellingTrades) {
+                async.parallel([
+                        function (callback) {
+                            async.concat(buyingTrades, function (value, callback) {
+                                Transaction.addTransaction(value, 'Buy', callback)
+                            }, callback);
+                        },
+                        function (callback) {
+                            async.concat(sellingTrades, function (value, callback) {
+                                Transaction.addTransaction(value, 'Sell', callback)
+                            }, callback);
+                        }
+                    ],
+                    function (err, data) {
+                        if (err) {
+                            console.log("error occured")
+                            // callback(null, err);
+                        } else {
+                            callback(null, {
+                                buyingTrades: buyingTrades,
+                                sellingTrades: sellingTrades,
+                                buyingOrder: MatchingEngine.buyingOrder,
+                                sellingOrder: MatchingEngine.sellingOrder,
+                            });
+                        }
+                    });
+            }
         }
     },
 
