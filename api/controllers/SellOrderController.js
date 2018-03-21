@@ -13,10 +13,8 @@ var controller = {
         }
     },
     displayList1: function (req, res) {
-
         if (req.body) {
             SellOrder.displayList1(req.body, res.callback);
-
         } else {
             res.json({
                 value: false,
@@ -26,5 +24,18 @@ var controller = {
             });
         }
     },
+
+    findAllSellOrders: function (req, res) {
+        if (req.body) {
+            SellOrder.findAllSellOrders(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid request"
+                }
+            });
+        }
+    }
 };
 module.exports = _.assign(module.exports, controller);

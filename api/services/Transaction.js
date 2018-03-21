@@ -1,19 +1,19 @@
 var schema = new Schema({
     user: {
-        
+
         type: Schema.Types.ObjectId,
-        ref:'User',
-     
+        ref: 'User',
+
         index: true
-        
+
     },
     script: {
-        
+
         type: Schema.Types.ObjectId,
-        ref:'Script',
-       
+        ref: 'Script',
+
         index: true
-        
+
     },
     rate: {
         type: Number,
@@ -30,29 +30,27 @@ var schema = new Schema({
         default: "Buy",
         enum: ['Buy', 'Sell']
     }
-    
+
 });
 
 schema.plugin(deepPopulate, {
     'user': {
         select: ''
-        },
-        'script': {
+    },
+    'script': {
         select: ''
-        }
+    }
 });
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 module.exports = mongoose.model('Transaction', schema);
 
-var exports = _.cloneDeep(require("sails-wohlig-service")(schema,"user script", "user script"));
+var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "user script", "user script"));
 var model = {
-    displayList: function(data,callback){
-
-    
-        Transaction.find({
-            
-        }).sort({createdAt:-1}).limit(20).exec(function (err, found) {
+    displayList: function (data, callback) {
+        Transaction.find({}).sort({
+            createdAt: -1
+        }).limit(20).exec(function (err, found) {
             if (err) {
                 callback(err, null);
             } else if (_.isEmpty(found)) {
@@ -63,19 +61,21 @@ var model = {
             }
         });
     },
-    displayList1:function (data,callback){
-        console.log('erere',data._id);
-            Transaction.find({user:data._id}).exec(function (err, found) {
-                if (err) {
-                    callback(err, null);
-                } else if (_.isEmpty(found)) {
-                    callback("noDataound", null);
-                } else {
-                    //var list = _.orderBy(found, ['rate'], ['desc']);
-                    callback(null, found);
-        
-                }
-        
+    displayList1: function (data, callback) {
+        console.log('erere', data._id);
+        Transaction.find({
+            user: data._id
+        }).exec(function (err, found) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(found)) {
+                callback("noDataound", null);
+            } else {
+                //var list = _.orderBy(found, ['rate'], ['desc']);
+                callback(null, found);
+
+            }
+
         });
     },
 };

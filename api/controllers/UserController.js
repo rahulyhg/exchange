@@ -135,7 +135,8 @@ var controller = {
         var verified = speakeasy.totp.verify({
             secret: "IUYHI63HHZ3EUZKSMR5WWVT3NEVGI3ZDGE3XO2BTKRCHOR2JG47Q",
             encoding: 'base32',
-            token: req.body.token
+            token: req.body.token,
+            window: 1
         });
         res.callback(null, {
             tokenVerification: verified
