@@ -39,12 +39,10 @@ myApp.factory('apiService', function ($http, $q, $timeout) {
                 }
             });
         },
-        getUserBuyList: function (data, callback) {
-            $http.post(adminurl + "BuyOrder/getUserBuyList", {
-                data: data
 
-            }).then(function (data) {
-                callback(data);
+        getUserList: function (data, callback) {
+            $http.post(adminurl + "BuyOrder/getUserList", data).then(function (data) {
+                callback(data.data);
             });
         },
 
@@ -73,37 +71,23 @@ myApp.factory('apiService', function ($http, $q, $timeout) {
                 }
             });
         },
-        getUserSellList: function (data, callback) {
-            $http.post(adminurl + "SellOrder/getUserSellList", {
-                data: data
-
-            }).then(function (data) {
-                callback(data);
-            });
-        },
-
         //Trade services
         getCompleteTransactionList: function (callback) {
             $http.post(adminurl + "Transaction/getCompleteTransactionList").then(function (data) {
                 if (data) {
-                    data = data.data;
-                    callback(data);
+                    callback(data.data);
                 }
             });
         },
         getUserTransactionList: function (data, callback) {
-
-            $http.post(adminurl + "Transaction/getUserTransactionList", {
-                data: data
-
-            }).then(function (data) {
-
-                callback(data);
+            $http.post(adminurl + "Transaction/getCompleteTransactionList").then(function (data) {
+                if (data) {
+                    callback(data.data);
+                }
             });
         },
 
         getUpdatedUserTransactionList: function (data, callback) {
-
             $http.post(adminurl + "Transaction/Save", data).then(function (data) {
                 callback(data);
             });

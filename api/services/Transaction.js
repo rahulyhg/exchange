@@ -67,14 +67,13 @@ var model = {
 
     getUserTransactionList: function (data, callback) {
         Transaction.find({
-            user: data.data._id
+            user: data.user
         }).exec(function (err, found) {
             if (err) {
                 callback(err, null);
             } else if (_.isEmpty(found)) {
                 callback("noDataound", null);
             } else {
-                //var list = _.orderBy(found, ['rate'], ['desc']);
                 callback(null, found);
             }
         });
@@ -125,7 +124,19 @@ var model = {
                 order.status = "Partial";
             }
             order.save(callback);
-        }], callback);
+        }], function (err, data) {
+            Transaction.getUserTransactionList(data, function (err, data) {
+                if (data) {
+                    sails.sockets.blast("TransactionOrderAdded", data);
+                }
+            });
+            BuyOrder.getUserList(data, function (err, data) {
+                if (data) {
+                    sails.sockets.blast("UserOrderDataAdded", data);
+                }
+            });
+            callback(null, data)
+        });
     },
 
 };

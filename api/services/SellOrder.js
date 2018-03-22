@@ -63,23 +63,6 @@ var model = {
         });
     },
 
-    getUserSellList: function (data, callback) {
-        SellOrder.find({
-            user: data.data._id
-        }).exec(function (err, found) {
-            if (err) {
-                callback(err, null);
-            } else if (_.isEmpty(found)) {
-                callback("noDataound", null);
-            } else {
-                var list = _.orderBy(found, ['rate'], ['desc']);
-                callback(null, list);
-
-            }
-
-        });
-    },
-
     findAllSellOrders: function (data, callback) {
         SellOrder.aggregate([{
                 $group: {

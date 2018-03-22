@@ -18,6 +18,16 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
             console.log('$scope.lists ', $scope.lists1);
         });
 
+        io.socket.on("TransactionOrderAdded", function (data) {
+            $scope.userTransaction = data;
+            console.log('$scope.userTransaction ', $scope.userTransaction);
+        });
+
+        io.socket.on("UserOrderDataAdded", function (data) {
+            $scope.userOrder = data;
+            console.log('$scope.userOrder ', $scope.userOrder);
+        });
+
         //sockets end
 
         $scope.tabs = [{
@@ -69,13 +79,13 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
         if ($scope.userData != null && $scope.userData.value == true) {
             data0 = $scope.userData.data;
             apiService.getUserTransactionList(data0, function (data) {
-                $scope.userTransaction = data.data.data;
+                $scope.userTransaction = data.data;
             });
-            apiService.getUserSellList(data0, function (data) {
-                $scope.userSellOrder = data.data.data;
-            });
-            apiService.getUserBuyList(data0, function (data) {
-                $scope.userBuyOrder = data.data.data;
+            console.log("data0", data0)
+            var dataToSend = {};
+            dataToSend.user = data0._id
+            apiService.getUserList(dataToSend, function (data) {
+                $scope.userOrder = data.data;
             });
         }
         // log outt
@@ -90,14 +100,15 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
             data.user = $scope.userData.data._id;
             data.type = "Buy"
             apiService.getUpdatedUserBuyList(data, function (data) {
-                // console.log("data", data);
-                // $state.reload();
+                toastr.success("Buy Order List Updated");
             });
         };
         $scope.addSellOrder = function (data) {
             data.user = $scope.userData.data._id;
             data.type = "Sell"
-            apiService.getUpdatedUserSellList(data, function (saveddata) {});
+            apiService.getUpdatedUserSellList(data, function (saveddata) {
+                toastr.success("Sell Order List Updated");
+            });
         };
     })
 

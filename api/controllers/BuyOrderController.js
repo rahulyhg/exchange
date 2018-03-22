@@ -27,7 +27,7 @@ var controller = {
 
     getUserList: function (req, res) {
         if (req.body) {
-            BuyOrder.getUserBuyList(req.body, res.callback);
+            BuyOrder.getUserList(req.body, res.callback);
         } else {
             res.json({
                 value: false,

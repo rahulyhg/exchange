@@ -113,47 +113,49 @@ var model = {
         async.waterfall([
             function (callback) {
                 BuyOrder.find({
-                    user: data.data._id,
+                    user: data.user,
                     "status": {
                         $in: ["Pending", "Partial"]
                     }
                 }).exec(function (err, found) {
                     if (err) {
                         callback(err, null);
-                    } else if (_.isEmpty(found)) {
-                        callback("noDataound", null);
                     } else {
-                        var list = _.orderBy(found, ['rate'], ['desc']);
+                        var list;
+                        if (_.isEmpty(found)) {
+                            list = {};
+                        }
+                        list = _.orderBy(found, ['rate'], ['desc']);
                         callback(null, list);
                     }
                 });
             },
             function (BuyData, callback) {
                 SellOrder.find({
-                    user: data.data._id,
+                    user: data.user,
                     "status": {
                         $in: ["Pending", "Partial"]
                     }
                 }).exec(function (err, found) {
                     if (err) {
                         callback(err, null);
-                    } else if (_.isEmpty(found)) {
-                        callback("noDataound", null);
                     } else {
-                        var list = _.orderBy(found, ['rate'], ['desc']);
+                        var list1;
+                        if (_.isEmpty(found)) {
+                            list1 = {};
+                        }
+                        list1 = _.orderBy(found, ['rate'], ['desc']);
                         userListData.buyData = BuyData;
-                        userListData.sellData = list;
+                        userListData.sellData = list1;
                         callback(null, userListData);
                     }
                 });
             }
-        ], function asyncComplete(err, data) {
+        ], function (err, data) {
             if (err) {
                 callback(err, null);
             } else {
-                sails.sockets.blast("UserBuyAndSellDataAdded", data);
                 callback(null, data);
-
             }
         });
     }

@@ -281,7 +281,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="data in userBuyOrder" ng-if="userBuyOrder!=null">
+                <tr ng-repeat="data in userOrder.buyData" ng-if="userOrder.buyData!=null">
                   <td>{{data.createdAt | date}}</td>
                   <td>--</td>
                   <td>Buy</td>
@@ -293,7 +293,7 @@
                   <td class="text-right">--</td>
                   <td class="text-right pr-4">--</td>
                 </tr>
-                <tr ng-repeat="data in userSellOrder" ng-if="userSellOrder!=null">
+                <tr ng-repeat="data in  userOrder.sellData" ng-if="userOrder.sellData!=null">
                   <td>{{data.createdAt |date}}</td>
                   <td>--</td>
                   <td>Sell</td>
