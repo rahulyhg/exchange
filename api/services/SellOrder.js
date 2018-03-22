@@ -1,30 +1,36 @@
 var schema = new Schema({
     user: {
-
         type: Schema.Types.ObjectId,
         ref: 'User',
-
         index: true
-
     },
     script: {
-
         type: Schema.Types.ObjectId,
         ref: 'Script',
-
         index: true
-
     },
     rate: {
         type: Number,
         required: true,
-
     },
     quantity: {
         type: Number,
         required: true,
-
-    }
+    },
+    filled: {
+        type: Number,
+        default: 0,
+    },
+    status: {
+        type: String,
+        enum: ['Complete', 'Partial'],
+        default: "Partial"
+    },
+    trades: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Transaction',
+        index: true
+    }]
 });
 
 schema.plugin(deepPopulate, {
@@ -56,8 +62,8 @@ var model = {
             }
         });
     },
+
     getUserSellList: function (data, callback) {
-        console.log('erere', data.data._id);
         SellOrder.find({
             user: data.data._id
         }).exec(function (err, found) {
@@ -73,6 +79,7 @@ var model = {
 
         });
     },
+
     findAllSellOrders: function (data, callback) {
         SellOrder.aggregate([{
                 $group: {
@@ -97,7 +104,7 @@ var model = {
                 callback(err, null);
             } else {
                 // MatchingEngine.createByingOrderArry(found);
-                callback(null, found);
+                callback(null, found)
             }
         });
     },

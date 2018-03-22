@@ -2,55 +2,7 @@
 
 module.exports = {
     minimumArrayLength: 100,
-    buyingOrder: [{
-            rate: 120,
-            orders: [{
-                    _id: 12345,
-                    user: "Chintan",
-                    script: 12345,
-                    quantity: 100
-                },
-                {
-                    _id: 12345,
-                    user: "abc",
-                    script: 12345,
-                    quantity: 100
-                }
-            ]
-        },
-        {
-            rate: 110,
-            orders: [{
-                    _id: 12345,
-                    user: "abcd",
-                    script: 12345,
-                    quantity: 100
-                },
-                {
-                    _id: 12345,
-                    user: "abcde",
-                    script: 12345,
-                    quantity: 100
-                }
-            ]
-        },
-        {
-            rate: 100,
-            orders: [{
-                    _id: 12345,
-                    user: "pqr",
-                    script: 12345,
-                    quantity: 100
-                },
-                {
-                    _id: 12345,
-                    user: "xyZ",
-                    script: 12345,
-                    quantity: 100
-                }
-            ]
-        }
-    ], // will be descending
+    buyingOrder: [], // will be descending
     /**
      * obj = {
             rate:100.20,
@@ -100,7 +52,7 @@ module.exports = {
 
         MatchingEngine.buyingOrder = MatchingEngine.buyingOrder.slice(0, MatchingEngine.minimumArrayLength);
 
-        console.log("MatchingEngine.buyingOrder", MatchingEngine.buyingOrder);
+        console.log("MatchingEngine.buyingOrder", JSON.stringify(MatchingEngine.buyingOrder));
         if (indexData == 0 && !alreadyRateAvailable) {
             MatchingEngine.matchingBuyingOrderWithSellingOrder(obj, data1.rate, callback);
         } else {
@@ -136,7 +88,7 @@ module.exports = {
 
         MatchingEngine.sellingOrder = MatchingEngine.sellingOrder.slice(0, MatchingEngine.minimumArrayLength);
 
-        console.log("MatchingEngine.sellingOrder", MatchingEngine.sellingOrder);
+        console.log("MatchingEngine.sellingOrder", JSON.stringify(MatchingEngine.sellingOrder));
 
         if (indexData == 0 && !alreadyRateAvailable) {
             MatchingEngine.matchingSellingOrderWithBuyingOrder(obj, data1.rate, callback);
@@ -147,7 +99,6 @@ module.exports = {
 
 
     removeFromBuyingOrder: function () {
-
         /**
          * if(currenctRate > buyingOrder.$last.rate) {
          *      _.find(Rate) {
@@ -161,13 +112,66 @@ module.exports = {
 
     removeFromBuyingOrder: function () {},
 
-    appendBuying: function () {
+    appendBuying: function (callback) {
         // find diff =  minimumArrayLength-currentLength 
         // find Mongo Order Buying Object less than    buyingOrder.$last.rate with limit `diff`  in descending order
         // append to the array in the end
+        if (_.isEmpty(MatchingEngine.buyingOrder)) {
+            BuyOrder.find({}, function (err, data) {
+                if (err || _.isEmpty(data)) {
+                    callback(err, "noDataFound")
+                } else {
+                    async.concatSeries(data, function (value, callback) {
+                        MatchingEngine.addToBuyingOrder(value, callback)
+                    }, callback);
+                }
+            })
+        } else {
+            var last_element = MatchingEngine.buyingOrder[MatchingEngine.buyingOrder.length - 1];
+            BuyOrder.find({
+                rate: {
+                    $lt: last_element.rate
+                }
+            }, function (err, data) {
+                if (err || _.isEmpty(data)) {
+                    callback(err, "noDataFound")
+                } else {
+                    async.concatSeries(data, function (value, callback) {
+                        MatchingEngine.addToBuyingOrder(value, callback)
+                    }, callback);
+                }
+            })
+        }
     },
 
-    appendSelling: function () {},
+    appendSelling: function () {
+        if (_.isEmpty(MatchingEngine.sellingOrder)) {
+            SellOrder.find({}, function (err, data) {
+                if (err || _.isEmpty(data)) {
+                    callback(err, "noDataFound")
+                } else {
+                    async.concatSeries(data, function (value, callback) {
+                        MatchingEngine.addToSellingOrder(value, callback)
+                    }, callback);
+                }
+            })
+        } else {
+            var last_element = MatchingEngine.sellingOrder[MatchingEngine.sellingOrder.length - 1];
+            SellOrder.find({
+                rate: {
+                    $lt: last_element.rate
+                }
+            }, function (err, data) {
+                if (err || _.isEmpty(data)) {
+                    callback(err, "noDataFound")
+                } else {
+                    async.concatSeries(data, function (value, callback) {
+                        MatchingEngine.addToSellingOrder(value, callback)
+                    }, callback);
+                }
+            })
+        }
+    },
 
     matchingBuyingOrderWithSellingOrder: function (buyObj, rate, callback) {
         var indexNo = _.sortedIndexBy(MatchingEngine.sellingOrder, {
@@ -272,18 +276,37 @@ module.exports = {
                 }
             }
 
-            callback(null, {
-                buyingTrades: buyingTrades,
-                sellingTrades: sellingTrades,
-                buyingOrder: MatchingEngine.buyingOrder,
-                sellingOrder: MatchingEngine.sellingOrder,
-            });
+            if (buyingTrades && sellingTrades) {
+                async.parallel([
+                        function (callback) {
+                            async.concat(buyingTrades, function (value, callback) {
+                                Transaction.addTransaction(value, 'Buy', callback)
+                            }, callback);
+                        },
+                        function (callback) {
+                            async.concat(sellingTrades, function (value, callback) {
+                                Transaction.addTransaction(value, 'Sell', callback)
+                            }, callback);
+                        }
+                    ],
+                    function (err, data) {
+                        if (err) {
+                            console.log("error occured")
+                            // callback(null, err);
+                        } else {
+                            callback(null, {
+                                buyingTrades: buyingTrades,
+                                sellingTrades: sellingTrades,
+                                buyingOrder: MatchingEngine.buyingOrder,
+                                sellingOrder: MatchingEngine.sellingOrder,
+                            });
+                        }
+                    });
+            }
         }
     },
 
     matchingSellingOrderWithBuyingOrder: function (sellObj, rate, callback) {
-
-
         var indexNo = _.sortedIndexBy(MatchingEngine.buyingOrder, {
             rate: rate
         }, function (o) {
@@ -319,7 +342,6 @@ module.exports = {
         }
 
         function startTrading(callback) {
-
             var endLoop = false;
             console.log(buyingOrdersCount);
             for (i = 0; i < buyingOrdersCount && !endLoop; i++) {
@@ -328,12 +350,12 @@ module.exports = {
                 _.each(currentOrderObjectArray, function (buyingObject) {
                     console.log(sellObj.quantity);
                     if (sellObj.quantity >= buyingObject.quantity) {
-                        var buyingTrade = _.cloneDeep(sellObj);
+                        var buyingTrade = _.cloneDeep(buyingObject);
                         buyingTrade.rate = buyingOrder.rate;
                         buyingTrade.quantity = buyingObject.quantity;
                         buyingTrades.push(buyingTrade);
 
-                        var sellingTrade = _.cloneDeep(buyingObject);
+                        var sellingTrade = _.cloneDeep(sellObj);
                         sellingTrade.rate = buyingOrder.rate;
                         sellingTrade.quantity = buyingObject.quantity;
                         sellingTrades.push(sellingTrade);
@@ -344,12 +366,12 @@ module.exports = {
                             return false;
                         }
                     } else if (sellObj.quantity < buyingObject.quantity) {
-                        var buyingTrade = _.cloneDeep(sellObj);
+                        var buyingTrade = _.cloneDeep(buyingObject);
                         buyingTrade.rate = buyingOrder.rate;
                         buyingTrade.quantity = sellObj.quantity;
                         buyingTrades.push(buyingTrade);
 
-                        var sellingTrade = _.cloneDeep(buyingObject);
+                        var sellingTrade = _.cloneDeep(sellObj);
                         sellingTrade.rate = buyingOrder.rate;
                         sellingTrade.quantity = sellObj.quantity;
                         sellingTrades.push(sellingTrade);
@@ -378,14 +400,36 @@ module.exports = {
                     endLoop2 = true;
                 }
             }
-            callback(null, {
-                buyingTrades: buyingTrades,
-                sellingTrades: sellingTrades,
-                buyingOrder: MatchingEngine.buyingOrder,
-                sellingOrder: MatchingEngine.sellingOrder,
-            });
-        }
 
+            if (buyingTrades && sellingTrades) {
+                async.parallel([
+                        function (callback) {
+                            async.concatSeries(buyingTrades, function (value, callback) {
+                                Transaction.addTransaction(value, 'Buy', callback)
+                            }, callback);
+                        },
+                        function (callback) {
+                            async.concatSeries(sellingTrades, function (value, callback) {
+                                Transaction.addTransaction(value, 'Sell', callback)
+                            }, callback);
+                        }
+                    ],
+                    function (err, data) {
+                        if (err) {
+                            console.log("error occured")
+                            callback(null, err);
+                        } else {
+                            callback(null, {
+                                buyingTrades: buyingTrades,
+                                sellingTrades: sellingTrades,
+                                buyingOrder: MatchingEngine.buyingOrder,
+                                sellingOrder: MatchingEngine.sellingOrder,
+                            });
+                        }
+                    });
+            }
+
+        }
     },
 
     sendForTrade: function () {}

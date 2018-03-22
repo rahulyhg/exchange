@@ -86,37 +86,36 @@ module.exports = mongoose.model('User', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "user", "user"));
 var model = {
+
     doLogin: function (data, callback) {
         User.findOne({
-        name: data.data.name,
-        password: data.data.password
-        
+            name: data.data.name,
+            password: data.data.password
         }).exec(function (err, found) {
-        if (err) {
-        
-        callback(err, null);
-        } else {
-        if (found) {
-        var foundObj = found.toObject();
-        delete foundObj.password;
-        callback(null, foundObj);
-        
-        } else {
-        callback({
-        message: "Incorrect Credentials!"
-        }, null);
-        }
-        }
+            if (err) {
+                callback(err, null);
+            } else {
+                if (found) {
+                    var foundObj = found.toObject();
+                    delete foundObj.password;
+                    callback(null, foundObj);
+                } else {
+                    callback({
+                        message: "Incorrect Credentials!"
+                    }, null);
+                }
+            }
         });
-        },
+    },
+
     add: function () {
-        
         var sum = 0;
         _.each(arguments, function (arg) {
             sum += arg;
         });
         return sum;
     },
+
     existsSocial: function (user, callback) {
         var Model = this;
         Model.findOne({

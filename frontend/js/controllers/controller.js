@@ -6,7 +6,7 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
         $scope.navigation = NavigationService.getNavigation();
 
         io.socket.on("BuyOrderAdded", function (data) {
-            console.log('45454',data);
+            console.log('45454', data);
         });
 
         $scope.tabs = [{
@@ -50,7 +50,7 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
             });
         };
         $scope.userData = $.jStorage.get("user");
-       
+
 
         // Display orders and trades of user
 
