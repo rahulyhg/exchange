@@ -25,7 +25,7 @@ var controller = {
         }
     },
 
-    getUserBuyList: function (req, res) {
+    getUserList: function (req, res) {
         if (req.body) {
             BuyOrder.getUserBuyList(req.body, res.callback);
         } else {
