@@ -24,6 +24,13 @@ module.exports = {
      */
     sellingOrder: [], // will be ascending
 
+    getBuyersSellers: function (callback) {
+        callback(null, {
+            buyers: MatchingEngine.buyingOrder,
+            sellers: MatchingEngine.sellingOrder
+        });
+    },
+
     addToBuyingOrder: function (data1, callback) {
         var indexData = _.sortedIndexBy(MatchingEngine.buyingOrder,   { 
             'rate':  data1.rate 
@@ -58,6 +65,8 @@ module.exports = {
         } else {
             callback();
         }
+        // Socket Call Buying HERE
+        sails.sockets.blast("BuyOrderAdded", MatchingEngine.buyingOrder);
     },
 
     addToSellingOrder: function (data1, callback) {
@@ -95,6 +104,8 @@ module.exports = {
         } else {
             callback();
         }
+        // Socket Call Selling HERE
+        sails.sockets.blast("SellOrderAdded", MatchingEngine.sellingOrder);
     },
 
 
@@ -112,7 +123,7 @@ module.exports = {
 
     removeFromBuyingOrder: function () {},
 
-    appendBuying: function (callback) {
+    appendBuying: function (callback) { //sorting addition remaining
         // find diff =  minimumArrayLength-currentLength 
         // find Mongo Order Buying Object less than    buyingOrder.$last.rate with limit `diff`  in descending order
         // append to the array in the end
@@ -144,7 +155,7 @@ module.exports = {
         }
     },
 
-    appendSelling: function () {
+    appendSelling: function (callback) {
         if (_.isEmpty(MatchingEngine.sellingOrder)) {
             SellOrder.find({}, function (err, data) {
                 if (err || _.isEmpty(data)) {
@@ -277,6 +288,10 @@ module.exports = {
             }
 
             if (buyingTrades && sellingTrades) {
+                // Socket Call Buying HERE
+                sails.sockets.blast("SellOrderAdded", MatchingEngine.sellingOrder);
+                sails.sockets.blast("BuyOrderAdded", MatchingEngine.buyingOrder);
+                // Socket for Selling HERE
                 async.parallel([
                         function (callback) {
                             async.concat(buyingTrades, function (value, callback) {
@@ -402,6 +417,8 @@ module.exports = {
             }
 
             if (buyingTrades && sellingTrades) {
+                sails.sockets.blast("SellOrderAdded", MatchingEngine.sellingOrder);
+                sails.sockets.blast("BuyOrderAdded", MatchingEngine.buyingOrder);
                 async.parallel([
                         function (callback) {
                             async.concatSeries(buyingTrades, function (value, callback) {

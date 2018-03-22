@@ -36,16 +36,6 @@ var controller = {
                 }
             });
         }
-    },
-    save: function (req, res) {
-        req.model.saveData(req.body, function (err, data) {
-            if (err) {
-                res.callback(err);
-            } else {
-
-                res.callback(err, data);
-            }
-        });
-    },
+    }
 };
 module.exports = _.assign(module.exports, controller);

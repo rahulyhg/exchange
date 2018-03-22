@@ -60,6 +60,11 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
         apiService.getCompleteTransactionList(function (data) {
             $scope.lists2 = data.data;
         });
+
+        NavigationService.apiCallWithoutData("Exchange/getArrData", function (data) {
+            $scope.lists2 = data.data;
+        });
+
         $scope.value = "";
         $scope.data1 = {};
 
