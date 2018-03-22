@@ -1,8 +1,8 @@
 module.exports = _.cloneDeep(require("sails-wohlig-controller"));
 var controller = {
-    displayList: function (req, res) {
+    getCompleteSellList: function (req, res) {
         if (req.body) {
-            SellOrder.displayList(req.body, res.callback);
+            SellOrder.getCompleteSellList(req.body, res.callback);
         } else {
             res.json({
                 value: false,
@@ -12,9 +12,9 @@ var controller = {
             });
         }
     },
-    displayList1: function (req, res) {
+    getUserSellList: function (req, res) {
         if (req.body) {
-            SellOrder.displayList1(req.body, res.callback);
+            SellOrder.getUserSellList(req.body, res.callback);
         } else {
             res.json({
                 value: false,
@@ -23,6 +23,20 @@ var controller = {
                 }
             });
         }
+    },
+    save: function (req, res) {
+        req.model.saveData(req.body, function (err, data) {
+            if (err) {
+                res.callback(err);
+            } else {
+                SellOrder.getCompleteSellList({}, function (err, data) {
+                    if (data) {
+                        sails.sockets.blast("BuyOrderAdded", data);
+                    }
+                });
+                res.callback(err, data);
+            }
+        });
     },
 
     findAllSellOrders: function (req, res) {

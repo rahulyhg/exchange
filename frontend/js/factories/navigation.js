@@ -16,8 +16,6 @@ myApp.factory('NavigationService', function ($http) {
     }];
 
     return {
-
-
         getNavigation: function () {
             return navigation;
         },
@@ -26,7 +24,6 @@ myApp.factory('NavigationService', function ($http) {
                 callback(data);
             });
         },
-
         apiCallWithoutData: function (url, callback) {
             $http.post(adminurl + url).then(function (data) {
                 if (data) {

@@ -1,9 +1,13 @@
-myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, NavigationService, $window, $timeout, toastr, $http) {
+myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, NavigationService, apiService, $window, $timeout, toastr, $http) {
         $scope.template = TemplateService.getHTML("content/home.html");
         TemplateService.title = "Home"; //This is the Title of the Website
         TemplateService.header = "";
         TemplateService.footer = "";
         $scope.navigation = NavigationService.getNavigation();
+
+        io.socket.on("BuyOrderAdded", function (data) {
+            console.log('45454',data);
+        });
 
         $scope.tabs = [{
                 title: 'Dynamic Title 1',
@@ -25,168 +29,68 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
         $scope.model = {
             name: 'Tabs'
         };
-
-        $scope.tableAmount = [{
-                usdt: "57658.89",
-                btc: "0.574765",
-                tusdt: "45675483"
-            },
-            {
-                usdt: "57658.89",
-                btc: "0.67476587",
-                tusdt: "45675483"
-            },
-            {
-                usdt: "57658.09",
-                btc: "0.6476587",
-                tusdt: "45675483"
-            },
-            {
-                usdt: "57658.87",
-                btc: "0.6476587",
-                tusdt: "456754832"
-            },
-            {
-                usdt: "57658.65",
-                btc: "0.476587",
-                tusdt: "45675483"
-            },
-            {
-                usdt: "57658.56",
-                btc: "0.6476587",
-                tusdt: "45675483"
-            },
-            {
-                usdt: "57658.32",
-                btc: "0.476587",
-                tusdt: "45675483"
-            },
-            {
-                usdt: "57658.43",
-                btc: "0.6476587",
-                tusdt: "456754832"
-            },
-            {
-                usdt: "57658.76",
-                btc: "0.6476587",
-                tusdt: "45675483"
-            },
-            {
-                usdt: "57658.43",
-                btc: "0.476587",
-                tusdt: "45675483"
-            },
-            {
-                usdt: "57658.54",
-                btc: "0.476587",
-                tusdt: "45675483"
-            },
-            {
-                usdt: "57658.12",
-                btc: "0.476587",
-                tusdt: "45675483"
-            },
-            {
-                usdt: "57658.43",
-                btc: "0.476587",
-                tusdt: "45675483"
-            },
-            {
-                usdt: "57658.76",
-                btc: "0.476587",
-                tusdt: "45675483"
-            },
-            {
-                usdt: "57658.23",
-                btc: "0.476587",
-                tusdt: "45675483"
-            },
-        ];
-
-
-        NavigationService.apiCallWithoutData("BuyOrder/displayList", function (data) {
-
+        // Display Buy Sell Transaction All users
+        apiService.getCompleteBuyList(function (data) {
             $scope.lists = data.data;
-
         });
-        NavigationService.apiCallWithoutData("SellOrder/displayList", function (data) {
-
+        apiService.getCompleteSellList(function (data) {
             $scope.lists1 = data.data;
-
         });
-        NavigationService.apiCallWithoutData("Transaction/displayList", function (data) {
-
+        apiService.getCompleteTransactionList(function (data) {
             $scope.lists2 = data.data;
-           
-
         });
         $scope.value = "";
-
         $scope.data1 = {};
+
+        // User Login 
         $scope.submitForm = function (data) {
-
-            NavigationService.callApiWithData("User/login", data, function (saveddata) {
-
+            apiService.userLogin(data, function (saveddata) {
                 $.jStorage.set("user", saveddata.data);
                 $state.reload();
             });
         };
+        $scope.userData = $.jStorage.get("user");
+       
 
-        $scope.x = $.jStorage.get("user");
-        console.log($scope.x);
-        if($scope.x!=null&&$scope.x.value==true){
-            
-                data0 = $scope.x.data;
-                
-                NavigationService.callApiWithData("BuyOrder/displayList1", data0, function (data) {
-                    
-                    $scope.userBuyOrder = data.data.data;
+        // Display orders and trades of user
 
-                });
-                NavigationService.callApiWithData("SellOrder/displayList1", data0, function (data) {
-                  
-                    $scope.userSellOrder = data.data.data;
-
-
-                });
-                NavigationService.callApiWithData("Transaction/displayList1", data0, function (data) {
-                
-                    $scope.userTransaction = data.data.data;
-
-                });
-            
-            }
+        if ($scope.userData != null && $scope.userData.value == true) {
+            data0 = $scope.userData.data;
+            apiService.getUserTransactionList(data0, function (data) {
+                $scope.userTransaction = data.data.data;
+            });
+            apiService.getUserSellList(data0, function (data) {
+                $scope.userSellOrder = data.data.data;
+            });
+            apiService.getUserBuyList(data0, function (data) {
+                console.log('$$$$$$$', data0);
+                $scope.userBuyOrder = data.data.data;
+            });
+        }
+        // log outt
         $scope.logOut = function () {
             $.jStorage.flush();
             $state.reload();
         };
-        $scope.x = $.jStorage.get("user");
 
+        // Adding orders
+        $scope.userData = $.jStorage.get("user");
         $scope.addBuyOrder = function (data) {
-            data.user = $scope.x.data._id;
-
-
-            NavigationService.callApiWithData("BuyOrder/save", data, function (saveddata) {
-
+            data.user = $scope.userData.data._id;
+            apiService.getUpdatedUserBuyList(data, function (saveddata) {
+                console.log("dta", data);
                 if (saveddata.data.value == true) {
                     $state.reload();
                 }
-
             });
-
         };
-
         $scope.addSellOrder = function (data) {
-            data.user = $scope.x.data._id;
-
-            NavigationService.callApiWithData("SellOrder/save", data, function (saveddata) {
-
+            data.user = $scope.userData.data._id;
+            apiService.getUpdatedUserSellList(data, function (saveddata) {
                 if (saveddata.data.value == true) {
                     $state.reload();
                 }
-
             });
-
         };
     })
 
@@ -223,7 +127,7 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
         };
     })
 
-    // Example API Controller
+    // EuserDataample API Controller
     .controller('DemoAPICtrl', function ($scope, TemplateService, apiService, NavigationService, $timeout) {
         apiService.getDemo($scope.formData, function (data) {
             console.log(data);

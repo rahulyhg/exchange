@@ -87,11 +87,9 @@ module.exports = mongoose.model('User', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "user", "user"));
 var model = {
     doLogin: function (data, callback) {
-        console.log('ererere',data);
-        console.log(md5(data.password));
         User.findOne({
-        name: data.name,
-        password: data.password
+        name: data.data.name,
+        password: data.data.password
         
         }).exec(function (err, found) {
         if (err) {

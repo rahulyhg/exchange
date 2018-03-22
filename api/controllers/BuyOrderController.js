@@ -12,9 +12,11 @@ var controller = {
             });
         }
     },
-    displayList: function (req, res) {
+    getCompleteBuyList: function (req, res) {
+        console.log('yuuy');
         if (req.body) {
-            BuyOrder.displayList(req.body, res.callback);
+            console.log('tertete22');
+            BuyOrder.getCompleteBuyList(req.body, res.callback);
         } else {
             res.json({
                 value: false,
@@ -25,9 +27,9 @@ var controller = {
         }
     },
 
-    displayList1: function (req, res) {
+    getUserBuyList: function (req, res) {
         if (req.body) {
-            BuyOrder.displayList1(req.body, res.callback);
+            BuyOrder.getUserBuyList(req.body, res.callback);
         } else {
             res.json({
                 value: false,
@@ -36,6 +38,20 @@ var controller = {
                 }
             });
         }
+    },
+    save: function (req, res) {
+        req.model.saveData(req.body, function (err, data) {
+            if (err) {
+                res.callback(err);
+            } else {
+                BuyOrder.getCompleteBuyList({}, function (err, data) {
+                    if (data) {
+                        sails.sockets.blast("BuyOrderAdded", data);
+                    }
+                });
+                res.callback(err, data);
+            }
+        });
     },
 };
 module.exports = _.assign(module.exports, controller);

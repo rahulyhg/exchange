@@ -1,8 +1,8 @@
 module.exports = _.cloneDeep(require("sails-wohlig-controller"));
 var controller = {
-    displayList: function (req, res) {
+    getCompleteTransactionList: function (req, res) {
         if (req.body) {
-            Transaction.displayList(req.body, res.callback);
+            Transaction.getCompleteTransactionList(req.body, res.callback);
 
         } else {
             res.json({
@@ -13,10 +13,10 @@ var controller = {
             });
         }
     },
-    displayList1: function (req, res) {
+    getUserTransactionList: function (req, res) {
 
         if (req.body) {
-            Transaction.displayList1(req.body, res.callback);
+            Transaction.getUserTransactionList(req.body, res.callback);
 
         } else {
             res.json({
@@ -27,5 +27,6 @@ var controller = {
             });
         }
     },
+    
 };
 module.exports = _.assign(module.exports, controller);

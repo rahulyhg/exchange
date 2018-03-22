@@ -14,12 +14,12 @@ var schema = new Schema({
     },
     rate: {
         type: Number,
-        required: true,
+        required: true
 
     },
     quantity: {
         type: Number,
-        required: true,
+        required: true
 
     }
 });
@@ -63,7 +63,7 @@ var model = {
                 callback(err, null);
             } else {
                 // MatchingEngine.matchingBuyingOrderWithSellingOrder();
-                callback(null, found)
+                callback(null, found);
             }
         });
     },
@@ -79,7 +79,8 @@ var model = {
     //     });
     // },
 
-    displayList: function (data, callback) {
+    getCompleteBuyList: function (data, callback) {
+        console.log('#######');
         BuyOrder.find({}).sort({
                 createdAt: -1
             })
@@ -90,16 +91,19 @@ var model = {
                     callback("noDataound", null);
                 } else {
                     var list = _.orderBy(found, ['rate'], ['desc']);
+                    console.log('4444444444');
                     callback(null, list);
                 }
             });
 
     },
 
-    displayList1: function (data, callback) {
+    getUserBuyList: function (data, callback) {
+        console.log('@@@@@@', data);
         console.log('erere', data._id);
+        console.log('rtrtr', data.data._id);
         BuyOrder.find({
-            user: data._id
+            user: data.data._id
         }).exec(function (err, found) {
             if (err) {
                 callback(err, null);
@@ -107,11 +111,17 @@ var model = {
                 callback("noDataound", null);
             } else {
                 var list = _.orderBy(found, ['rate'], ['desc']);
+                console.log('&&&&&', found)
                 callback(null, list);
 
             }
 
         });
     },
+    // xyz:function(data,callback){
+    //     var x="Hello";
+    //     sails.socket.blast(x);
+    //     callback(null,x);
+    // },
 };
 module.exports = _.assign(module.exports, exports, model);

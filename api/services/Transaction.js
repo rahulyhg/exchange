@@ -47,7 +47,7 @@ module.exports = mongoose.model('Transaction', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "user script", "user script"));
 var model = {
-    displayList: function (data, callback) {
+    getCompleteTransactionList: function (data, callback) {
         Transaction.find({}).sort({
             createdAt: -1
         }).limit(20).exec(function (err, found) {
@@ -61,10 +61,10 @@ var model = {
             }
         });
     },
-    displayList1: function (data, callback) {
-        console.log('erere', data._id);
+    getUserTransactionList: function (data, callback) {
+        console.log('erere', data.data._id);
         Transaction.find({
-            user: data._id
+            user: data.data._id
         }).exec(function (err, found) {
             if (err) {
                 callback(err, null);
