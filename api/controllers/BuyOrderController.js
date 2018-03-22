@@ -13,9 +13,7 @@ var controller = {
         }
     },
     getCompleteBuyList: function (req, res) {
-        console.log('yuuy');
         if (req.body) {
-            console.log('tertete22');
             BuyOrder.getCompleteBuyList(req.body, res.callback);
         } else {
             res.json({

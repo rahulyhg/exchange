@@ -53,6 +53,7 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
 
 
         // Display orders and trades of user
+        console.log("$scope.userData ", $scope.userData)
 
         if ($scope.userData != null && $scope.userData.value == true) {
             data0 = $scope.userData.data;
@@ -63,7 +64,6 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
                 $scope.userSellOrder = data.data.data;
             });
             apiService.getUserBuyList(data0, function (data) {
-                console.log('$$$$$$$', data0);
                 $scope.userBuyOrder = data.data.data;
             });
         }

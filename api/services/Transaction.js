@@ -66,7 +66,6 @@ var model = {
     },
 
     getUserTransactionList: function (data, callback) {
-        console.log('erere', data.data._id);
         Transaction.find({
             user: data.data._id
         }).exec(function (err, found) {
