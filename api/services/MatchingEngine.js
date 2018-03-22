@@ -159,7 +159,7 @@ module.exports = {
             var last_element = MatchingEngine.sellingOrder[MatchingEngine.sellingOrder.length - 1];
             SellOrder.find({
                 rate: {
-                    $lt: last_element.rate
+                    $gt: last_element.rate
                 }
             }, function (err, data) {
                 if (err || _.isEmpty(data)) {
