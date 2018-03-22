@@ -5,9 +5,20 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
         TemplateService.footer = "";
         $scope.navigation = NavigationService.getNavigation();
 
+
+        //sockets
+
         io.socket.on("BuyOrderAdded", function (data) {
-            console.log('45454', data);
+            $scope.lists = data;
+            console.log('$scope.lists ', $scope.lists);
         });
+
+        io.socket.on("SellOrderAdded", function (data) {
+            $scope.lists1 = data;
+            console.log('$scope.lists ', $scope.lists1);
+        });
+
+        //sockets end
 
         $scope.tabs = [{
                 title: 'Dynamic Title 1',
@@ -77,20 +88,16 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
         $scope.userData = $.jStorage.get("user");
         $scope.addBuyOrder = function (data) {
             data.user = $scope.userData.data._id;
-            apiService.getUpdatedUserBuyList(data, function (saveddata) {
-                console.log("dta", data);
-                if (saveddata.data.value == true) {
-                    $state.reload();
-                }
+            data.type = "Buy"
+            apiService.getUpdatedUserBuyList(data, function (data) {
+                // console.log("data", data);
+                // $state.reload();
             });
         };
         $scope.addSellOrder = function (data) {
             data.user = $scope.userData.data._id;
-            apiService.getUpdatedUserSellList(data, function (saveddata) {
-                if (saveddata.data.value == true) {
-                    $state.reload();
-                }
-            });
+            data.type = "Sell"
+            apiService.getUpdatedUserSellList(data, function (saveddata) {});
         };
     })
 

@@ -191,7 +191,8 @@ module.exports = {
                  */
                 startTrading(callback);
             } else {
-                callback(); // No Trade Should Occur
+                buyObj.rate = rate
+                callback(null, buyObj); // No Trade Should Occur
             }
 
         } else if (indexNo == MatchingEngine.sellingOrder.length) { // Entire Array is getting matched
@@ -225,12 +226,12 @@ module.exports = {
                 _.each(currentOrderObjectArray, function (sellingObject) {
                     console.log(buyObj.quantity);
                     if (buyObj.quantity >= sellingObject.quantity) {
-                        var buyingTrade = _.cloneDeep(buyObj);
+                        var buyingTrade = _.cloneDeep(sellingObject);
                         buyingTrade.rate = sellingOrder.rate;
                         buyingTrade.quantity = sellingObject.quantity;
                         buyingTrades.push(buyingTrade);
 
-                        var sellingTrade = _.cloneDeep(sellingObject);
+                        var sellingTrade = _.cloneDeep(buyObj);
                         sellingTrade.rate = sellingOrder.rate;
                         sellingTrade.quantity = sellingObject.quantity;
                         sellingTrades.push(sellingTrade);
@@ -241,12 +242,12 @@ module.exports = {
                             return false;
                         }
                     } else if (buyObj.quantity < sellingObject.quantity) {
-                        var buyingTrade = _.cloneDeep(buyObj);
+                        var buyingTrade = _.cloneDeep(sellingObject);
                         buyingTrade.rate = sellingOrder.rate;
                         buyingTrade.quantity = buyObj.quantity;
                         buyingTrades.push(buyingTrade);
 
-                        var sellingTrade = _.cloneDeep(sellingObject);
+                        var sellingTrade = _.cloneDeep(buyObj);
                         sellingTrade.rate = sellingOrder.rate;
                         sellingTrade.quantity = buyObj.quantity;
                         sellingTrades.push(sellingTrade);
@@ -320,7 +321,8 @@ module.exports = {
                 buyingOrdersCount = 1;
                 startTrading(callback);
             } else {
-                callback(); // No Trade Should Occur
+                sellObj.rate = rate
+                callback(null, sellObj); // No Trade Should Occur
             }
         } else if (indexNo == MatchingEngine.buyingOrder.length) {
             buyingOrdersCount = indexNo;

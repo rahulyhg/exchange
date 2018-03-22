@@ -22,7 +22,7 @@ myApp.factory('apiService', function ($http, $q, $timeout) {
             });
         },
         // User Login
-        userLogin: function (data,callback) {
+        userLogin: function (data, callback) {
             $http.post(adminurl + "User/login", {
                 data: data
 
@@ -48,11 +48,22 @@ myApp.factory('apiService', function ($http, $q, $timeout) {
             });
         },
 
+        //save Buy And Sell
+
         getUpdatedUserBuyList: function (data, callback) {
-            $http.post(adminurl + "BuyOrder/Save", data).then(function (data) {
-                callback(data);
+            $http.post(adminurl + "Exchange/saveOrdersData", data).then(function (data) {
+                callback(data.data);
             });
         },
+
+        getUpdatedUserSellList: function (data, callback) {
+            $http.post(adminurl + "Exchange/saveOrdersData", data).then(function (data) {
+                callback(data.data);
+            });
+        },
+
+        //save Buy And Sell end
+
         //Sell order services
         getCompleteSellList: function (callback) {
             $http.post(adminurl + "SellOrder/getCompleteSellList").then(function (data) {
@@ -71,11 +82,6 @@ myApp.factory('apiService', function ($http, $q, $timeout) {
             });
         },
 
-        getUpdatedUserSellList: function (data, callback) {
-            $http.post(adminurl + "SellOrder/Save", data).then(function (data) {
-                callback(data);
-            });
-        },
         //Trade services
         getCompleteTransactionList: function (callback) {
             $http.post(adminurl + "Transaction/getCompleteTransactionList").then(function (data) {
@@ -86,18 +92,18 @@ myApp.factory('apiService', function ($http, $q, $timeout) {
             });
         },
         getUserTransactionList: function (data, callback) {
-       
+
             $http.post(adminurl + "Transaction/getUserTransactionList", {
                 data: data
 
             }).then(function (data) {
-               
+
                 callback(data);
             });
         },
 
         getUpdatedUserTransactionList: function (data, callback) {
-    
+
             $http.post(adminurl + "Transaction/Save", data).then(function (data) {
                 callback(data);
             });

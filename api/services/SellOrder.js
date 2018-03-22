@@ -23,8 +23,8 @@ var schema = new Schema({
     },
     status: {
         type: String,
-        enum: ['Complete', 'Partial'],
-        default: "Partial"
+        enum: ['Complete', 'Partial', 'Pending'],
+        default: "Pending"
     },
     trades: [{
         type: Schema.Types.ObjectId,

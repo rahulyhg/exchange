@@ -42,11 +42,7 @@ var controller = {
             if (err) {
                 res.callback(err);
             } else {
-                BuyOrder.getCompleteBuyList({}, function (err, data) {
-                    if (data) {
-                        sails.sockets.blast("BuyOrderAdded", data);
-                    }
-                });
+
                 res.callback(err, data);
             }
         });

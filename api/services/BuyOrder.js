@@ -26,8 +26,8 @@ var schema = new Schema({
     },
     status: {
         type: String,
-        enum: ['Complete', 'Partial'],
-        default: "Partial"
+        enum: ['Complete', 'Partial', 'Pending'],
+        default: "Pending"
     },
     trades: [{
         type: Schema.Types.ObjectId,
@@ -108,17 +108,52 @@ var model = {
             });
     },
 
-    getUserBuyList: function (data, callback) {
-        BuyOrder.find({
-            user: data.data._id
-        }).exec(function (err, found) {
+    getUserList: function (data, callback) {
+        var userListData = {};
+        async.waterfall([
+            function (callback) {
+                BuyOrder.find({
+                    user: data.data._id,
+                    "status": {
+                        $in: ["Pending", "Partial"]
+                    }
+                }).exec(function (err, found) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(found)) {
+                        callback("noDataound", null);
+                    } else {
+                        var list = _.orderBy(found, ['rate'], ['desc']);
+                        callback(null, list);
+                    }
+                });
+            },
+            function (BuyData, callback) {
+                SellOrder.find({
+                    user: data.data._id,
+                    "status": {
+                        $in: ["Pending", "Partial"]
+                    }
+                }).exec(function (err, found) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(found)) {
+                        callback("noDataound", null);
+                    } else {
+                        var list = _.orderBy(found, ['rate'], ['desc']);
+                        userListData.buyData = BuyData;
+                        userListData.sellData = list;
+                        callback(null, userListData);
+                    }
+                });
+            }
+        ], function asyncComplete(err, data) {
             if (err) {
                 callback(err, null);
-            } else if (_.isEmpty(found)) {
-                callback("noDataound", null);
             } else {
-                var list = _.orderBy(found, ['rate'], ['desc']);
-                callback(null, list);
+                sails.sockets.blast("UserBuyAndSellDataAdded", data);
+                callback(null, data);
+
             }
         });
     }

@@ -68,6 +68,11 @@ var model = {
                 if (err || _.isEmpty(data2)) {
                     callback(err, [])
                 } else {
+                    BuyOrder.getCompleteBuyList({}, function (err, data) {
+                        if (data) {
+                            sails.sockets.blast("BuyOrderAdded", data);
+                        }
+                    });
                     MatchingEngine.addToBuyingOrder(data2, callback);
                 }
             })
@@ -76,6 +81,11 @@ var model = {
                 if (err || _.isEmpty(data2)) {
                     callback(err, [])
                 } else {
+                    SellOrder.getCompleteSellList({}, function (err, data) {
+                        if (data) {
+                            sails.sockets.blast("SellOrderAdded", data);
+                        }
+                    });
                     MatchingEngine.addToSellingOrder(data2, callback);
                 }
             })
