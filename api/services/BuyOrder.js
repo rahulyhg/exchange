@@ -6,11 +6,9 @@ var schema = new Schema({
 
     },
     script: {
-
         type: Schema.Types.ObjectId,
         ref: 'Script',
         index: true
-
     },
     rate: {
         type: Number,
@@ -26,7 +24,11 @@ var schema = new Schema({
         type: Number,
         default: 0,
     },
-    status: String,
+    status: {
+        type: String,
+        enum: ['Complete', 'Partial'],
+        default: "Partial"
+    },
     trades: [{
         type: Schema.Types.ObjectId,
         ref: 'Transaction',
@@ -50,45 +52,45 @@ module.exports = mongoose.model('BuyOrder', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "user script", "user script", "order", "asc"));
 var model = {
 
-    findAllBuyOrders: function (data, callback) {
-        BuyOrder.aggregate([{
-                $group: {
-                    _id: "$rate",
-                    orders: {
-                        $push: {
-                            user: "$user",
-                            quantity: "$quantity",
-                            script: "$script",
-                            id: "$_id"
-                        }
-                    }
-                }
-            }, // Stage 2
-            {
-                $sort: {
-                    _id: -1
-                }
-            },
-        ], function (err, found) {
-            if (err || _.isEmpty(found)) {
-                callback(err, null);
-            } else {
-                // MatchingEngine.matchingBuyingOrderWithSellingOrder();
-                callback(null, found)
-            }
-        });
-    },
-
     // findAllBuyOrders: function (data, callback) {
-    //     BuyOrder.find({}).exec(function (err, found) {
+    //     BuyOrder.aggregate([{
+    //             $group: {
+    //                 _id: "$rate",
+    //                 orders: {
+    //                     $push: {
+    //                         user: "$user",
+    //                         quantity: "$quantity",
+    //                         script: "$script",
+    //                         id: "$_id"
+    //                     }
+    //                 }
+    //             }
+    //         }, // Stage 2
+    //         {
+    //             $sort: {
+    //                 _id: -1
+    //             }
+    //         },
+    //     ], function (err, found) {
     //         if (err || _.isEmpty(found)) {
     //             callback(err, null);
     //         } else {
-    //             MatchingEngine.createByingOrderArry(found);
+    //             // MatchingEngine.matchingBuyingOrderWithSellingOrder();
     //             callback(null, found)
     //         }
     //     });
     // },
+
+    findAllBuyOrders: function (data, callback) {
+        BuyOrder.find({}).exec(function (err, found) {
+            if (err || _.isEmpty(found)) {
+                callback(err, null);
+            } else {
+                MatchingEngine.appendBuying(callback)
+                // callback(null, found)
+            }
+        });
+    },
 
     displayList: function (data, callback) {
         BuyOrder.find({}).sort({
@@ -108,7 +110,6 @@ var model = {
     },
 
     displayList1: function (data, callback) {
-        console.log('erere', data._id);
         BuyOrder.find({
             user: data._id
         }).exec(function (err, found) {

@@ -83,7 +83,7 @@
                             <div class="row">
                               <label for="first_name" class="col-3 col-form-label label-color">Price:</label>
                               <div class="col-9 place-right">
-                                <input type="number" ng-model="data11.rate" class="form-control shadow-box" id="first_name" name="first_name" placeholder="Rate">
+                                <input type="number" ng-model="buyData.rate" class="form-control shadow-box" id="first_name" name="first_name" placeholder="Rate">
                               </div>
                             </div>
                           </div>
@@ -91,7 +91,7 @@
                             <div class="row">
                               <label for="last_name" class="col-3 col-form-label label-color">Quantity:</label>
                               <div class="col-9  place-right">
-                                <input type="number" ng-model="data11.quantity" class="form-control shadow-box" id="last_name" name="last_name" placeholder="Quantity">
+                                <input type="number" ng-model="buyData.quantity" class="form-control shadow-box" id="last_name" name="last_name" placeholder="Quantity">
                                 <div class="text-center">
                                   <button type="button" class="btn btn-light btn-percent shadow-box label-color">25%</button>
                                   <button type="button" class="btn btn-light btn-percent shadow-box label-color">50%</button>
@@ -118,7 +118,7 @@
                                   <span>Register</span> to trade</button>
                               </div>
                               <div class="col text-center" ng-if=x.value==true>
-                                <button type="" class="btn btn-light text-center btn-login w-100 shadow-box mt-3 label-color rounded" ng-click="addBuyOrder(data11)">
+                                <button type="" class="btn btn-light text-center btn-login w-100 shadow-box mt-3 label-color rounded" ng-click="addBuyOrder(buyData)">
                                   <span class="">Submit</span>
                                 </button>
                               </div>
@@ -147,7 +147,7 @@
                           <div class="row">
                             <label for="first_name" class="col-3 col-form-label label-color">Price:</label>
                             <div class="col-9 place-right">
-                              <input type="number" ng-model="data12.rate" class="form-control shadow-box" id="first_name" name="first_name" placeholder="Rate">
+                              <input type="number" ng-model="sellData.rate" class="form-control shadow-box" id="first_name" name="first_name" placeholder="Rate">
                             </div>
                           </div>
                         </div>
@@ -155,7 +155,7 @@
                           <div class="row">
                             <label for="last_name" class="col-3 col-form-label label-color">Quantity:</label>
                             <div class="col-9  place-right">
-                              <input type="number" ng-model="data12.quantity" class="form-control shadow-box" id="last_name" name="last_name" placeholder="Quantity">
+                              <input type="number" ng-model="sellData.quantity" class="form-control shadow-box" id="last_name" name="last_name" placeholder="Quantity">
                               <div class="text-center">
                                 <button type="button" class="btn btn-light btn-percent shadow-box label-color">25%</button>
                                 <button type="button" class="btn btn-light btn-percent shadow-box label-color">50%</button>
@@ -182,7 +182,7 @@
                                 <span>Register</span> to trade</button>
                             </div>
                             <div class="col" ng-if=x.value==true>
-                              <button type="" class="btn btn-light text-center w-100 btn-login shadow-box mt-3 label-color rounded" ng-click="addSellOrder(data12)">
+                              <button type="" class="btn btn-light text-center w-100 btn-login shadow-box mt-3 label-color rounded" ng-click="addSellOrder(sellData)">
                                 <span>Submit</span>
                             </div>
                           </div>
@@ -281,30 +281,30 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="data in userBuyOrder"ng-if="userBuyOrder!=null">
-                  <td>{{data.createdAt}}</td>
+                <tr ng-repeat="data in userBuyOrder" ng-if="userBuyOrder!=null">
+                  <td>{{data.createdAt | date}}</td>
                   <td>--</td>
                   <td>Buy</td>
                   <td>--</td>
                   <td>{{data.rate}}</td>
                   <td>{{data.quantity}}</td>
-                  <td>--</td>
+                  <td>{{data.filled}}</td>
                   <td class="text-right">{{data.rate*data.quantity}}</td>
                   <td class="text-right">--</td>
                   <td class="text-right pr-4">--</td>
                 </tr>
-                 <tr ng-repeat="data in userSellOrder"ng-if="userSellOrder!=null">
-                  <td>{{data.createdAt}}</td>
+                <tr ng-repeat="data in userSellOrder" ng-if="userSellOrder!=null">
+                  <td>{{data.createdAt |date}}</td>
                   <td>--</td>
                   <td>Sell</td>
                   <td>--</td>
                   <td>{{data.rate}}</td>
                   <td>{{data.quantity}}</td>
-                  <td>--</td>
+                  <td>{{data.filled}}</td>
                   <td class="text-right">{{data.rate*data.quantity}}</td>
                   <td class="text-right">--</td>
                   <td class="text-right pr-4">--</td>
-                </tr> 
+                </tr>
               </tbody>
             </table>
           </div>
@@ -347,8 +347,8 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="data in userTransaction"ng-if="userTransaction!=null">
-                  <td>{{data.createdAt}}</td>
+                <tr ng-repeat="data in userTransaction" ng-if="userTransaction!=null">
+                  <td>{{data.createdAt | date}}</td>
                   <td>--</td>
                   <td>{{data.orderType}}</td>
                   <td>--</td>

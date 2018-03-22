@@ -99,7 +99,6 @@ module.exports = {
 
 
     removeFromBuyingOrder: function () {
-
         /**
          * if(currenctRate > buyingOrder.$last.rate) {
          *      _.find(Rate) {
@@ -113,13 +112,66 @@ module.exports = {
 
     removeFromBuyingOrder: function () {},
 
-    appendBuying: function () {
+    appendBuying: function (callback) {
         // find diff =  minimumArrayLength-currentLength 
         // find Mongo Order Buying Object less than    buyingOrder.$last.rate with limit `diff`  in descending order
         // append to the array in the end
+        if (_.isEmpty(MatchingEngine.buyingOrder)) {
+            BuyOrder.find({}, function (err, data) {
+                if (err || _.isEmpty(data)) {
+                    callback(err, "noDataFound")
+                } else {
+                    async.concatSeries(data, function (value, callback) {
+                        MatchingEngine.addToBuyingOrder(value, callback)
+                    }, callback);
+                }
+            })
+        } else {
+            var last_element = MatchingEngine.buyingOrder[MatchingEngine.buyingOrder.length - 1];
+            BuyOrder.find({
+                rate: {
+                    $lt: last_element.rate
+                }
+            }, function (err, data) {
+                if (err || _.isEmpty(data)) {
+                    callback(err, "noDataFound")
+                } else {
+                    async.concatSeries(data, function (value, callback) {
+                        MatchingEngine.addToBuyingOrder(value, callback)
+                    }, callback);
+                }
+            })
+        }
     },
 
-    appendSelling: function () {},
+    appendSelling: function () {
+        if (_.isEmpty(MatchingEngine.sellingOrder)) {
+            SellOrder.find({}, function (err, data) {
+                if (err || _.isEmpty(data)) {
+                    callback(err, "noDataFound")
+                } else {
+                    async.concatSeries(data, function (value, callback) {
+                        MatchingEngine.addToSellingOrder(value, callback)
+                    }, callback);
+                }
+            })
+        } else {
+            var last_element = MatchingEngine.sellingOrder[MatchingEngine.sellingOrder.length - 1];
+            SellOrder.find({
+                rate: {
+                    $lt: last_element.rate
+                }
+            }, function (err, data) {
+                if (err || _.isEmpty(data)) {
+                    callback(err, "noDataFound")
+                } else {
+                    async.concatSeries(data, function (value, callback) {
+                        MatchingEngine.addToSellingOrder(value, callback)
+                    }, callback);
+                }
+            })
+        }
+    },
 
     matchingBuyingOrderWithSellingOrder: function (buyObj, rate, callback) {
         var indexNo = _.sortedIndexBy(MatchingEngine.sellingOrder, {
@@ -173,12 +225,12 @@ module.exports = {
                 _.each(currentOrderObjectArray, function (sellingObject) {
                     console.log(buyObj.quantity);
                     if (buyObj.quantity >= sellingObject.quantity) {
-                        var buyingTrade = _.cloneDeep(sellingObject);
+                        var buyingTrade = _.cloneDeep(buyObj);
                         buyingTrade.rate = sellingOrder.rate;
                         buyingTrade.quantity = sellingObject.quantity;
                         buyingTrades.push(buyingTrade);
 
-                        var sellingTrade = _.cloneDeep(buyObj);
+                        var sellingTrade = _.cloneDeep(sellingObject);
                         sellingTrade.rate = sellingOrder.rate;
                         sellingTrade.quantity = sellingObject.quantity;
                         sellingTrades.push(sellingTrade);
@@ -189,12 +241,12 @@ module.exports = {
                             return false;
                         }
                     } else if (buyObj.quantity < sellingObject.quantity) {
-                        var buyingTrade = _.cloneDeep(sellingObject);
+                        var buyingTrade = _.cloneDeep(buyObj);
                         buyingTrade.rate = sellingOrder.rate;
                         buyingTrade.quantity = buyObj.quantity;
                         buyingTrades.push(buyingTrade);
 
-                        var sellingTrade = _.cloneDeep(buyObj);
+                        var sellingTrade = _.cloneDeep(sellingObject);
                         sellingTrade.rate = sellingOrder.rate;
                         sellingTrade.quantity = buyObj.quantity;
                         sellingTrades.push(sellingTrade);
@@ -348,7 +400,6 @@ module.exports = {
                     endLoop2 = true;
                 }
             }
-
 
             if (buyingTrades && sellingTrades) {
                 async.parallel([

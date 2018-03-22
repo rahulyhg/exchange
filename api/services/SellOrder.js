@@ -17,8 +17,15 @@ var schema = new Schema({
         type: Number,
         required: true,
     },
-    filled: Number,
-    status: String,
+    filled: {
+        type: Number,
+        default: 0,
+    },
+    status: {
+        type: String,
+        enum: ['Complete', 'Partial'],
+        default: "Partial"
+    },
     trades: [{
         type: Schema.Types.ObjectId,
         ref: 'Transaction',
@@ -56,7 +63,6 @@ var model = {
         });
     },
     displayList1: function (data, callback) {
-        console.log('erere', data._id);
         SellOrder.find({
             user: data._id
         }).exec(function (err, found) {

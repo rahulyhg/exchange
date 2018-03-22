@@ -64,7 +64,6 @@ var model = {
         });
     },
     displayList1: function (data, callback) {
-        console.log('erere', data._id);
         Transaction.find({
             user: data._id
         }).exec(function (err, found) {
