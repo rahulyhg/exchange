@@ -27,7 +27,7 @@ myApp.factory('apiService', function ($http, $q, $timeout) {
                 data: data
 
             }).then(function (data) {
-                callback(data);
+                callback(data.data);
             });
         },
         //Buy order services

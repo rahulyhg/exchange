@@ -96,13 +96,12 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
 
         // User Login 
         $scope.submitForm = function (data) {
-            apiService.userLogin(data, function (saveddata) {
-                $.jStorage.set("user", saveddata.data);
+            apiService.userLogin(data, function (data) {
+                $.jStorage.set("user", data);
                 $state.reload();
             });
         };
         $scope.userData = $.jStorage.get("user");
-
 
         // Display orders and trades of user
 

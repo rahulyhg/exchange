@@ -61,8 +61,20 @@ module.exports = {
 
         console.log("MatchingEngine.buyingOrder", JSON.stringify(MatchingEngine.buyingOrder));
         if (indexData == 0 && !alreadyRateAvailable) {
+            console.log("data1", data1);
+            BuyOrder.getUserList(data1, function (err, data) {
+                if (data) {
+                    sails.sockets.blast("UserOrderDataAdded", data);
+                }
+            });
             MatchingEngine.matchingBuyingOrderWithSellingOrder(obj, data1.rate, callback);
         } else {
+            console.log("data1333333333333333333333333", data1);
+            BuyOrder.getUserList(data1, function (err, data) {
+                if (data) {
+                    sails.sockets.blast("UserOrderDataAdded", data);
+                }
+            });
             callback();
         }
         // Socket Call Buying HERE
@@ -100,8 +112,20 @@ module.exports = {
         console.log("MatchingEngine.sellingOrder", JSON.stringify(MatchingEngine.sellingOrder));
 
         if (indexData == 0 && !alreadyRateAvailable) {
+            console.log("data1", data1);
+            BuyOrder.getUserList(data1, function (err, data) {
+                if (data) {
+                    sails.sockets.blast("UserOrderDataAdded", data);
+                }
+            });
             MatchingEngine.matchingSellingOrderWithBuyingOrder(obj, data1.rate, callback);
         } else {
+            console.log("data1333333333333333333333333", data1);
+            BuyOrder.getUserList(data1, function (err, data) {
+                if (data) {
+                    sails.sockets.blast("UserOrderDataAdded", data);
+                }
+            });
             callback();
         }
         // Socket Call Selling HERE

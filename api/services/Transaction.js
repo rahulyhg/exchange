@@ -128,14 +128,15 @@ var model = {
                     sails.sockets.blast("TransactionOrderAdded", data);
                 }
             });
-            BuyOrder.getUserList(data, function (err, data) {
-                if (data) {
-                    sails.sockets.blast("UserOrderDataAdded", data);
-                }
-            });
             Transaction.getCompleteTransactionList({}, function (err, data) {
                 if (data) {
                     sails.sockets.blast("AllTransactionDataAdded", data);
+                }
+            });
+            console.log("dataa-------", data)
+            BuyOrder.getUserList(data, function (err, data) {
+                if (data) {
+                    sails.sockets.blast("UserOrderDataAdded", data);
                 }
             });
             callback(null, data)
