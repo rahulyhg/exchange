@@ -289,4 +289,46 @@ header {
     }
 }
 
+.login-placeholder{
+    &::-webkit-input-placeholder {
+        color: #e0e3e7;
+    }
+}
+
+.user-pass{
+    padding: 10px;
+    color: #6d6b6b;
+}
+
+.login-modal {
+    padding: 5px 75px; // .modal-content {
+    //     margin: 35% auto;
+    //     width: 80%;
+    //     border: none;
+    // }
+    opacity: 1!important;
+    top: 50%!important;
+}
+
+.login-modal .form-group {
+    input {
+        &:focus {
+            outline: none;
+        }
+    }
+   
+}
+.error-msg {
+    margin: 10px;
+    color: red !important;
+    font-size: 12px;
+}
+
+.reg-log{
+background: #ced4da;
+display: block;
+margin: 0 auto;
+}
+
+
 @import "kishori"

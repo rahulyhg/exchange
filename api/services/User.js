@@ -1,14 +1,11 @@
 var schema = new Schema({
     name: {
         type: String,
-        required: true,
-        excel: true,
+        unique: true
     },
     email: {
         type: String,
         validate: validators.isEmail(),
-        excel: "User Email",
-        unique: true
     },
     dob: {
         type: Date,

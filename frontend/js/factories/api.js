@@ -21,6 +21,14 @@ myApp.factory('apiService', function ($http, $q, $timeout) {
                 callback(data.data.data);
             });
         },
+        //user Register
+        userRegister: function (data, callback) {
+            console.log("%%%%%%%%%%",adminurl)
+            $http.post(adminurl + "User/save",data).then(function (data) {
+                console.log("Api response",data)
+                callback(data.data.data);
+            });
+        },
         // User Login
         userLogin: function (data, callback) {
             $http.post(adminurl + "User/login", {

@@ -1,5 +1,23 @@
 <div class="container-fluid">
   <div class="mx-4 mb-4">
+    <div class="row m-3">
+      <div class="col">
+        <div class="float-right">
+            <form name="formData" class="form-inline " >
+              <label class="user-pass" for="username">Username:</label>
+              <input type="text" class="form-control login-placeholder" ng-model="data1.name"  id="username" placeholder="Enter username" name="username">
+              <label class="user-pass" for="password">Password:</label>
+              <input type="password" class="form-control login-placeholder" ng-model="data1.password" name="password" id="password" placeholder="Enter password">
+              <button class="button button-block button-positive mx-4" ng-click="submitForm(data1)" class="btn btn-default" ng-disabled="formData.$invalid"
+              promise-btn>Log In</button>
+              <button class="button button-block button-positive" ng-click="openModal()">Register</button>
+            </form> 
+        </div>
+        
+      </div>
+       
+    </div>
+      
     <div class="row">
       <div class="col-12 col-md-3">
         <div class="table-responsive">
@@ -199,14 +217,14 @@
         </div>
       </div>
       <div class="col-12 col-md-3">
-        <div ng-if=userData==null||userData.value==false>
+        <!-- <div ng-if=userData==null||userData.value==false>
           <form name="formData">Username:
             <input type="text" ng-model="data1.name" name="username"> Password:
             <input type="password" ng-model="data1.password" name="password">
             <button class="button button-block button-positive" ng-click="submitForm(data1)" class="btn btn-default" ng-disabled="formData.$invalid"
               promise-btn>Log In</button>
           </form>
-        </div>
+        </div> -->
         <div ng-if=userData.value==true>
           <p>Welcome {{userData.data.name}}</p>
           <button class="button button-block button-positive" ng-click="logOut()" class="btn btn-default" ng-disabled="formData.$invalid"

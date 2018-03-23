@@ -1,10 +1,29 @@
-myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, NavigationService, apiService, $window, $timeout, toastr, $http) {
-        $scope.template = TemplateService.getHTML("content/home.html");
+myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, NavigationService, apiService, $window, $timeout, $uibModal, toastr, $http) {
+    $scope.template = TemplateService.getHTML("content/home.html");
         TemplateService.title = "Home"; //This is the Title of the Website
         TemplateService.header = "";
         TemplateService.footer = "";
         $scope.navigation = NavigationService.getNavigation();
+        var registerPopup = null;
+         $scope.openModal = function () {
+             console.log("*************");
+                registerPopup = $uibModal.open({
+                    templateUrl: "views/content/modal/register.html",
+                    scope: $scope,
+                    // windowClass: "login-modal"
+                });
+            };
 
+            $scope.closeModal = function(data1){
+                
+                apiService.userRegister(data1, function (data) {
+                    console.log("data",data)
+                    if (_.isEmpty(data)){
+                        toastr.warning("Please Enter unique Username");
+                    }
+                });
+                registerPopup.close();
+            }
 
         //sockets
 
