@@ -79,8 +79,9 @@ myApp.factory('apiService', function ($http, $q, $timeout) {
                 }
             });
         },
+
         getUserTransactionList: function (data, callback) {
-            $http.post(adminurl + "Transaction/getCompleteTransactionList").then(function (data) {
+            $http.post(adminurl + "Transaction/getUserTransactionList", data).then(function (data) {
                 if (data) {
                     callback(data.data);
                 }

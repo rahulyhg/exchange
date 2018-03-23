@@ -236,7 +236,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="data in lists2">
+              <tr ng-repeat="data in allTransactionData">
                 <td class="pl-3 text-danger font-weight-bold">{{data.rate}}</td>
                 <td class="pl-4 font-weight-bold">{{data.quantity}}</td>
 
@@ -287,7 +287,7 @@
                   <td>Buy</td>
                   <td>--</td>
                   <td>{{data.rate}}</td>
-                  <td>{{data.quantity}}</td>
+                  <td>{{data.quantity-data.filled}}</td>
                   <td>{{data.filled}}</td>
                   <td class="text-right">{{data.rate*data.quantity}}</td>
                   <td class="text-right">--</td>

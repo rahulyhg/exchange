@@ -55,13 +55,11 @@ var model = {
             createdAt: -1
         }).limit(20).exec(function (err, found) {
             if (err) {
-                callback(err, null);
-            } else if (_.isEmpty(found)) {
-                callback("noDataound", null);
+                callback(err, "noData")
             } else {
-                //var list2 = _.orderBy(found, ['rate'], ['desc']);
                 callback(null, found);
             }
+
         });
     },
 
@@ -133,6 +131,11 @@ var model = {
             BuyOrder.getUserList(data, function (err, data) {
                 if (data) {
                     sails.sockets.blast("UserOrderDataAdded", data);
+                }
+            });
+            Transaction.getCompleteTransactionList({}, function (err, data) {
+                if (data) {
+                    sails.sockets.blast("AllTransactionDataAdded", data);
                 }
             });
             callback(null, data)

@@ -128,7 +128,9 @@ module.exports = {
         // find Mongo Order Buying Object less than    buyingOrder.$last.rate with limit `diff`  in descending order
         // append to the array in the end
         if (_.isEmpty(MatchingEngine.buyingOrder)) {
-            BuyOrder.find({}, function (err, data) {
+            BuyOrder.find({}).sort({
+                rate: -1
+            }).exec(function (err, data) {
                 if (err || _.isEmpty(data)) {
                     callback(err, "noDataFound")
                 } else {
@@ -157,7 +159,9 @@ module.exports = {
 
     appendSelling: function (callback) {
         if (_.isEmpty(MatchingEngine.sellingOrder)) {
-            SellOrder.find({}, function (err, data) {
+            SellOrder.find({}).sort({
+                rate: 1
+            }).exec(function (err, data) {
                 if (err || _.isEmpty(data)) {
                     callback(err, "noDataFound")
                 } else {

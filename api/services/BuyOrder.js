@@ -123,7 +123,7 @@ var model = {
                     } else {
                         var list;
                         if (_.isEmpty(found)) {
-                            list = {};
+                            found = {};
                         }
                         list = _.orderBy(found, ['rate'], ['desc']);
                         callback(null, list);

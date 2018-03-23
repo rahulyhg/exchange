@@ -9,14 +9,36 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
         //sockets
 
         io.socket.on("BuyOrderAdded", function (data) {
-            $scope.lists = data;
-            console.log('$scope.lists ', $scope.lists);
+            $scope.lists = [];
+            _.forEach(data, function (n) {
+                var buyDataToSend = {};
+                buyDataToSend.rate = n.rate;
+                buyDataToSend.quantity = _.sumBy(n.orders, function (o) {
+                    return o.quantity;
+                })
+                $scope.lists.push(buyDataToSend);
+                $scope.lists.slice(0, 20);
+            })
         });
 
         io.socket.on("SellOrderAdded", function (data) {
-            $scope.lists1 = data;
-            console.log('$scope.lists ', $scope.lists1);
+            $scope.lists1 = [];
+            _.forEach(data, function (n) {
+                var sellDataToSend = {};
+                sellDataToSend.rate = n.rate;
+                sellDataToSend.quantity = _.sumBy(n.orders, function (o) {
+                    return o.quantity;
+                })
+                $scope.lists1.push(sellDataToSend);
+                $scope.lists1.slice(0, 20);
+            })
         });
+
+        io.socket.on("AllTransactionDataAdded", function (data) {
+            $scope.allTransactionData = data;
+            console.log('$scope.allTransactionData ', $scope.allTransactionData);
+        });
+
 
         io.socket.on("TransactionOrderAdded", function (data) {
             $scope.userTransaction = data;
@@ -27,6 +49,7 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
             $scope.userOrder = data;
             console.log('$scope.userOrder ', $scope.userOrder);
         });
+
 
         //sockets end
 
@@ -51,19 +74,22 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
             name: 'Tabs'
         };
         // Display Buy Sell Transaction All users
-        apiService.getCompleteBuyList(function (data) {
-            $scope.lists = data.data;
-        });
-        apiService.getCompleteSellList(function (data) {
-            $scope.lists1 = data.data;
-        });
+
+        // apiService.getCompleteBuyList(function (data) {
+        //     $scope.lists = data.data;
+        // });
+        // apiService.getCompleteSellList(function (data) {
+        //     $scope.lists1 = data.data;
+        // });
+
         apiService.getCompleteTransactionList(function (data) {
-            $scope.lists2 = data.data;
+            $scope.allTransactionData = data.data;
         });
 
         NavigationService.apiCallWithoutData("Exchange/getArrData", function (data) {
-            $scope.lists2 = data.data;
+            $scope.buyAndSellData = data.data;
         });
+
 
         $scope.value = "";
         $scope.data1 = {};
@@ -79,16 +105,18 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
 
 
         // Display orders and trades of user
-        console.log("$scope.userData ", $scope.userData)
 
         if ($scope.userData != null && $scope.userData.value == true) {
-            data0 = $scope.userData.data;
-            apiService.getUserTransactionList(data0, function (data) {
+
+            var getUserTransactionData = {}
+            getUserTransactionData.user = $scope.userData.data._id
+            apiService.getUserTransactionList(getUserTransactionData, function (data) {
                 $scope.userTransaction = data.data;
+
             });
-            console.log("data0", data0)
+
             var dataToSend = {};
-            dataToSend.user = data0._id
+            dataToSend.user = $scope.userData.data._id
             apiService.getUserList(dataToSend, function (data) {
                 $scope.userOrder = data.data;
             });
