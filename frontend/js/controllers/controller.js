@@ -1,56 +1,56 @@
 myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, NavigationService, apiService, $window, $timeout, $uibModal, toastr, $http) {
-    $scope.template = TemplateService.getHTML("content/home.html");
+        $scope.template = TemplateService.getHTML("content/home.html");
         TemplateService.title = "Home"; //This is the Title of the Website
         TemplateService.header = "";
         TemplateService.footer = "";
         $scope.navigation = NavigationService.getNavigation();
         var registerPopup = null;
-         $scope.openModal = function () {
-             console.log("*************");
-                registerPopup = $uibModal.open({
-                    templateUrl: "views/content/modal/register.html",
-                    scope: $scope,
-                    // windowClass: "login-modal"
-                });
-            };
+        $scope.openModal = function () {
+            console.log("*************");
+            registerPopup = $uibModal.open({
+                templateUrl: "views/content/modal/register.html",
+                scope: $scope,
+                // windowClass: "login-modal"
+            });
+        };
 
-            $scope.closeModal = function(data1){
-                
-                apiService.userRegister(data1, function (data) {
-                    console.log("data",data)
-                    if (_.isEmpty(data)){
-                        toastr.warning("Please Enter unique Username");
-                    }
-                });
-                registerPopup.close();
-            }
+        $scope.closeModal = function (data1) {
+
+            apiService.userRegister(data1, function (data) {
+                console.log("data", data);
+                if (_.isEmpty(data)) {
+                    toastr.warning("Please Enter unique Username");
+                }
+            });
+            registerPopup.close();
+        };
 
         //sockets
 
         io.socket.on("BuyOrderAdded", function (data) {
             $scope.lists = [];
-            _.forEach(data, function (n) {
+            _.each(data, function (n) {
                 var buyDataToSend = {};
                 buyDataToSend.rate = n.rate;
                 buyDataToSend.quantity = _.sumBy(n.orders, function (o) {
                     return o.quantity;
-                })
+                });
                 $scope.lists.push(buyDataToSend);
                 $scope.lists.slice(0, 20);
-            })
+            });
         });
 
         io.socket.on("SellOrderAdded", function (data) {
             $scope.lists1 = [];
-            _.forEach(data, function (n) {
+            _.each(data, function (n) {
                 var sellDataToSend = {};
                 sellDataToSend.rate = n.rate;
                 sellDataToSend.quantity = _.sumBy(n.orders, function (o) {
                     return o.quantity;
-                })
+                });
                 $scope.lists1.push(sellDataToSend);
                 $scope.lists1.slice(0, 20);
-            })
+            });
         });
 
         io.socket.on("AllTransactionDataAdded", function (data) {
@@ -149,14 +149,14 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
         $scope.userData = $.jStorage.get("user");
         $scope.addBuyOrder = function (data) {
             data.user = $scope.userData.data._id;
-            data.type = "Buy"
+            data.type = "Buy";
             apiService.getUpdatedUserBuyList(data, function (data) {
                 toastr.success("Buy Order List Updated");
             });
         };
         $scope.addSellOrder = function (data) {
             data.user = $scope.userData.data._id;
-            data.type = "Sell"
+            data.type = "Sell";
             apiService.getUpdatedUserSellList(data, function (saveddata) {
                 toastr.success("Sell Order List Updated");
             });

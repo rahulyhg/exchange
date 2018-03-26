@@ -65,8 +65,10 @@ var model = {
 
     getUserTransactionList: function (data, callback) {
         Transaction.find({
-            user: data.user
-        }).exec(function (err, found) {
+            user: data.user,
+        }).sort({
+            createdAt: -1
+        }).limit(20).exec(function (err, found) {
             if (err) {
                 callback(err, null);
             } else if (_.isEmpty(found)) {
