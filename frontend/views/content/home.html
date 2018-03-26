@@ -22,7 +22,9 @@
           </form>
         </div>
         <div class="float-right" ng-if=userData.value==true>
-          <p class="display-name">Welcome {{userData.data.name}}</p>
+          <p class="display-name">Welcome,
+            <span class="text-capitalize">{{userData.data.name}}</span>
+          </p>
           <button class="btn btn-light text-center btn-logout shadow-box label-color rounded mx-2" ng-click="logOut()" class="btn btn-default"
             ng-disabled="formData.$invalid" promise-btn>
             <span>Log Out</span>
@@ -61,7 +63,7 @@
                   </div>
                   <div class="col-12 form-group form-group-sm  mb-2">
                     <div class="row">
-                      <label for="last_name" class="col-3 col-form-label label-color">Quantity:</label>
+                      <label for="last_name" class="col-3 col-form-label label-color">Qnt:</label>
                       <div class="col-9  place-right">
                         <input type="number" ng-model="buyData.quantity" class="form-control shadow-box" id="last_name" name="last_name" placeholder="Quantity">
                         <!-- <div class="text-center">
@@ -123,7 +125,7 @@
                 </div>
                 <div class="col-12 form-group form-group-sm  mb-2">
                   <div class="row">
-                    <label for="last_name" class="col-3 col-form-label label-color">Quantity:</label>
+                    <label for="last_name" class="col-3 col-form-label label-color">Qnt:</label>
                     <div class="col-9  place-right">
                       <input type="number" ng-model="sellData.quantity" class="form-control shadow-box" id="last_name" name="last_name" placeholder="Quantity">
                       <!-- <div class="text-center">
