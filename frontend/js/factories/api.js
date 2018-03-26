@@ -23,9 +23,9 @@ myApp.factory('apiService', function ($http, $q, $timeout) {
         },
         //user Register
         userRegister: function (data, callback) {
-            console.log("%%%%%%%%%%",adminurl)
-            $http.post(adminurl + "User/save",data).then(function (data) {
-                console.log("Api response",data)
+            console.log("%%%%%%%%%%", adminurl)
+            $http.post(adminurl + "User/save", data).then(function (data) {
+                console.log("Api response", data)
                 callback(data.data.data);
             });
         },

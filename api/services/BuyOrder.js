@@ -93,19 +93,9 @@ var model = {
     },
 
     getCompleteBuyList: function (data, callback) {
-        BuyOrder.find({}).sort({
-                createdAt: -1
-            })
-            .limit(20).exec(function (err, found) {
-                if (err) {
-                    callback(err, null);
-                } else if (_.isEmpty(found)) {
-                    callback("noDataound", null);
-                } else {
-                    var list = _.orderBy(found, ['rate'], ['desc']);
-                    callback(null, list);
-                }
-            });
+        MatchingEngine.getBuyersSellers(function (err, data) {
+            callback(err, data.buyers);
+        });
     },
 
     getUserList: function (data, callback) {

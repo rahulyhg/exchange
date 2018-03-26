@@ -49,17 +49,8 @@ var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "user script",
 var model = {
 
     getCompleteSellList: function (data, callback) {
-        SellOrder.find({}).sort({
-            createdAt: -1
-        }).limit(20).exec(function (err, found) {
-            if (err) {
-                callback(err, null);
-            } else if (_.isEmpty(found)) {
-                callback("noDataound", null);
-            } else {
-                var list1 = _.orderBy(found, ['rate'], ['asc']);
-                callback(null, list1);
-            }
+        MatchingEngine.getBuyersSellers(function (err, data) {
+            callback(err, data.sellers);
         });
     },
 

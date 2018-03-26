@@ -78,7 +78,7 @@ var model = {
                 } else {
                     MatchingEngine.addToSellingOrder(data2, callback);
                 }
-            })
+            });
         }
     },
 
@@ -91,7 +91,7 @@ var model = {
             } else {
                 callback(null, "noData");
             }
-        })
+        });
     },
 
 };
