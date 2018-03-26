@@ -179,7 +179,7 @@
               <tr>
 
                 <th colspan="2">
-                  <h6>List of BuyOrders</h6>
+                  <h6>Buy Orders</h6>
                 </th>
               </tr>
             </thead>
@@ -193,8 +193,8 @@
             <tbody>
               <tr ng-repeat="data in lists|limitTo:20">
 
-                <td class=" font-weight-bold">{{data.quantity}}</td>
-                <td class=" text-success font-weight-bold">{{data.rate}}</td>
+                <td class=" font-weight-bold">{{data.quantity|number}}</td>
+                <td class=" text-success font-weight-bold">{{data.rate|number}}</td>
               </tr>
 
             </tbody>
@@ -208,7 +208,7 @@
             <thead class="thead-light">
               <tr>
                 <th colspan="2">
-                  <h6>List of SellOrders</h6>
+                  <h6>Sell Orders</h6>
                 </th>
               </tr>
             </thead>
@@ -222,8 +222,8 @@
             <tbody>
               <tr ng-repeat="data in lists1|limitTo:20">
 
-                <td class=" text-danger font-weight-bold">{{data.rate}}</td>
-                <td class=" font-weight-bold">{{data.quantity}}</td>
+                <td class=" text-danger font-weight-bold">{{data.rate|number}}</td>
+                <td class=" font-weight-bold">{{data.quantity|number}}</td>
               </tr>
             </tbody>
           </table>
@@ -267,7 +267,7 @@
               <tr ng-repeat="data in allTransactionData">
 
                 <td class=" text-danger font-weight-bold" ng-class="{'buy-btc-color': data.orderType=='Buy'}">{{data.rate}}</td>
-                <td class=" font-weight-bold">{{data.quantity}}</td>
+                <td class=" font-weight-bold">{{data.quantity|number}}</td>
                 <td>{{data.createdAt|date:'HH:mm:ss'}}</td>
               </tr>
             </tbody>
@@ -276,7 +276,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-12 col-lg-12">
+      <!-- <div class="col-md-12 col-lg-12">
         <div class="mt-4 table-order">
           <div class="float-left">
             <h6 class="font-weight-bold">
@@ -306,12 +306,12 @@
                       <option></option>
                     </select>
                   </th>
-                  <!-- <th></th> -->
+
                 </tr>
               </thead>
               <tbody>
                 <tr ng-repeat="data in userOrder.buyData" ng-if="userOrder.buyData!=null">
-                  <td>{{data.createdAt | date}}</td>
+                  <td>{{data.createdAt | date:'short'}}</td>
                   <td>--</td>
                   <td>Buy</td>
                   <td>--</td>
@@ -338,7 +338,7 @@
             </table>
           </div>
         </div>
-      </div>
+      </div> -->
       <div class="col-md-12 col-lg-12">
         <div class="mt-4 table-order">
           <div class="float-left">
@@ -346,48 +346,34 @@
               My Trade History
             </h6>
           </div>
-          <div class="float-right hide-pair">
-            <input type="checkbox" class="align-middle">
-            <span>Hide other pairs</span>
-            <span class="pl-3 font-weight-bold">
-              <a>More</a>
-            </span>
-          </div>
+
           <div class="table-responsive border">
             <table class="table table-order">
               <thead>
                 <tr>
                   <th>Date</th>
-                  <th>Pair</th>
+
                   <th>Type</th>
-                  <th>Side</th>
+
                   <th>Price</th>
                   <th>Quantity</th>
-                  <th>Filled%</th>
+
                   <th class="text-right">Total</th>
-                  <th class="text-right">Trigger conditions</th>
-                  <th class="text-right pr-4">
-                    <button type="button" class="btn btn-cancle">cancel All</button>
-                    <select class="select-option align-middle">
-                      <option></option>
-                    </select>
-                  </th>
-                  <th>Status</th>
+
+
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="data in userTransaction" ng-if="userTransaction!=null">
-                  <td>{{data.createdAt | date}}</td>
-                  <td>--</td>
+                <tr ng-repeat="data in userTransaction|orderBy:date.createAt:'desc'" ng-if="userTransaction!=null">
+                  <td>{{data.createdAt | date:'short'}}</td>
+
                   <td>{{data.orderType}}</td>
-                  <td>--</td>
-                  <td>{{data.rate}}</td>
-                  <td>{{data.quantity}}</td>
-                  <td>--</td>
-                  <td class="text-right">{{data.rate*data.quantity}}</td>
-                  <td class="text-right">--</td>
-                  <td class="text-right pr-4">--</td>
-                  <td>--</td>
+
+                  <td>{{data.rate|number}}</td>
+                  <td>{{data.quantity|number}}</td>
+
+                  <td class="text-right">{{data.rate*data.quantity|number}}</td>
+
                 </tr>
               </tbody>
             </table>
