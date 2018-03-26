@@ -355,7 +355,8 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="data in userTransaction" ng-if="userTransaction!=null">
+                <tr ng-class="{'row-background-green':data.orderType=='Buy' , 'row-background-red':data.orderType=='Sell'}" ng-repeat="data in userTransaction"
+                  ng-if="userTransaction!=null">
                   <td>{{data.createdAt | date:'short'}}</td>
 
                   <td class="font-weight-bold" ng-class="{'text-success':data.orderType=='Buy' , 'text-danger':data.orderType=='Sell'}">{{data.orderType}}</td>
