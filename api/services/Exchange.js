@@ -84,13 +84,12 @@ var model = {
 
     getArrData: function (data, callback) {
         MatchingEngine.getBuyersSellers(function (err, data) {
-            // console.log("data!!!!!!!!!!!!!!!", data);
             if (data) {
                 sails.sockets.blast("SellOrderAdded", data.sellers);
                 sails.sockets.blast("BuyOrderAdded", data.buyers);
-                callback(null, data)
+                callback(null, data);
             } else {
-                callback(null, "noData")
+                callback(null, "noData");
             }
         })
     },

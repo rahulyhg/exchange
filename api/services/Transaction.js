@@ -55,7 +55,7 @@ var model = {
             createdAt: -1
         }).limit(20).exec(function (err, found) {
             if (err) {
-                callback(err, "noData")
+                callback(err, "noData");
             } else {
                 callback(null, found);
             }
