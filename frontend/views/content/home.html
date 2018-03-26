@@ -364,7 +364,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="data in userTransaction|orderBy:date.createAt:'desc'" ng-if="userTransaction!=null">
+                <tr ng-repeat="data in userTransaction" ng-if="userTransaction!=null">
                   <td>{{data.createdAt | date:'short'}}</td>
 
                   <td>{{data.orderType}}</td>

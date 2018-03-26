@@ -86,7 +86,7 @@ var model = {
             if (err || _.isEmpty(found)) {
                 callback(err, null);
             } else {
-                MatchingEngine.appendBuying(callback)
+                MatchingEngine.appendBuying(callback);
                 // callback(null, found)
             }
         });
