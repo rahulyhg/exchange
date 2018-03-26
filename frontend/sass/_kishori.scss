@@ -2,12 +2,12 @@
 ////////////////////// tabs css///////////////////
 .exchange-tabs {
     @include border-color($darkgray $darkgray null $darkgray);
-    border: 1px solid transparent;
-    .tab-pane{
-        border-bottom: 1px solid $darkgray;
-        border-left:1px solid $darkgray;
-        border-right:1px solid $darkgray;
-    }
+    border: 1px solid $darkgray;
+    // .tab-pane{
+    //     border-bottom: 1px solid $darkgray;
+    //     border-left:1px solid $darkgray;
+    //     border-right:1px solid $darkgray;
+    // }
    
    .bor-top{
        border-top:1px solid $darkgray;

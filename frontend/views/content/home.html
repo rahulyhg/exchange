@@ -19,9 +19,146 @@
     </div>
       
     <div class="row">
-      <div class="col-12 col-md-3">
-        <div class="table-responsive">
-          <table class="table-amount border">
+        <div class="col-12 col-md-3 exchange-tabs">
+            <div class="">
+              <!-- <uib-tabset active="activeJustified" justified="true">
+                <uib-tab index="0" heading="Limit"> -->
+                      <form class="form-horizontal">
+                        <div class="px-3">
+                          <div class="">
+                            <div class="row">
+                              <div class="col form-group form-group-sm">
+                                <div class="row">
+                                  <label for="first_name" class="col-6 col-form-label font-weight-bold">
+                                    Buy BTC
+                                  </label>
+                                  <!-- <div class="col-6 text-right">
+                                    <label for="first_name" class="col-form-label label-color">USDT Balance:--</label>
+                                  </div> -->
+                                </div>
+                              </div>
+                              <div class="col-12 form-group form-group-sm mb-2">
+                                <div class="row">
+                                  <label for="first_name" class="col-3 col-form-label label-color">Price:</label>
+                                  <div class="col-9 place-right">
+                                    <input type="number" ng-model="buyData.rate" class="form-control shadow-box" id="first_name" name="first_name" placeholder="Rate">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-12 form-group form-group-sm  mb-2">
+                                <div class="row">
+                                  <label for="last_name" class="col-3 col-form-label label-color">Quantity:</label>
+                                  <div class="col-9  place-right">
+                                    <input type="number" ng-model="buyData.quantity" class="form-control shadow-box" id="last_name" name="last_name" placeholder="Quantity">
+                                    <!-- <div class="text-center">
+                                      <button type="button" class="btn btn-light btn-percent shadow-box label-color">25%</button>
+                                      <button type="button" class="btn btn-light btn-percent shadow-box label-color">50%</button>
+                                      <button type="button" class="btn btn-light btn-percent shadow-box label-color">75%</button>
+                                      <button type="button" class="btn btn-light btn-percent shadow-box label-color">100%</button>
+                                    </div> -->
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-12 form-group form-group-sm">
+                                <div class="row">
+                                  <label for="Street" class="col-3 col-form-label label-color">Total:</label>
+                                  <div class="col-9  place-right">
+                                    <input type="number" ng-model="Total" ng-init="Total=(buyData.rate)*(buyData.quantity)" value="{{buyData.quantity*buyData.rate}}"
+                                      class="form-control shadow-box" id="Street" name="Street" placeholder="Total">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col form-group form-group-sm">
+                                <div class="row">
+                                  <div class="col text-center" ng-if=userData==null||userData.value==false>
+                                    <button type="submit" class="btn btn-light text-center btn-login w-100 shadow-box mt-3 label-color rounded">
+                                      <span class="">Login</span> or
+                                      <span>Register</span> to trade</button>
+                                  </div>
+                                  <div class="col text-center" ng-if=userData.value==true>
+                                    <button type="" class="btn btn-light text-center btn-login w-100 shadow-box mt-3 label-color rounded" ng-click="addBuyOrder(buyData)">
+                                      <span class="">Submit</span>
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                      <form class="form-horizontal">
+                        <div class="px-3">
+                          <div class="row">
+                            <div class="col form-group form-group-sm bor-top">
+                              <div class="row">
+                                <label for="first_name" class="col-6 col-form-label font-weight-bold">
+                                  Sell BTC
+                                </label>
+                                <!-- <div class="col-6 text-right">
+                                  <label for="first_name" class="col-form-label label-color">USDT Balance:--</label>
+                                </div> -->
+                              </div>
+                            </div>
+                            <div class="col-12 form-group form-group-sm  mb-2">
+                              <div class="row">
+                                <label for="first_name" class="col-3 col-form-label label-color">Price:</label>
+                                <div class="col-9 place-right">
+                                  <input type="number" ng-model="sellData.rate" class="form-control shadow-box" id="first_name" name="first_name" placeholder="Rate">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12 form-group form-group-sm  mb-2">
+                              <div class="row">
+                                <label for="last_name" class="col-3 col-form-label label-color">Quantity:</label>
+                                <div class="col-9  place-right">
+                                  <input type="number" ng-model="sellData.quantity" class="form-control shadow-box" id="last_name" name="last_name" placeholder="Quantity">
+                                  <!-- <div class="text-center">
+                                    <button type="button" class="btn btn-light btn-percent shadow-box label-color">25%</button>
+                                    <button type="button" class="btn btn-light btn-percent shadow-box label-color">50%</button>
+                                    <button type="button" class="btn btn-light btn-percent shadow-box label-color">75%</button>
+                                    <button type="button" class="btn btn-light btn-percent shadow-box label-color">100%</button>
+                                  </div> -->
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12 form-group form-group-sm">
+                              <div class="row">
+                                <label for="Street" class="col-3 col-form-label label-color">Total:</label>
+                                <div class="col-9  place-right">
+                                  <input type="number" ng-model="Total1" ng-init="Total=(sellData.rate)*(sellData.quantity)" value="{{sellData.quantity*sellData.rate}}"
+                                    class="form-control shadow-box" id="Street" name="Street" placeholder="Total">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12 form-group form-group-sm">
+                              <div class="row">
+                                <div class="col" ng-if=userData==null||userData.value==false>
+                                  <button type="submit" class="btn btn-light text-center w-100 btn-login shadow-box mt-3 label-color rounded">
+                                    <span>Login</span> or
+                                    <span>Register</span> to trade</button>
+                                </div>
+                                <div class="col" ng-if=userData.value==true>
+                                  <button type="" class="btn btn-light text-center w-100 btn-login shadow-box mt-3 label-color rounded" ng-click="addSellOrder(sellData)">
+                                    <span>Submit</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                   
+                    
+                     
+                    
+                <!-- </uib-tab>
+                <uib-tab index="1" heading="Market">Market</uib-tab>
+                <uib-tab index="2" heading="Stop-Limit">Stop-Limit </uib-tab>
+              </uib-tabset> -->
+            </div>
+          </div>
+      <div class="col-12 col-md-3 ">
+        <div class="table-responsive text-center">
+          <table class="table-amount border w-100">
             <thead class="thead-light">
               <tr>
                 <th>
@@ -48,8 +185,10 @@
           </table>
 
         </div>
-        <div class="table-responsive">
-          <table class="table-amount green-hover border">
+        </div>
+        <div class="col-12 col-md-3">
+        <div class="table-responsive text-center">
+          <table class="table-amount green-hover border w-100">
             <thead class="thead-light">
               <tr>
                 <th>
@@ -77,145 +216,7 @@
           </table>
         </div>
       </div>
-      <div class="col-12 col-md-6">
-        <div class="exchange-tabs">
-          <uib-tabset active="activeJustified" justified="true">
-            <uib-tab index="0" heading="Limit">
-              <div class="row">
-                <div class="col col-lg-6">
-                  <form class="form-horizontal">
-                    <div class="px-3">
-                      <div class="bor-right">
-                        <div class="row">
-                          <div class="col form-group form-group-sm">
-                            <div class="row">
-                              <label for="first_name" class="col-6 col-form-label font-weight-bold">
-                                Buy BTC
-                              </label>
-                              <div class="col-6 text-right">
-                                <label for="first_name" class="col-form-label label-color">USDT Balance:--</label>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-12 form-group form-group-sm mb-2">
-                            <div class="row">
-                              <label for="first_name" class="col-3 col-form-label label-color">Price:</label>
-                              <div class="col-9 place-right">
-                                <input type="number" ng-model="buyData.rate" class="form-control shadow-box" id="first_name" name="first_name" placeholder="Rate">
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-12 form-group form-group-sm  mb-2">
-                            <div class="row">
-                              <label for="last_name" class="col-3 col-form-label label-color">Quantity:</label>
-                              <div class="col-9  place-right">
-                                <input type="number" ng-model="buyData.quantity" class="form-control shadow-box" id="last_name" name="last_name" placeholder="Quantity">
-                                <div class="text-center">
-                                  <button type="button" class="btn btn-light btn-percent shadow-box label-color">25%</button>
-                                  <button type="button" class="btn btn-light btn-percent shadow-box label-color">50%</button>
-                                  <button type="button" class="btn btn-light btn-percent shadow-box label-color">75%</button>
-                                  <button type="button" class="btn btn-light btn-percent shadow-box label-color">100%</button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-12 form-group form-group-sm">
-                            <div class="row">
-                              <label for="Street" class="col-3 col-form-label label-color">Total:</label>
-                              <div class="col-9  place-right">
-                                <input type="number" ng-model="Total" ng-init="Total=(buyData.rate)*(buyData.quantity)" value="{{buyData.quantity*buyData.rate}}"
-                                  class="form-control shadow-box" id="Street" name="Street" placeholder="Total">
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col form-group form-group-sm">
-                            <div class="row">
-                              <div class="col text-center" ng-if=userData==null||userData.value==false>
-                                <button type="submit" class="btn btn-light text-center btn-login w-100 shadow-box mt-3 label-color rounded">
-                                  <span class="">Login</span> or
-                                  <span>Register</span> to trade</button>
-                              </div>
-                              <div class="col text-center" ng-if=userData.value==true>
-                                <button type="" class="btn btn-light text-center btn-login w-100 shadow-box mt-3 label-color rounded" ng-click="addBuyOrder(buyData)">
-                                  <span class="">Submit</span>
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-                <div class="col col-lg-6">
-                  <form class="form-horizontal">
-                    <div class="px-3">
-                      <div class="row">
-                        <div class="col form-group form-group-sm bor-top">
-                          <div class="row">
-                            <label for="first_name" class="col-6 col-form-label font-weight-bold">
-                              Sell BTC
-                            </label>
-                            <div class="col-6 text-right">
-                              <label for="first_name" class="col-form-label label-color">USDT Balance:--</label>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-12 form-group form-group-sm  mb-2">
-                          <div class="row">
-                            <label for="first_name" class="col-3 col-form-label label-color">Price:</label>
-                            <div class="col-9 place-right">
-                              <input type="number" ng-model="sellData.rate" class="form-control shadow-box" id="first_name" name="first_name" placeholder="Rate">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-12 form-group form-group-sm  mb-2">
-                          <div class="row">
-                            <label for="last_name" class="col-3 col-form-label label-color">Quantity:</label>
-                            <div class="col-9  place-right">
-                              <input type="number" ng-model="sellData.quantity" class="form-control shadow-box" id="last_name" name="last_name" placeholder="Quantity">
-                              <div class="text-center">
-                                <button type="button" class="btn btn-light btn-percent shadow-box label-color">25%</button>
-                                <button type="button" class="btn btn-light btn-percent shadow-box label-color">50%</button>
-                                <button type="button" class="btn btn-light btn-percent shadow-box label-color">75%</button>
-                                <button type="button" class="btn btn-light btn-percent shadow-box label-color">100%</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-12 form-group form-group-sm">
-                          <div class="row">
-                            <label for="Street" class="col-3 col-form-label label-color">Total:</label>
-                            <div class="col-9  place-right">
-                              <input type="number" ng-model="Total1" ng-init="Total=(sellData.rate)*(sellData.quantity)" value="{{sellData.quantity*sellData.rate}}"
-                                class="form-control shadow-box" id="Street" name="Street" placeholder="Total">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-12 form-group form-group-sm">
-                          <div class="row">
-                            <div class="col" ng-if=userData==null||userData.value==false>
-                              <button type="submit" class="btn btn-light text-center w-100 btn-login shadow-box mt-3 label-color rounded">
-                                <span>Login</span> or
-                                <span>Register</span> to trade</button>
-                            </div>
-                            <div class="col" ng-if=userData.value==true>
-                              <button type="" class="btn btn-light text-center w-100 btn-login shadow-box mt-3 label-color rounded" ng-click="addSellOrder(sellData)">
-                                <span>Submit</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </uib-tab>
-            <uib-tab index="1" heading="Market">Market</uib-tab>
-            <uib-tab index="2" heading="Stop-Limit">Stop-Limit </uib-tab>
-          </uib-tabset>
-        </div>
-      </div>
+      
       <div class="col-12 col-md-3">
         <!-- <div ng-if=userData==null||userData.value==false>
           <form name="formData">Username:
@@ -233,8 +234,8 @@
         <div ng-if="userData.value==false">
           <p>{{userData.error.message}}</p>
         </div>
-        <div class="table-responsive">
-          <table class="table-amount border">
+        <div class="table-responsive text-center">
+          <table class="table-amount border w-100">
             <thead class="thead-light">
               <tr>
                 <th>
