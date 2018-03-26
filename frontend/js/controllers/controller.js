@@ -116,15 +116,14 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
 
         if ($scope.userData != null && $scope.userData.value == true) {
 
-            var getUserTransactionData = {}
-            getUserTransactionData.user = $scope.userData.data._id
+            var getUserTransactionData = {};
+            getUserTransactionData.user = $scope.userData.data._id;
             apiService.getUserTransactionList(getUserTransactionData, function (data) {
                 $scope.userTransaction = data.data;
-
             });
 
             var dataToSend = {};
-            dataToSend.user = $scope.userData.data._id
+            dataToSend.user = $scope.userData.data._id;
             apiService.getUserList(dataToSend, function (data) {
                 $scope.userOrder = data.data;
             });
