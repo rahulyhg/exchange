@@ -1,6 +1,6 @@
 apps:
   - script: "app.js"
-    name: "Node Framework - 80"
+    name: "Wohlig Exchange - 112"
     watch: false
     args: "--prod"
     exec_mode: "cluster"
