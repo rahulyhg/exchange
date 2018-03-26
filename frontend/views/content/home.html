@@ -5,10 +5,9 @@
         <div class="float-right" ng-if="!userData.value">
           <form name="formData" class="form-inline ">
             <label class="user-pass" for="username">Username:</label>
-            <input type="text" class="form-control login-placeholder" ng-model="data1.name" id="username" placeholder="Enter username"
-              name="username">
+            <input type="text" class="form-control login-placeholder" ng-model="data1.name" id="username" name="username">
             <label class="user-pass" for="password">Password:</label>
-            <input type="password" class="form-control login-placeholder" ng-model="data1.password" name="password" id="password" placeholder="Enter password">
+            <input type="password" class="form-control login-placeholder" ng-model="data1.password" name="password" id="password">
             <!-- <button type="" class="btn btn-light text-center btn-login w-100 shadow-box mt-3 label-color rounded" ng-click="addBuyOrder(buyData)">
                   <span class="">Submit</span>
                 </button> -->
@@ -55,7 +54,7 @@
                   </div>
                   <div class="col-12 form-group form-group-sm mb-2">
                     <div class="row">
-                      <label for="first_name" class="col-3 col-form-label label-color">Price:</label>
+                      <label for="first_name" class="col-3 col-form-label label-color">Rate:</label>
                       <div class="col-9 place-right">
                         <input type="number" ng-model="buyData.rate" class="form-control shadow-box" id="first_name" name="first_name" placeholder="Rate">
                       </div>
@@ -63,7 +62,7 @@
                   </div>
                   <div class="col-12 form-group form-group-sm  mb-2">
                     <div class="row">
-                      <label for="last_name" class="col-3 col-form-label label-color">Qnt:</label>
+                      <label for="last_name" class="col-3 col-form-label label-color">Qty:</label>
                       <div class="col-9  place-right">
                         <input type="number" ng-model="buyData.quantity" class="form-control shadow-box" id="last_name" name="last_name" placeholder="Quantity">
                         <!-- <div class="text-center">
@@ -117,7 +116,7 @@
                 </div>
                 <div class="col-12 form-group form-group-sm  mb-2">
                   <div class="row">
-                    <label for="first_name" class="col-3 col-form-label label-color">Price:</label>
+                    <label for="first_name" class="col-3 col-form-label label-color">Rate:</label>
                     <div class="col-9 place-right">
                       <input type="number" ng-model="sellData.rate" class="form-control shadow-box" id="first_name" name="first_name" placeholder="Rate">
                     </div>
@@ -125,7 +124,7 @@
                 </div>
                 <div class="col-12 form-group form-group-sm  mb-2">
                   <div class="row">
-                    <label for="last_name" class="col-3 col-form-label label-color">Qnt:</label>
+                    <label for="last_name" class="col-3 col-form-label label-color">Qty:</label>
                     <div class="col-9  place-right">
                       <input type="number" ng-model="sellData.quantity" class="form-control shadow-box" id="last_name" name="last_name" placeholder="Quantity">
                       <!-- <div class="text-center">
@@ -231,14 +230,6 @@
       </div>
 
       <div class="col-12 col-md-3 transaction-pad">
-        <!-- <div ng-if=userData==null||userData.value==false>
-          <form name="formData">Username:
-            <input type="text" ng-model="data1.name" name="username"> Password:
-            <input type="password" ng-model="data1.password" name="password">
-            <button class="button button-block button-positive" ng-click="submitForm(data1)" class="btn btn-default" ng-disabled="formData.$invalid"
-              promise-btn>Log In</button>
-          </form>
-        </div> -->
 
         <div ng-if="userData.value==false">
           <p>{{userData.error.message}}</p>
@@ -266,7 +257,7 @@
             <tbody>
               <tr ng-repeat="data in allTransactionData">
 
-                <td class=" text-danger font-weight-bold" ng-class="{'buy-btc-color': data.orderType=='Buy'}">{{data.rate}}</td>
+                <td class="font-weight-bold">{{data.rate}}</td>
                 <td class=" font-weight-bold">{{data.quantity|number}}</td>
                 <td>{{data.createdAt|date:'HH:mm:ss'}}</td>
               </tr>
@@ -367,7 +358,7 @@
                 <tr ng-repeat="data in userTransaction" ng-if="userTransaction!=null">
                   <td>{{data.createdAt | date:'short'}}</td>
 
-                  <td>{{data.orderType}}</td>
+                  <td class="font-weight-bold" ng-class="{'text-success':data.orderType=='Buy' , 'text-danger':data.orderType=='Sell'}">{{data.orderType}}</td>
 
                   <td>{{data.rate|number}}</td>
                   <td>{{data.quantity|number}}</td>

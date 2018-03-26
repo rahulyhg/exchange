@@ -51,8 +51,10 @@ var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "user script",
 var model = {
 
     getCompleteTransactionList: function (data, callback) {
-        Transaction.find({}).sort({
-            createdAt: -1
+        Transaction.find({
+            orderType: "Buy"
+        }).sort({
+            createdAt: -1,
         }).limit(20).exec(function (err, found) {
             if (err) {
                 callback(err, "noData");

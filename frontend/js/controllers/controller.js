@@ -5,8 +5,21 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
         TemplateService.footer = "";
         $scope.navigation = NavigationService.getNavigation();
         var registerPopup = null;
+
+        function convertData(data) {
+            return _.map(_.slice(data, 0, 20), function (n) {
+                var quantity = _.sumBy(n.orders, function (o) {
+                    return o.quantity;
+                });
+                return {
+                    rate: n.rate,
+                    quantity: quantity
+                };
+            });
+        }
+
+
         $scope.openModal = function () {
-            console.log("*************");
             registerPopup = $uibModal.open({
                 templateUrl: "views/content/modal/register.html",
                 scope: $scope,
@@ -17,7 +30,6 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
         $scope.closeModal = function (data1) {
 
             apiService.userRegister(data1, function (data) {
-                console.log("data", data);
                 if (_.isEmpty(data)) {
                     toastr.warning("Please Enter unique Username");
                 }
@@ -28,45 +40,27 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
         //sockets
 
         io.socket.on("BuyOrderAdded", function (data) {
-            $scope.lists = [];
-            _.each(data, function (n) {
-                var buyDataToSend = {};
-                buyDataToSend.rate = n.rate;
-                buyDataToSend.quantity = _.sumBy(n.orders, function (o) {
-                    return o.quantity;
-                });
-                $scope.lists.push(buyDataToSend);
-                $scope.lists.slice(0, 20);
-            });
+            console.log(data);
+            $scope.lists = convertData(data);
         });
 
+
+
         io.socket.on("SellOrderAdded", function (data) {
-            $scope.lists1 = [];
-            _.each(data, function (n) {
-                var sellDataToSend = {};
-                sellDataToSend.rate = n.rate;
-                sellDataToSend.quantity = _.sumBy(n.orders, function (o) {
-                    return o.quantity;
-                });
-                $scope.lists1.push(sellDataToSend);
-                $scope.lists1.slice(0, 20);
-            });
+            $scope.lists1 = convertData(data);
         });
 
         io.socket.on("AllTransactionDataAdded", function (data) {
             $scope.allTransactionData = data;
-            console.log('$scope.allTransactionData ', $scope.allTransactionData);
         });
 
 
         io.socket.on("TransactionOrderAdded", function (data) {
             $scope.userTransaction = data;
-            console.log('$scope.userTransaction ', $scope.userTransaction);
         });
 
         io.socket.on("UserOrderDataAdded", function (data) {
             $scope.userOrder = data;
-            console.log('$scope.userOrder ', $scope.userOrder);
         });
 
 
@@ -94,19 +88,15 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
         };
         // Display Buy Sell Transaction All users
 
-        // apiService.getCompleteBuyList(function (data) {
-        //     $scope.lists = data.data;
-        // });
-        // apiService.getCompleteSellList(function (data) {
-        //     $scope.lists1 = data.data;
-        // });
+        apiService.getCompleteBuyList(function (data) {
+            $scope.lists = convertData(data.data);
+        });
+        apiService.getCompleteSellList(function (data) {
+            $scope.lists1 = convertData(data.data);
+        });
 
         apiService.getCompleteTransactionList(function (data) {
             $scope.allTransactionData = data.data;
-        });
-
-        NavigationService.apiCallWithoutData("Exchange/getArrData", function (data) {
-            $scope.buyAndSellData = data.data;
         });
 
 
@@ -198,7 +188,5 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
 
     // EuserDataample API Controller
     .controller('DemoAPICtrl', function ($scope, TemplateService, apiService, NavigationService, $timeout) {
-        apiService.getDemo($scope.formData, function (data) {
-            console.log(data);
-        });
+        apiService.getDemo($scope.formData, function (data) {});
     });
