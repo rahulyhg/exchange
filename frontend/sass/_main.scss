@@ -324,11 +324,37 @@ header {
     font-size: 12px;
 }
 
+.buy-btc-color{
+    color: $green!important
+}
+
 .reg-log{
 background: #ced4da;
 display: block;
 margin: 0 auto;
 }
 
+.display-name{
+    display: inline-block
+}
+
+.btn-logout {
+    padding: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    border: 1px solid $elightblack;
+    background: transparent;
+    span {
+        color: $orange;
+    }
+}
+
+.pad0{
+    padding: 0px;
+}
+
+.transaction-pad{
+    padding: 0px 0px 0px 15px;
+}
 
 @import "kishori"

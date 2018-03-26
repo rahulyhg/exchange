@@ -11293,10 +11293,31 @@ header {
   color: red !important;
   font-size: 12px; }
 
+.buy-btc-color {
+  color: #5cb85c !important; }
+
 .reg-log {
   background: #ced4da;
   display: block;
   margin: 0 auto; }
+
+.display-name {
+  display: inline-block; }
+
+.btn-logout {
+  padding: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid #ced4da;
+  background: transparent; }
+  .btn-logout span {
+    color: #f0ad4e; }
+
+.pad0 {
+  padding: 0px; }
+
+.transaction-pad {
+  padding: 0px 0px 0px 15px; }
 
 .exchange-tabs {
   border-top-color: #dee2e6;
@@ -11412,10 +11433,10 @@ header {
   margin: 5px 6px; }
 
 .table-amount tbody tr:hover {
-  background-color: #faecf2; }
+  background-color: #eff7e6; }
 
 .green-hover tbody tr:hover {
-  background-color: #eff7e6; }
+  background-color: #faecf2; }
 
 .signal span {
   font-size: 16px; }

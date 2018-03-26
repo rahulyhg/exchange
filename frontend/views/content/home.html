@@ -2,18 +2,25 @@
   <div class="mx-4 mb-4">
     <div class="row m-3">
       <div class="col">
-        <div class="float-right">
+        <div class="float-right" ng-if="!userData.value">
             <form name="formData" class="form-inline " >
               <label class="user-pass" for="username">Username:</label>
               <input type="text" class="form-control login-placeholder" ng-model="data1.name"  id="username" placeholder="Enter username" name="username">
               <label class="user-pass" for="password">Password:</label>
               <input type="password" class="form-control login-placeholder" ng-model="data1.password" name="password" id="password" placeholder="Enter password">
-              <button class="button button-block button-positive mx-4" ng-click="submitForm(data1)" class="btn btn-default" ng-disabled="formData.$invalid"
-              promise-btn>Log In</button>
-              <button class="button button-block button-positive" ng-click="openModal()">Register</button>
+              <!-- <button type="" class="btn btn-light text-center btn-login w-100 shadow-box mt-3 label-color rounded" ng-click="addBuyOrder(buyData)">
+                  <span class="">Submit</span>
+                </button> -->
+              <button class="btn btn-light text-center btn-login shadow-box label-color rounded mx-4" ng-click="submitForm(data1)" class="btn btn-default" ng-disabled="formData.$invalid"
+              promise-btn><span>Log In</span> </button>
+              <button class="btn btn-light text-center btn-login shadow-box label-color rounded" ng-click="openModal()"><span>Register</span> </button>
             </form> 
         </div>
-        
+        <div class="float-right" ng-if=userData.value==true>
+            <p class="display-name">Welcome {{userData.data.name}}</p>
+            <button class="btn btn-light text-center btn-logout shadow-box label-color rounded mx-2" ng-click="logOut()" class="btn btn-default" ng-disabled="formData.$invalid"
+              promise-btn> <span>Log Out</span> </button>
+          </div>
       </div>
        
     </div>
@@ -64,7 +71,7 @@
                                   <label for="Street" class="col-3 col-form-label label-color">Total:</label>
                                   <div class="col-9  place-right">
                                     <input type="number" ng-model="Total" ng-init="Total=(buyData.rate)*(buyData.quantity)" value="{{buyData.quantity*buyData.rate}}"
-                                      class="form-control shadow-box" id="Street" name="Street" placeholder="Total">
+                                      class="form-control shadow-box" id="Street" name="Street" placeholder="Total" disabled>
                                   </div>
                                 </div>
                               </div>
@@ -126,7 +133,7 @@
                                 <label for="Street" class="col-3 col-form-label label-color">Total:</label>
                                 <div class="col-9  place-right">
                                   <input type="number" ng-model="Total1" ng-init="Total=(sellData.rate)*(sellData.quantity)" value="{{sellData.quantity*sellData.rate}}"
-                                    class="form-control shadow-box" id="Street" name="Street" placeholder="Total">
+                                    class="form-control shadow-box" id="Street" name="Street" placeholder="Total" disabled>
                                 </div>
                               </div>
                             </div>
@@ -161,10 +168,8 @@
           <table class="table-amount border w-100">
             <thead class="thead-light">
               <tr>
-                <th>
-                  <i class="fa fa-barcode-alt"></i>
-                </th>
-                <th>
+                
+                <th colspan="2">
                   <h6>List of BuyOrders</h6>
                 </th>
               </tr>
@@ -177,7 +182,7 @@
             </thead>
             <tbody>
               <tr ng-repeat="data in lists">
-                <td class="pl-3 text-danger font-weight-bold">{{data.rate}}</td>
+                <td class="pl-3 text-success font-weight-bold">{{data.rate}}</td>
                 <td class="pl-4 font-weight-bold">{{data.quantity}}</td>
               </tr>
 
@@ -186,15 +191,12 @@
 
         </div>
         </div>
-        <div class="col-12 col-md-3">
+        <div class="col-12 col-md-3 pad0">
         <div class="table-responsive text-center">
           <table class="table-amount green-hover border w-100">
             <thead class="thead-light">
               <tr>
-                <th>
-                  <i class="fa fa-barcode-alt"></i>
-                </th>
-                <th>
+                <th colspan="2">
                   <h6>List of SellOrders</h6>
                 </th>
               </tr>
@@ -208,7 +210,7 @@
             </thead>
             <tbody>
               <tr ng-repeat="data in lists1">
-                <td class="pl-3 text-success font-weight-bold">{{data.rate}}</td>
+                <td class="pl-3 text-danger font-weight-bold">{{data.rate}}</td>
                 <td class="pl-4 font-weight-bold">{{data.quantity}}</td>
 
               </tr>
@@ -217,7 +219,7 @@
         </div>
       </div>
       
-      <div class="col-12 col-md-3">
+      <div class="col-12 col-md-3 transaction-pad">
         <!-- <div ng-if=userData==null||userData.value==false>
           <form name="formData">Username:
             <input type="text" ng-model="data1.name" name="username"> Password:
@@ -226,11 +228,7 @@
               promise-btn>Log In</button>
           </form>
         </div> -->
-        <div ng-if=userData.value==true>
-          <p>Welcome {{userData.data.name}}</p>
-          <button class="button button-block button-positive" ng-click="logOut()" class="btn btn-default" ng-disabled="formData.$invalid"
-            promise-btn>Log Out</button>
-        </div>
+     
         <div ng-if="userData.value==false">
           <p>{{userData.error.message}}</p>
         </div>
@@ -238,10 +236,8 @@
           <table class="table-amount border w-100">
             <thead class="thead-light">
               <tr>
-                <th>
-                  <i class="fa fa-barcode-alt"></i>
-                </th>
-                <th>
+                
+                <th colspan="2">
                   <h6>Transactions</h6>
                 </th>
               </tr>
@@ -256,7 +252,7 @@
             </thead>
             <tbody>
               <tr ng-repeat="data in allTransactionData">
-                <td class="pl-3 text-danger font-weight-bold">{{data.rate}}</td>
+                <td class="pl-3 text-danger font-weight-bold" ng-class="{'buy-btc-color': data.orderType=='Buy'}">{{data.rate}}</td>{{data}}
                 <td class="pl-4 font-weight-bold">{{data.quantity}}</td>
 
               </tr>
@@ -270,7 +266,7 @@
         <div class="mt-4 table-order">
           <div class="float-left">
             <h6 class="font-weight-bold">
-              Open Orders
+              My Open Orders
             </h6>
           </div>
           <div class="float-right hide-pair">
@@ -291,7 +287,7 @@
                   <th class="text-right">Total</th>
                   <th class="text-right">Trigger conditions</th>
                   <th class="text-right pr-4">
-                    <button type="button" class="btn btn-cancle">cancle All</button>
+                    <button type="button" class="btn btn-cancle">cancel All</button>
                     <select class="select-option  align-middle">
                       <option></option>
                     </select>
@@ -333,7 +329,7 @@
         <div class="mt-4 table-order">
           <div class="float-left">
             <h6 class="font-weight-bold">
-              Trade History
+              My Trade History
             </h6>
           </div>
           <div class="float-right hide-pair">
@@ -357,7 +353,7 @@
                   <th class="text-right">Total</th>
                   <th class="text-right">Trigger conditions</th>
                   <th class="text-right pr-4">
-                    <button type="button" class="btn btn-cancle">cancle All</button>
+                    <button type="button" class="btn btn-cancle">cancel All</button>
                     <select class="select-option align-middle">
                       <option></option>
                     </select>
