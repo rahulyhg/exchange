@@ -176,14 +176,16 @@
             </thead>
             <thead>
               <tr>
-                <th>Rate</th>
+                
                 <th>Quantity</th>
+                <th>Rate</th>
               </tr>
             </thead>
             <tbody>
               <tr ng-repeat="data in lists">
-                <td class="pl-3 text-success font-weight-bold">{{data.rate}}</td>
-                <td class="pl-4 font-weight-bold">{{data.quantity}}</td>
+                
+                <td class=" font-weight-bold">{{data.quantity}}</td>
+                <td class=" text-success font-weight-bold">{{data.rate}}</td>
               </tr>
 
             </tbody>
@@ -191,7 +193,7 @@
 
         </div>
         </div>
-        <div class="col-12 col-md-3 pad0">
+        <div class="col-12 col-md-3 ">
         <div class="table-responsive text-center">
           <table class="table-amount green-hover border w-100">
             <thead class="thead-light">
@@ -203,16 +205,15 @@
             </thead>
 
             <thead>
-              <tr>
-                <th>Rate</th>
+              <tr>     
                 <th>Quantity</th>
+                <th>Rate</th>
               </tr>
             </thead>
             <tbody>
               <tr ng-repeat="data in lists1">
-                <td class="pl-3 text-danger font-weight-bold">{{data.rate}}</td>
-                <td class="pl-4 font-weight-bold">{{data.quantity}}</td>
-
+                  <td class=" font-weight-bold">{{data.quantity}}</td>
+                <td class=" text-danger font-weight-bold">{{data.rate}}</td>
               </tr>
             </tbody>
           </table>
@@ -245,16 +246,16 @@
 
             <thead>
               <tr>
+                  <th>Quantity</th>
                 <th>Rate</th>
-                <th>Quantity</th>
+               
 
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="data in allTransactionData">
-                <td class="pl-3 text-danger font-weight-bold" ng-class="{'buy-btc-color': data.orderType=='Buy'}">{{data.rate}}</td>{{data}}
-                <td class="pl-4 font-weight-bold">{{data.quantity}}</td>
-
+              <tr ng-repeat="data in allTransactionData"> 
+                <td class=" font-weight-bold">{{data.quantity}}</td>
+                <td class=" text-danger font-weight-bold" ng-class="{'buy-btc-color': data.orderType=='Buy'}">{{data.rate}}</td>{{data}}
               </tr>
             </tbody>
           </table>
