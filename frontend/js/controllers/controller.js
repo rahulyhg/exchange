@@ -58,12 +58,13 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
 
 
         io.socket.on("TransactionOrderAdded", function (data) {
-            var getUserTransactionData = {};
-            getUserTransactionData.user = $scope.userData.data._id;
-            apiService.getUserTransactionList(getUserTransactionData, function (data) {
-                $scope.userTransaction = data.data;
-            });
-            $scope.$apply();
+            if ($scope.userData != null && $scope.userData.value == true) {
+                var getUserTransactionData = {};
+                getUserTransactionData.user = $scope.userData.data._id;
+                apiService.getUserTransactionList(getUserTransactionData, function (data) {
+                    $scope.userTransaction = data.data;
+                });
+            }
         });
 
         io.socket.on("UserOrderDataAdded", function (data) {
