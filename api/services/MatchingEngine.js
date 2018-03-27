@@ -236,14 +236,12 @@ module.exports = {
         } else {
             if (rate == MatchingEngine.sellingOrder[0].rate) {
                 sellingOrdersCount = indexNo + 1;
-                console.log("State4");
                 /**
                  * Multiple Trades will occur
                  */
                 startTrading(callback);
             } else {
-                console.log("State5");
-                sellingOrdersCount = indexNo + 1;
+                sellingOrdersCount = indexNo;
                 /**
                  * Multiple Trades will occur
                  */
