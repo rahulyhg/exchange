@@ -5,7 +5,7 @@
     <form name="formName">
       <div class="form-group">
         <label for="name">Enter Code:</label>
-        <input type="text" name="code" class="form-control" id="code" ng-model="vrCode.code" required>
+        <input type="text" name="code" class="form-control" id="code" ng-model="vrCode.code" placeholder="Enter Code" required>
         <span class="error-msg" ng-show="formName.code.$touched && formName.code.$invalid">Enter the six digit code.</span>
       </div>
       <button ng-click="closeCodeModal(vrCode)" class="btn btn-default reg-log mb-2" ng-disabled="formName.$invalid">Submit</button>
