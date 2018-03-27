@@ -40,27 +40,35 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
         //sockets
 
         io.socket.on("BuyOrderAdded", function (data) {
-            console.log(data);
             $scope.lists = convertData(data);
+            $scope.$apply();
         });
 
 
 
         io.socket.on("SellOrderAdded", function (data) {
             $scope.lists1 = convertData(data);
+            $scope.$apply();
         });
 
         io.socket.on("AllTransactionDataAdded", function (data) {
             $scope.allTransactionData = data;
+            $scope.$apply();
         });
 
 
         io.socket.on("TransactionOrderAdded", function (data) {
-            $scope.userTransaction = data;
+            var getUserTransactionData = {};
+            getUserTransactionData.user = $scope.userData.data._id;
+            apiService.getUserTransactionList(getUserTransactionData, function (data) {
+                $scope.userTransaction = data.data;
+            });
+            $scope.$apply();
         });
 
         io.socket.on("UserOrderDataAdded", function (data) {
             $scope.userOrder = data;
+            $scope.$apply();
         });
 
 
