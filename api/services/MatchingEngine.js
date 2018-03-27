@@ -234,7 +234,9 @@ module.exports = {
              */
             startTrading(callback);
         } else {
-            if (rate == MatchingEngine.sellingOrder[0].rate) {
+            console.log(MatchingEngine.sellingOrder[indexNo]);
+            console.log("Rate:", rate);
+            if (rate == MatchingEngine.sellingOrder[indexNo].rate) {
                 sellingOrdersCount = indexNo + 1;
                 /**
                  * Multiple Trades will occur
@@ -361,14 +363,14 @@ module.exports = {
             buyingOrdersCount = indexNo;
             startTrading(callback);
         } else {
-            if (rate == MatchingEngine.buyingOrder[0].rate) {
+            if (rate == MatchingEngine.buyingOrder[indexNo].rate) {
                 buyingOrdersCount = indexNo + 1;
                 /**
                  * Multiple Trades will occur
                  */
                 startTrading(callback);
             } else {
-                buyingOrdersCount = indexNo + 1;
+                buyingOrdersCount = indexNo;
                 /**
                  * Multiple Trades will occur
                  */
