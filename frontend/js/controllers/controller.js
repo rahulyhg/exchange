@@ -41,13 +41,13 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
 
         io.socket.on("BuyOrderAdded", function (data) {
             console.log(data);
-            $scope.lists = convertData(data);
+            $scope.allBuyOrderData = convertData(data);
         });
 
 
 
         io.socket.on("SellOrderAdded", function (data) {
-            $scope.lists1 = convertData(data);
+            $scope.allSellOrderData = convertData(data);
         });
 
         io.socket.on("AllTransactionDataAdded", function (data) {
@@ -89,10 +89,10 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
         // Display Buy Sell Transaction All users
 
         apiService.getCompleteBuyList(function (data) {
-            $scope.lists = convertData(data.data);
+            $scope.allBuyOrderData = convertData(data.data);
         });
         apiService.getCompleteSellList(function (data) {
-            $scope.lists1 = convertData(data.data);
+            $scope.allSellOrderData = convertData(data.data);
         });
 
         apiService.getCompleteTransactionList(function (data) {
@@ -106,6 +106,9 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
         // User Login 
         $scope.submitForm = function (data) {
             apiService.userLogin(data, function (data) {
+                if (data.value == false) {
+                    toastr.error("Incorrect Credentials!", "Try Again");
+                }
                 $.jStorage.set("user", data);
                 $state.reload();
             });

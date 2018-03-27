@@ -192,7 +192,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="data in lists|limitTo:20">
+              <tr ng-repeat="data in allBuyOrderData|limitTo:20">
 
                 <td class=" font-weight-bold">{{data.quantity|number}}</td>
                 <td class=" text-success font-weight-bold">{{data.rate|number}}</td>
@@ -221,7 +221,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="data in lists1|limitTo:20">
+              <tr ng-repeat="data in allSellOrderData|limitTo:20">
 
                 <td class=" text-danger font-weight-bold">{{data.rate|number}}</td>
                 <td class=" font-weight-bold">{{data.quantity|number}}</td>
@@ -233,9 +233,9 @@
 
       <div class="col-12 col-md-3 transaction-pad">
 
-        <div ng-if="userData.value==false">
+        <!-- <div ng-if="userData.value==false">
           <p>{{userData.error.message}}</p>
-        </div>
+        </div> -->
         <div class="table-responsive text-center">
           <table class="table-amount border w-100">
             <thead class="thead-light">
