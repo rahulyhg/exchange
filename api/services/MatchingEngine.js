@@ -217,7 +217,6 @@ module.exports = {
         var sellingTrades = [];
         var sellingOrdersCount = 0;
         if (indexNo == 0) {
-            console.log("State1");
             if (MatchingEngine.sellingOrder.length > 0 && rate == MatchingEngine.sellingOrder[0].rate) {
                 sellingOrdersCount = 1;
                 /**
@@ -229,22 +228,22 @@ module.exports = {
             }
 
         } else if (indexNo == MatchingEngine.sellingOrder.length) { // Entire Array is getting matched
-            console.log("State2");
             sellingOrdersCount = indexNo;
             /**
              * Multiple Trades can occur
              */
             startTrading(callback);
         } else {
-            console.log("State3");
             if (rate == MatchingEngine.sellingOrder[0].rate) {
                 sellingOrdersCount = indexNo + 1;
+                console.log("State4");
                 /**
                  * Multiple Trades will occur
                  */
                 startTrading(callback);
             } else {
-                sellingOrdersCount = indexNo;
+                console.log("State5");
+                sellingOrdersCount = indexNo + 1;
                 /**
                  * Multiple Trades will occur
                  */
