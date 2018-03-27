@@ -59,9 +59,8 @@ module.exports = {
 
         MatchingEngine.buyingOrder = MatchingEngine.buyingOrder.slice(0, MatchingEngine.minimumArrayLength);
 
-        console.log("MatchingEngine.buyingOrder", JSON.stringify(MatchingEngine.buyingOrder));
+
         if (indexData == 0 && !alreadyRateAvailable) {
-            console.log("data1", data1);
             BuyOrder.getUserList(data1, function (err, data) {
                 if (data) {
                     sails.sockets.blast("UserOrderDataAdded", data);
@@ -69,7 +68,6 @@ module.exports = {
             });
             MatchingEngine.matchingBuyingOrderWithSellingOrder(obj, data1.rate, callback);
         } else {
-            console.log("data1333333333333333333333333", data1);
             BuyOrder.getUserList(data1, function (err, data) {
                 if (data) {
                     sails.sockets.blast("UserOrderDataAdded", data);
@@ -109,10 +107,8 @@ module.exports = {
 
         MatchingEngine.sellingOrder = MatchingEngine.sellingOrder.slice(0, MatchingEngine.minimumArrayLength);
 
-        console.log("MatchingEngine.sellingOrder", JSON.stringify(MatchingEngine.sellingOrder));
 
         if (indexData == 0 && !alreadyRateAvailable) {
-            console.log("data1", data1);
             BuyOrder.getUserList(data1, function (err, data) {
                 if (data) {
                     sails.sockets.blast("UserOrderDataAdded", data);
@@ -120,7 +116,6 @@ module.exports = {
             });
             MatchingEngine.matchingSellingOrderWithBuyingOrder(obj, data1.rate, callback);
         } else {
-            console.log("data1333333333333333333333333", data1);
             BuyOrder.getUserList(data1, function (err, data) {
                 if (data) {
                     sails.sockets.blast("UserOrderDataAdded", data);
@@ -222,7 +217,7 @@ module.exports = {
         var sellingTrades = [];
         var sellingOrdersCount = 0;
         if (indexNo == 0) {
-
+            console.log("State1");
             if (MatchingEngine.sellingOrder.length > 0 && rate == MatchingEngine.sellingOrder[0].rate) {
                 sellingOrdersCount = 1;
                 /**
@@ -234,12 +229,14 @@ module.exports = {
             }
 
         } else if (indexNo == MatchingEngine.sellingOrder.length) { // Entire Array is getting matched
+            console.log("State2");
             sellingOrdersCount = indexNo;
             /**
              * Multiple Trades can occur
              */
             startTrading(callback);
         } else {
+            console.log("State3");
             if (rate == MatchingEngine.sellingOrder[0].rate) {
                 sellingOrdersCount = indexNo + 1;
                 /**
@@ -257,12 +254,10 @@ module.exports = {
 
         function startTrading(callback) {
             var endLoop = false;
-            console.log(sellingOrdersCount);
             for (i = 0; i < sellingOrdersCount && !endLoop; i++) {
                 var sellingOrder = MatchingEngine.sellingOrder[i];
                 var currentOrderObjectArray = MatchingEngine.sellingOrder[i].orders;
                 _.each(currentOrderObjectArray, function (sellingObject) {
-                    console.log(buyObj.quantity);
                     if (buyObj.quantity >= sellingObject.quantity) {
                         var buyingTrade = _.cloneDeep(buyObj);
                         buyingTrade.rate = sellingOrder.rate;
@@ -334,7 +329,7 @@ module.exports = {
                     ],
                     function (err, data) {
                         if (err) {
-                            console.log("error occured")
+                            console.log("error occured");
                             // callback(null, err);
                         } else {
                             callback(null, {
@@ -386,12 +381,10 @@ module.exports = {
 
         function startTrading(callback) {
             var endLoop = false;
-            console.log(buyingOrdersCount);
             for (i = 0; i < buyingOrdersCount && !endLoop; i++) {
                 var buyingOrder = MatchingEngine.buyingOrder[i];
                 var currentOrderObjectArray = MatchingEngine.buyingOrder[i].orders;
                 _.each(currentOrderObjectArray, function (buyingObject) {
-                    console.log(sellObj.quantity);
                     if (sellObj.quantity >= buyingObject.quantity) {
                         var buyingTrade = _.cloneDeep(buyingObject);
                         buyingTrade.rate = buyingOrder.rate;
@@ -461,7 +454,7 @@ module.exports = {
                     ],
                     function (err, data) {
                         if (err) {
-                            console.log("error occured")
+                            console.log("error occured");
                             callback(null, err);
                         } else {
                             callback(null, {

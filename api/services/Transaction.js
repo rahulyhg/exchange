@@ -138,7 +138,6 @@ var model = {
                     sails.sockets.blast("AllTransactionDataAdded", data);
                 }
             });
-            console.log("dataa-------", data);
             BuyOrder.getUserList(data, function (err, data) {
                 if (data) {
                     sails.sockets.blast("UserOrderDataAdded", data);
