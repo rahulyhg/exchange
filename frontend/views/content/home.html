@@ -47,16 +47,16 @@
                       <label for="first_name" class="col-6 col-form-label font-weight-bold">
                         Buy BTC
                       </label>
-                      <!-- <div class="col-6 text-right">
-                        <label for="first_name" class="col-form-label label-color">USDT : 10000</label>
-                      </div> -->
+                      <div class="col-6 text-right">
+                        <label for="first_name" class="col-form-label label-color">USDT : {{userUSDTBalance}}</label>
+                      </div>
                     </div>
                   </div>
                   <div class="col-12 form-group form-group-sm mb-2">
                     <div class="row">
                       <label for="first_name" class="col-3 col-form-label label-color">Rate:</label>
                       <div class="col-9 place-right">
-                        <input type="number" step="0.01" ng-model="buyData.rate" class="form-control shadow-box" id="first_name" name="first_name"
+                        <input type="number" step="0.01" ng-model="buyData.rate" class="form-control shadow-box" id="buyOrderRate" name="first_name"
                           placeholder="Rate">
                       </div>
                     </div>
@@ -65,7 +65,7 @@
                     <div class="row">
                       <label for="last_name" class="col-3 col-form-label label-color">Qty:</label>
                       <div class="col-9  place-right">
-                        <input type="number" step="1" ng-model="buyData.quantity" class="form-control shadow-box" id="last_name" name="last_name"
+                        <input type="number" step="1" ng-model="buyData.quantity" class="form-control shadow-box" id="buyOrderQuantity" name="last_name"
                           placeholder="Quantity">
                         <!-- <div class="text-center">
                                       <button type="button" class="btn btn-light btn-percent shadow-box label-color">25%</button>
@@ -81,7 +81,7 @@
                       <label for="Street" class="col-3 col-form-label label-color">Total:</label>
                       <div class="col-9  place-right">
                         <input type="number" ng-model="Total" ng-init="Total=(buyData.rate)*(buyData.quantity)" value="{{buyData.quantity*buyData.rate}}"
-                          class="form-control shadow-box" id="Street" name="Street" placeholder="Total" disabled>
+                          class="form-control shadow-box" id="buyOrderTotal" name="Street" placeholder="Total" disabled>
                       </div>
                     </div>
                   </div>
@@ -111,16 +111,16 @@
                     <label for="first_name" class="col-6 col-form-label font-weight-bold">
                       Sell BTC
                     </label>
-                    <!-- <div class="col-6 text-right">
-                      <label for="first_name" class="col-form-label label-color">BTC : 1.02948</label>
-                    </div> -->
+                    <div class="col-6 text-right">
+                      <label for="first_name" class="col-form-label label-color">BTC : {{userBTCBalance}}</label>
+                    </div>
                   </div>
                 </div>
                 <div class="col-12 form-group form-group-sm  mb-2">
                   <div class="row">
                     <label for="first_name" step="0.01" class="col-3 col-form-label label-color">Rate:</label>
                     <div class="col-9 place-right">
-                      <input type="number" ng-model="sellData.rate" class="form-control shadow-box" id="first_name" name="first_name" placeholder="Rate">
+                      <input type="number" ng-model="sellData.rate" class="form-control shadow-box" id="sellOrderRate" name="first_name" placeholder="Rate">
                     </div>
                   </div>
                 </div>
@@ -128,7 +128,7 @@
                   <div class="row">
                     <label for="last_name" step="1" class="col-3 col-form-label label-color">Qty:</label>
                     <div class="col-9  place-right">
-                      <input type="number" ng-model="sellData.quantity" class="form-control shadow-box" id="last_name" name="last_name" placeholder="Quantity">
+                      <input type="number" ng-model="sellData.quantity" class="form-control shadow-box" id="sellOrderQuantity" name="last_name" placeholder="Quantity">
                       <!-- <div class="text-center">
                                     <button type="button" class="btn btn-light btn-percent shadow-box label-color">25%</button>
                                     <button type="button" class="btn btn-light btn-percent shadow-box label-color">50%</button>
@@ -143,7 +143,7 @@
                     <label for="Street" class="col-3 col-form-label label-color">Total:</label>
                     <div class="col-9  place-right">
                       <input type="number" ng-model="Total1" ng-init="Total=(sellData.rate)*(sellData.quantity)" value="{{sellData.quantity*sellData.rate}}"
-                        class="form-control shadow-box" id="Street" name="Street" placeholder="Total" disabled>
+                        class="form-control shadow-box" id="sellOrderTotal" name="Street" placeholder="Total" disabled>
                     </div>
                   </div>
                 </div>
@@ -192,7 +192,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="data in allBuyOrderData|limitTo:20">
+              <tr ng-repeat="data in allBuyOrderData|limitTo:20" ng-click="goToSellOrder(data)">
 
                 <td class=" font-weight-bold">{{data.quantity|number}}</td>
                 <td class=" text-success font-weight-bold">{{data.rate|number}}</td>
@@ -221,7 +221,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="data in allSellOrderData|limitTo:20">
+              <tr ng-repeat="data in allSellOrderData|limitTo:20"ng-click="goToBuyOrder(data)">
 
                 <td class=" text-danger font-weight-bold">{{data.rate|number}}</td>
                 <td class=" font-weight-bold">{{data.quantity|number}}</td>
@@ -249,8 +249,8 @@
 
             <thead>
               <tr>
-                <th>Quantity</th>
                 <th>Rate</th>
+                <th>Quantity</th>
                 <th>Date</th>
 
 

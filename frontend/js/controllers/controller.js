@@ -40,7 +40,6 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
         //sockets
 
         io.socket.on("BuyOrderAdded", function (data) {
-            console.log(data);
             $scope.allBuyOrderData = convertData(data);
         });
 
@@ -62,7 +61,13 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
         io.socket.on("UserOrderDataAdded", function (data) {
             $scope.userOrder = data;
         });
-
+        io.socket.on("UpdatedBalance", function (data) {
+            if (data.currency == "USDT") {
+                $scope.userUSDTBalance = (data.balance).toFixed(2);
+            } else {
+                $scope.userBTCBalance = (data.balance).toFixed(8);
+            }
+        });
 
         //sockets end
 
@@ -103,6 +108,7 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
         $scope.value = "";
         $scope.data1 = {};
 
+
         // User Login 
         $scope.submitForm = function (data) {
             apiService.userLogin(data, function (data) {
@@ -114,7 +120,42 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
             });
         };
         $scope.userData = $.jStorage.get("user");
+        $scope.goToSellOrder = function (data) {
+            $scope.sellData = {};
+            document.getElementById('sellOrderRate').value = $scope.sellData.rate = data.rate;
+            document.getElementById('sellOrderQuantity').value = $scope.sellData.quantity = data.quantity;
+            document.getElementById('sellOrderTotal').value = data.rate * data.quantity;
+        };
+        $scope.goToBuyOrder = function (data) {
+            $scope.buyData = {};
+            document.getElementById('buyOrderRate').value = $scope.buyData.rate=data.rate;
+            document.getElementById('buyOrderQuantity').value =$scope.buyData.quantity= data.quantity;
+            document.getElementById('buyOrderTotal').value = data.rate * data.quantity;
+        };
 
+        //Balance Display
+        if ($scope.userData != null && $scope.userData.value == true) {
+            var getUserBalance = {};
+            getUserBalance.user = $scope.userData.data._id;
+            apiService.getBalance(getUserBalance, function (data) {
+                if (data.value == true) {
+                    _.forEach(data.data, function (balArray) {
+                        if (balArray.currency == "BTC") {
+
+                            $scope.userBTCBalance = (balArray.balance).toFixed(8);
+                        } else {
+                            $scope.userUSDTBalance = (balArray.balance).toFixed(2);
+                        }
+                    });
+                } else {
+                    $scope.userBTCBalance = 0;
+                    $scope.userBTCBalance = ($scope.userBTCBalance).toFixed(8);
+                    $scope.userUSDTBalance = 0;
+                    $scope.userUSDTBalance = ($scope.userUSDTBalance).toFixed(2);
+
+                }
+            });
+        }
         // Display orders and trades of user
 
         if ($scope.userData != null && $scope.userData.value == true) {
@@ -140,18 +181,63 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
         // Adding orders
         $scope.userData = $.jStorage.get("user");
         $scope.addBuyOrder = function (data) {
+            var newBal = 0;
             data.user = $scope.userData.data._id;
             data.type = "Buy";
-            apiService.getUpdatedUserBuyList(data, function (data) {
-                toastr.success("Buy Order List Updated");
+            total = data.rate * data.quantity;
+            currentUserBuyOrder = data;
+            apiService.getBalance(getUserBalance, function (data) {
+
+                _.forEach(data.data, function (balArray) {
+                    if (balArray.currency == "USDT") {
+                        userUSDTBalance1 = balArray.balance;
+                        if (total <= userUSDTBalance1) {
+                            newBal = userUSDTBalance1 - total;
+                            getUserBalance.balance = newBal;
+                            getUserBalance.currency = "USDT";
+                            apiService.updateBalance(getUserBalance, function (data) {});
+                            apiService.getUpdatedUserBuyList(currentUserBuyOrder, function (data) {
+                                toastr.success("Buy Order List Updated");
+                            });
+                        } else {
+                            toastr.error("Insufficient Balance");
+                        }
+                    }
+                });
+
             });
+
+
+
+
         };
         $scope.addSellOrder = function (data) {
+            var newBal = 0;
             data.user = $scope.userData.data._id;
             data.type = "Sell";
-            apiService.getUpdatedUserSellList(data, function (saveddata) {
-                toastr.success("Sell Order List Updated");
+            BTCQuantity = data.quantity;
+            currentUserSellOrder = data;
+            apiService.getBalance(getUserBalance, function (data) {
+                _.forEach(data.data, function (balArray) {
+                    if (balArray.currency == "BTC") {
+                        userBTCBalance1 = balArray.balance;
+                        if (BTCQuantity <= userBTCBalance1) {
+                            newBal = userBTCBalance1 - BTCQuantity;
+                            getUserBalance.balance = newBal;
+                            getUserBalance.currency = "BTC";
+                            apiService.updateBalance(getUserBalance, function (data) {});
+                            apiService.getUpdatedUserSellList(currentUserSellOrder, function (saveddata) {
+                                toastr.success("Sell Order List Updated");
+                            });
+                        } else {
+                            toastr.error("Insufficient Balance");
+                        }
+                    }
+                });
             });
+
+
+
         };
     })
 

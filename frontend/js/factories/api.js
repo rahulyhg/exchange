@@ -38,6 +38,21 @@ myApp.factory('apiService', function ($http, $q, $timeout) {
                 callback(data.data);
             });
         },
+        // User Balance
+        getBalance: function (data, callback) {
+
+            $http.post(adminurl + "Balance/getBalance",
+                data).then(function (data) {
+                callback(data.data);
+            });
+        },
+        updateBalance: function (data, callback) {
+
+            $http.post(adminurl + "Balance/updateBalance",
+                data).then(function (data) {
+                callback(data.data);
+            });
+        },
         //Buy order services
         getCompleteBuyList: function (callback) {
             $http.post(adminurl + "BuyOrder/getCompleteBuyList").then(function (data) {

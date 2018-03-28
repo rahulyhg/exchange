@@ -94,6 +94,7 @@ var model = {
 
     getCompleteBuyList: function (data, callback) {
         MatchingEngine.getBuyersSellers(function (err, data) {
+
             callback(err, data.buyers);
         });
     },
