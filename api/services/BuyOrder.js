@@ -100,7 +100,6 @@ var model = {
     },
 
     getUserList: function (data, callback) {
-        console.log("data", data);
         var userListData = {};
         async.waterfall([
             function (callback) {

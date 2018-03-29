@@ -27,6 +27,35 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
             });
         };
 
+        $scope.open2Factor = function () {
+            registerPopup = $uibModal.open({
+                templateUrl: "views/content/modal/two-factor.html",
+                scope: $scope,
+                size: "lg",
+                // windowClass: "login-modal"
+            });
+        };
+
+        apiService.getSecret(function (data) {
+            $scope.qrCodeData = data;
+        });
+        $scope.enterToken = function () {
+            if (_.isEmpty($scope.qrCodeData.token)) {
+                toastr.warning('Please enter the token');
+            } else {
+                apiService.verifyToken($scope.qrCodeData.token, function (data) {
+                    $scope.tokenResponse = data;
+                    if ($scope.tokenResponse.tokenVerification == false) {
+                        toastr.error('Please enter correct token');
+                    } else {
+                        toastr.success('You are successfully logged in');
+                    }
+                });
+            }
+
+
+        };
+
         $scope.closeModal = function (data1) {
 
             apiService.userRegister(data1, function (data) {
@@ -41,25 +70,35 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
 
         io.socket.on("BuyOrderAdded", function (data) {
             $scope.allBuyOrderData = convertData(data);
+            $scope.$apply();
         });
 
 
 
         io.socket.on("SellOrderAdded", function (data) {
             $scope.allSellOrderData = convertData(data);
+            $scope.$apply();
         });
 
         io.socket.on("AllTransactionDataAdded", function (data) {
             $scope.allTransactionData = data;
+            $scope.$apply();
         });
 
 
         io.socket.on("TransactionOrderAdded", function (data) {
-            $scope.userTransaction = data;
+            if ($scope.userData != null && $scope.userData.value == true) {
+                var getUserTransactionData = {};
+                getUserTransactionData.user = $scope.userData.data._id;
+                apiService.getUserTransactionList(getUserTransactionData, function (data) {
+                    $scope.userTransaction = data.data;
+                });
+            }
         });
 
         io.socket.on("UserOrderDataAdded", function (data) {
             $scope.userOrder = data;
+            $scope.$apply();
         });
         io.socket.on("UpdatedBalance", function (data) {
             if (data.currency == "USDT") {
@@ -109,14 +148,23 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
         $scope.data1 = {};
 
 
+        $scope.closeCodeModal = function (vrcode) {
+            console.log(vrcode);
+            $state.reload();
+        }
         // User Login 
         $scope.submitForm = function (data) {
+            registerPopup = $uibModal.open({
+                templateUrl: "views/content/modal/code.html",
+                scope: $scope,
+                // windowClass: "login-modal"
+            });
             apiService.userLogin(data, function (data) {
                 if (data.value == false) {
                     toastr.error("Incorrect Credentials!", "Try Again");
                 }
                 $.jStorage.set("user", data);
-                $state.reload();
+
             });
         };
         $scope.userData = $.jStorage.get("user");
@@ -128,9 +176,9 @@ myApp.controller('HomeCtrl', function ($scope, $state, TemplateService, Navigati
         };
         $scope.goToBuyOrder = function (data) {
             $scope.buyData = {};
-            document.getElementById('buyOrderRate').value = $scope.buyData.rate=data.rate;
-            document.getElementById('buyOrderQuantity').value =$scope.buyData.quantity= data.quantity;
-            document.getElementById('buyOrderTotal').value = data.rate * data.quantity;
+            document.getElementById('buyOrderRate').value = $scope.buyData.rate = data.rate;
+            document.getElementById('buyOrderQuantity').value = $scope.buyData.quantity = data.quantity;
+            document.getElementById('buyOrderTotal').value = (data.rate * data.quantity);
         };
 
         //Balance Display

@@ -10396,6 +10396,11 @@ header {
   color: red !important;
   font-size: 12px; }
 
+.setting-button {
+  display: inline-block;
+  font-size: 20px;
+  color: #9e9ea1; }
+
 .buy-btc-color {
   color: #5cb85c !important; }
 

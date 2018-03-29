@@ -82,6 +82,7 @@ var model = {
     },
 
     addTransaction: function (data, transactionType, callback) {
+        var oldData = data;
         var orderType, OrderTable, orderDataId;
         var transactionDetail;
         var orderDetail;
@@ -127,7 +128,7 @@ var model = {
             }
             order.save(callback);
         }], function (err, data) {
-            Transaction.getUserTransactionList(data, function (err, data) {
+            Transaction.getUserTransactionList(oldData, function (err, data) {
                 if (data) {
                     sails.sockets.blast("TransactionOrderAdded", data);
                 }
@@ -137,7 +138,6 @@ var model = {
                     sails.sockets.blast("AllTransactionDataAdded", data);
                 }
             });
-            console.log("dataa-------", data)
             BuyOrder.getUserList(data, function (err, data) {
                 if (data) {
                     sails.sockets.blast("UserOrderDataAdded", data);

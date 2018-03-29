@@ -120,7 +120,6 @@ var model = {
             "oauthLogin.socialProvider": user.provider,
         }).exec(function (err, data) {
             if (err) {
-                console.log(err);
                 callback(err, data);
             } else if (_.isEmpty(data)) {
                 var modelUser = {
